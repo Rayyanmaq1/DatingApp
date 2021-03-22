@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:livu/Services/CoinsDeduction.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:livu/Services/Last_MessageService.dart';
@@ -443,37 +445,38 @@ class ChatScreenState extends State<ChatScreen> {
               // print(getData[index].imageUrl);
               return GestureDetector(
                 onTap: () async {
-                  print(File(getData[index].imageUrl.createPath()));
-                  //  var gallery = await ImagePicker.platform.
-                  int timestamp = new DateTime.now().millisecondsSinceEpoch;
-                  var snapshot = await FirebaseStorage.instance
-                      .ref()
-                      .child(
-                          'chat_images/${DateTime.now().toString()}myimage.jpg')
-                      .putFile(File(getData[index].imageUrl.createPath()))
-                      .catchError((e) {
-                    print(e);
-                  });
-
-                  await snapshot.ref.getDownloadURL().then((value) {
-                    _sendMessage(
-                        messageText: 'Image', imageUrl: value.toString());
-                  });
                   setState(() {
                     showGifts = false;
                   });
+
+                  if (Get.find<UserDataController>().userModel.value.coins >=
+                      getGifts[index].coins) {
+                    CoinsDeduction().setCoins(
+                        Get.find<UserDataController>().userModel.value.coins,
+                        getGifts[index].coins);
+                    _sendMessage(
+                        messageText: 'Gift',
+                        imageUrl: getGifts[index].imageUrl);
+                  } else {
+                    Get.snackbar(
+                        'No Enough Coins', 'You donnt have enough coins');
+                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: SizeConfig.widthMultiplier * 18,
-                      height: SizeConfig.heightMultiplier * 12,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(getGifts[index].imageUrl),
+                    CachedNetworkImage(
+                      imageUrl: getGifts[index].imageUrl,
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: SizeConfig.widthMultiplier * 18,
+                        height: SizeConfig.heightMultiplier * 12,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: imageProvider),
                         ),
                       ),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -484,7 +487,7 @@ class ChatScreenState extends State<ChatScreen> {
                           height: 20,
                         ),
                         Text(
-                          getGifts[index].coins,
+                          getGifts[index].coins.toString(),
                           style: TextStyle(color: Colors.white),
                         ),
                       ],
@@ -503,33 +506,55 @@ class ChatScreenState extends State<ChatScreen> {
             ),
             itemCount: getData.length,
             itemBuilder: (context, index) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: SizeConfig.widthMultiplier * 18,
-                    height: SizeConfig.heightMultiplier * 12,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(getData[index].imageUrl),
+              return GestureDetector(
+                onTap: () async {
+                  setState(() {
+                    showGifts = false;
+                  });
+                  if (Get.find<UserDataController>().userModel.value.coins >=
+                      getData[index].coins) {
+                    CoinsDeduction().setCoins(
+                        Get.find<UserDataController>().userModel.value.coins,
+                        getData[index].coins);
+                    _sendMessage(
+                        messageText: 'Gift', imageUrl: getData[index].imageUrl);
+                  } else {
+                    Get.snackbar(
+                        'No Enough Coins', 'You donnt have enough coins');
+                  }
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: getData[index].imageUrl,
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: SizeConfig.widthMultiplier * 18,
+                        height: SizeConfig.heightMultiplier * 12,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: imageProvider),
+                        ),
                       ),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        'assets/Coin.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      Text(
-                        getData[index].coins,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          'assets/Coin.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        Text(
+                          getData[index].coins.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -571,16 +596,6 @@ class ChatScreenState extends State<ChatScreen> {
     _sendMessage(messageText: text, imageUrl: null);
   }
 
-  _getImagefromgallery() async {
-    image = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
-  }
-
-  _getImagefromcamera() async {
-    image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 50);
-  }
-
   void _sendMessage({String messageText, String imageUrl}) {
     reference.push().set({
       MESSAGE_TEXT: messageText,
@@ -606,14 +621,6 @@ class ChatScreenState extends State<ChatScreen> {
         .collection(USERS_COLLECTION)
         .doc(Get.find<UserDataController>().userModel.value.id)
         .collection('last_message');
-
-    // DocumentReference _recRef = FirebaseFirestore.instance
-    //     .collection(USERS_COLLECTION)
-    //     .doc(widget.lastMessage.uid);
-    // DocumentReference _userRef = FirebaseFirestore.instance
-    //     .collection(USERS_COLLECTION)
-    //     .doc(Get.find<UserDataController>().userModel.value.id);
-
     _userColl.doc(widget.lastMessage.uid).set({
       LATEST_MESSAGE: latestMessage,
       // LATEST_REFERENCE: _recRef,

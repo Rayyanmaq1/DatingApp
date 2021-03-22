@@ -58,6 +58,7 @@ dependencies:
   # tiktoklikescroller: ^0.1.1
   shared_preferences: 
   flutter_vlc_player: ^5.0.3 
+  cached_network_image: ^2.5.1
   flutter_ringtone_player: ^2.0.0
   # shared_preferences: ^2.0.3
   emoji_picker: ^0.1.0

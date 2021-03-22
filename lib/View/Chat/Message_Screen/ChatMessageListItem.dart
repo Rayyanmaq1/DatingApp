@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:livu/theme.dart';
 import '../../../Model/MessageModel.dart';
@@ -52,22 +53,24 @@ class ChatMessageListItem extends StatelessWidget {
               child: messageSnapshot.value[MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
+                        print(messageSnapshot.value[MESSAGE_IMAGE_URL]);
+
                         Get.to(() => FullImageViewScreen(
                             url: messageSnapshot.value[MESSAGE_IMAGE_URL]));
                       },
-                      child: Hero(
-                        tag: messageSnapshot.value[MESSAGE_IMAGE_URL],
-                        child: Container(
+                      child: CachedNetworkImage(
+                        imageUrl: messageSnapshot.value[MESSAGE_IMAGE_URL],
+                        imageBuilder: (context, imageProvider) => Container(
                           height: SizeConfig.heightMultiplier * 14,
                           width: SizeConfig.widthMultiplier * 48,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    messageSnapshot.value[MESSAGE_IMAGE_URL]),
-                                fit: BoxFit.cover),
+                                image: imageProvider, fit: BoxFit.contain),
                           ),
                         ),
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                       //       new Image.network(
                       //   messageSnapshot.value[MESSAGE_IMAGE_URL],
@@ -128,23 +131,22 @@ class ChatMessageListItem extends StatelessWidget {
               child: messageSnapshot.value[MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
-                        // print("on tap called");
                         Get.to(() => FullImageViewScreen(
                             url: messageSnapshot.value[MESSAGE_IMAGE_URL]));
                       },
-                      child: Hero(
-                        tag: messageSnapshot.value[MESSAGE_IMAGE_URL],
-                        child: Container(
+                      child: CachedNetworkImage(
+                        imageUrl: messageSnapshot.value[MESSAGE_IMAGE_URL],
+                        imageBuilder: (context, imageProvider) => Container(
                           height: SizeConfig.heightMultiplier * 14,
                           width: SizeConfig.widthMultiplier * 48,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    messageSnapshot.value[MESSAGE_IMAGE_URL]),
-                                fit: BoxFit.cover),
+                                image: imageProvider, fit: BoxFit.contain),
                           ),
                         ),
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                       //       new Image.network(
                       //   messageSnapshot.value[MESSAGE_IMAGE_URL],
@@ -170,19 +172,19 @@ class FullImageViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.back(),
-      child: Hero(
-        tag: url,
+        onTap: () => Get.back(),
         child: Center(
-          child: Container(
+            child: CachedNetworkImage(
+          imageUrl: url,
+          imageBuilder: (context, imageProvider) => Container(
             height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(url), fit: BoxFit.contain)),
+              image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+            ),
           ),
-        ),
-      ),
-    );
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        )));
   }
 }
