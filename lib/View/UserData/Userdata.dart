@@ -175,7 +175,9 @@ class _UserDataState extends State<UserData> {
 
                     UserDataServices().setUserData(
                         dateTime, _genderController.text, _nameController.text);
-                    Get.offAll(() => CustomNavigation());
+                    Get.offAll(() => CustomNavigation(
+                          showPopUps: true,
+                        ));
                   },
                   child: PhysicalModel(
                     color: purpleColor,

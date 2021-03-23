@@ -91,50 +91,6 @@ class _ChatPageState extends State<ChatPage> {
                   Divider(
                     color: Colors.grey[850],
                   ),
-                  ListTile(
-                    onTap: () => Get.to(() => ChatScreen()),
-                    leading: CircleAvatar(
-                      radius: 30,
-                    ),
-                    title: Text(
-                      'LivU Team',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: SizeConfig.textMultiplier * 2),
-                    ),
-                    subtitle: Text(
-                      'You can get +100 free coins for first',
-                      style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: SizeConfig.textMultiplier * 1.5),
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '12:30',
-                          style: TextStyle(color: Colors.grey[500]),
-                        ),
-                        Container(
-                          width: 20,
-                          height: 20,
-                          child: Center(
-                              child: Text(
-                            '5',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          )),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  redColor,
-                                  pinkColor,
-                                ],
-                              ),
-                              shape: BoxShape.circle),
-                        ),
-                      ],
-                    ),
-                  ),
                   GetX<LastMessageController>(
                     builder: (controller) {
                       return controller.lastMessage.length != 0

@@ -4,11 +4,12 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(MyApp()); // Wrap your app
 }
 
 class MyApp extends StatelessWidget {

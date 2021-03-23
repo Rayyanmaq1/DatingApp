@@ -347,7 +347,6 @@ class ChatScreenState extends State<ChatScreen> {
                           maxWidth: 200,
                           maxHeight: 300);
                       print(gallery.path);
-                      int timestamp = new DateTime.now().millisecondsSinceEpoch;
                       var snapshot = await FirebaseStorage.instance
                           .ref()
                           .child(

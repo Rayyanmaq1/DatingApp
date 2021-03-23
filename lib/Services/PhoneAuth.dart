@@ -29,7 +29,11 @@ class AuthService {
   //SignIn
   signIn(AuthCredential authCreds) {
     print(authCreds.signInMethod);
-    FirebaseAuth.instance.signInWithCredential(authCreds).catchError((e) {
+    FirebaseAuth.instance.signInWithCredential(authCreds).then((value) {
+      if (value.user.uid.isNotEmpty) {
+        Get.offAll(() => UserData());
+      }
+    }).catchError((e) {
       if (e.toString() ==
           '[firebase_auth/invalid-verification-code] The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.') {
         Fluttertoast.showToast(
@@ -40,6 +44,7 @@ class AuthService {
             backgroundColor: Colors.black,
             textColor: Colors.white,
             fontSize: 16.0);
+        return false;
       } else if (e.toString() ==
           '[firebase_auth/session-expired] The sms code has expired. Please re-send the verification code to try again.') {
         Fluttertoast.showToast(
@@ -50,6 +55,9 @@ class AuthService {
             backgroundColor: Colors.black,
             textColor: Colors.white,
             fontSize: 16.0);
+        return false;
+      } else {
+        return true;
       }
     });
   }
@@ -58,17 +66,8 @@ class AuthService {
     //print(verificationId);
     AuthCredential authCreds = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
-    // authCreds.token == null
-    //     ? Fluttertoast.showToast(
-    //         msg: "Incorrect Code",
-    //         toastLength: Toast.LENGTH_SHORT,
-    //         gravity: ToastGravity.BOTTOM,
-    //         timeInSecForIosWeb: 1,
-    //         backgroundColor: Colors.black,
-    //         textColor: Colors.white,
-    //         fontSize: 16.0)
+
     signIn(authCreds);
-    Get.offAll(() => UserData());
   }
 
   Future<void> verifyPhone(phoneNo) async {

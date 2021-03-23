@@ -17,12 +17,16 @@ class _SplashScreenState extends State<SplashScreen> {
   bool login = false;
   void initState() {
     _getData();
+
     Timer(
       Duration(seconds: 3),
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) =>
-              login == true ? CustomNavigation() : LoginPage(),
+          builder: (BuildContext context) => login == true
+              ? CustomNavigation(
+                  showPopUps: false,
+                )
+              : LoginPage(),
         ),
       ),
     );
@@ -30,10 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _getData() async {
-    login = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      print(login);
       login = prefs.getBool('Login');
     });
   }

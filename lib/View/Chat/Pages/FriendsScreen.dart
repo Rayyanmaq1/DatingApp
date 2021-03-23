@@ -29,20 +29,6 @@ class FriendsScreen extends StatelessWidget {
               title: Text('Friends'),
               backgroundColor: greyColor,
               actions: [
-                // Padding(
-                //   padding: const EdgeInsets.all(1.0),
-                //   child: GestureDetector(
-                //     onTap: () => Get.to(() => OnlineRemender()),
-                //     child: Icon(
-                //       Icons.notifications_outlined,
-                //       color: Colors.white,
-                //       size: 28,
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   width: SizeConfig.widthMultiplier * 3,
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: GestureDetector(
@@ -167,10 +153,13 @@ class FriendsScreen extends StatelessWidget {
 
   chatContainer(name, image, uid) {
     return GestureDetector(
-      // onTap: () => Get.to(() => ChatScreen(
-      //       lastMessage: lastMessageModel,
-      //       friendRequest: false,
-      //     )),
+      onTap: () {
+        LastMessage model = LastMessage.feomUserInfo(name, image, uid);
+        Get.to(() => ChatScreen(
+              lastMessage: model,
+              friendRequest: false,
+            ));
+      },
       child: ListTile(
         leading: CircleAvatar(
           backgroundImage: NetworkImage(

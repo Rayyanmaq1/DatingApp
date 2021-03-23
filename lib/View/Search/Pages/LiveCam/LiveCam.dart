@@ -149,7 +149,7 @@ class _LiveCamState extends State<LiveCam> {
   Widget _expandedVideoRow(List<Widget> views) {
     final wrappedViews = views.map<Widget>(_videoView).toList();
 
-    return Expanded(
+    return Container(
       child: Row(
         children: wrappedViews,
       ),

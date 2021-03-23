@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'edit_profile.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
+import 'package:livu/Services/UserDataServices.dart';
 import 'package:get/get.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
@@ -57,13 +58,16 @@ class ProfileScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: GetX<UserDataController>(
                           builder: (controller) {
-                            return CircleAvatar(
-                              backgroundImage:
-                                  controller.userModel.value.imageUrl != null
-                                      ? NetworkImage(
-                                          controller.userModel.value.imageUrl)
-                                      : AssetImage('assets/userAvatar.png'),
-                              radius: 60,
+                            return GestureDetector(
+                              onTap: () => UserDataServices().setImage(),
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    controller.userModel.value.imageUrl != null
+                                        ? NetworkImage(
+                                            controller.userModel.value.imageUrl)
+                                        : AssetImage('assets/userAvatar.png'),
+                                radius: 60,
+                              ),
                             );
                           },
                         ),
@@ -162,7 +166,11 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                "0",
+                                Get.find<UserDataController>()
+                                    .userModel
+                                    .value
+                                    .coins
+                                    .toString(),
                                 style: TextStyle(color: Colors.white),
                               )
                             ],
@@ -181,7 +189,11 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                "0",
+                                Get.find<UserDataController>()
+                                    .userModel
+                                    .value
+                                    .likes
+                                    .toString(),
                                 style: TextStyle(color: Colors.white),
                               )
                             ],

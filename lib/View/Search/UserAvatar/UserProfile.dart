@@ -62,7 +62,7 @@ class _UserProfileState extends State<UserProfile> {
                           : Center(
                               child: Text(
                                 'No Image to show',
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ));
                 }),
@@ -179,7 +179,11 @@ class _UserProfileState extends State<UserProfile> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            "7",
+                            Get.find<UserDataController>()
+                                .userModel
+                                .value
+                                .likes
+                                .toString(),
                             style: TextStyle(color: Colors.redAccent),
                           ),
                         )

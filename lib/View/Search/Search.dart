@@ -10,15 +10,15 @@ import 'package:get/route_manager.dart';
 import 'package:livu/View/History/History.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/View/History/Pages/VideoMatch_History.dart';
-import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:livu/Controller/lastMessageController.dart';
-import 'package:livu/Controller/HistoryController.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'Widgets/PopUp.dart';
 
+// ignore: must_be_immutable
 class Search extends StatefulWidget {
+  bool showPopUps = false;
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -30,12 +30,14 @@ class _SearchState extends State<Search> {
   List<Widget> pageList = List<Widget>();
   List<CameraDescription> camera;
   int selectedRadio = 1;
+  bool getInfo = false;
 
   CameraController cameraController;
   void initState() {
     // print(friendRequest.friendRequestModel.value.otherUserUid);
     getCamera();
     _setData();
+
     pageList.add(Container(
       color: Colors.black,
     ));
@@ -44,8 +46,8 @@ class _SearchState extends State<Search> {
 
   _setData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.setBool('Login', true);
-    print(prefs.getBool('Login'));
   }
 
   getCamera() async {
@@ -64,10 +66,6 @@ class _SearchState extends State<Search> {
   }
 
   Widget build(BuildContext context) {
-    // setState(() {
-    //   print(selectedRadio.toString() + "Radio");
-    // });
-    print(SizeConfig.widthMultiplier * 20);
     return PickupLayout(
       scaffold: Scaffold(
         //backgroundColor: Colors.red,
@@ -96,7 +94,7 @@ class _SearchState extends State<Search> {
             ),
             _seleted == 0
                 ? Positioned(
-                    bottom: SizeConfig.heightMultiplier * 35,
+                    bottom: SizeConfig.heightMultiplier * 25,
                     left: MediaQuery.of(context).size.width * 0.3,
                     child: Container(
                       child: Text(
@@ -141,7 +139,7 @@ class _SearchState extends State<Search> {
   // ignore: non_constant_identifier_names
   BottomContainer() {
     return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.heightMultiplier * 12),
+      padding: EdgeInsets.only(bottom: SizeConfig.heightMultiplier * 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

@@ -23,12 +23,14 @@ class _FilterWidgetState extends State<FilterWidget> {
       left: MediaQuery.of(context).size.width * 0.4,
       top: SizeConfig.heightMultiplier * 8,
       child: GestureDetector(
-        onTap: () => showDialog(
-          context: context,
-          builder: (context) {
-            return _buildDialog();
-          },
-        ).then((value) => setState(() {})),
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return _buildDialog();
+            },
+          );
+        },
         child: PhysicalModel(
           color: Colors.black,
           borderRadius: BorderRadius.all(
@@ -367,48 +369,3 @@ class _FilterWidgetState extends State<FilterWidget> {
     );
   }
 }
-
-// class RPSCustomPainter extends CustomPainter {
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     Paint paint_0 = new Paint()
-//       ..color = purpleColor
-//       ..style = PaintingStyle.fill
-//       ..strokeWidth = 1;
-
-//     Path path_0 = Path();
-//     path_0.moveTo(0, 0);
-//     path_0.lineTo(size.width, 0);
-//     path_0.lineTo(size.width, size.height * 0.9800000);
-//     path_0.lineTo(size.width * 0.9675000, size.height * 0.8100000);
-//     path_0.lineTo(size.width * 0.9350000, size.height * 0.6000000);
-//     path_0.lineTo(size.width * 0.8850000, size.height * 0.5500000);
-//     path_0.lineTo(size.width * 0.8325000, size.height * 0.5800000);
-//     path_0.lineTo(size.width * 0.7975000, size.height * 0.7600000);
-//     path_0.lineTo(size.width * 0.7375000, size.height * 0.8700000);
-//     path_0.lineTo(size.width * 0.6850000, size.height * 0.8100000);
-//     path_0.lineTo(size.width * 0.6400000, size.height * 0.7400000);
-//     path_0.lineTo(size.width * 0.6025000, size.height * 0.6000000);
-//     path_0.lineTo(size.width * 0.5425000, size.height * 0.4800000);
-//     path_0.lineTo(size.width * 0.4800000, size.height * 0.4700000);
-//     path_0.lineTo(size.width * 0.4050000, size.height * 0.6800000);
-//     path_0.lineTo(size.width * 0.3525000, size.height * 0.8100000);
-//     path_0.lineTo(size.width * 0.3100000, size.height * 0.8700000);
-//     path_0.lineTo(size.width * 0.2625000, size.height * 0.8600000);
-//     path_0.lineTo(size.width * 0.2225000, size.height * 0.8000000);
-//     path_0.lineTo(size.width * 0.1825000, size.height * 0.7000000);
-//     path_0.lineTo(size.width * 0.1375000, size.height * 0.5200000);
-//     path_0.lineTo(size.width * 0.0750000, size.height * 0.6000000);
-//     path_0.lineTo(size.width * 0.0325000, size.height * 0.8100000);
-//     path_0.lineTo(size.width * 0.0025000, size.height * 0.9900000);
-//     path_0.lineTo(0, 0);
-//     path_0.close();
-
-//     canvas.drawPath(path_0, paint_0);
-//   }
-
-//   @override
-//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-//     return true;
-//   }
-// }

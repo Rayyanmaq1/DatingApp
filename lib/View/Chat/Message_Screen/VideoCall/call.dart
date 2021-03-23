@@ -144,7 +144,7 @@ class _CallPageState extends State<CallPage> {
   Widget _expandedVideoRow(List<Widget> views) {
     final wrappedViews = views.map<Widget>(_videoView).toList();
 
-    return Expanded(
+    return Container(
       child: Row(
         children: wrappedViews,
       ),
@@ -194,41 +194,12 @@ class _CallPageState extends State<CallPage> {
         setState(() {
           runOnce = false;
         });
-        print('123123');
         return Stack(
           children: <Widget>[
             _expandedVideoRow([views[1]]),
             _positionedVideoRow([views[0]])
-
-            // Positioned(
-            //   right: 0,
-            //   top: 0,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.all(Radius.circular(12))),
-            //     child: _expandedVideoRow([views[0]]),
-            //     height: 200,
-            //     width: 120,
-            //   ),
-            // ),
           ],
         );
-      // case 3:
-      //   return Container(
-      //       child: Column(
-      //     children: <Widget>[
-      //       _expandedVideoRow(views.sublist(0, 2)),
-      //       _expandedVideoRow(views.sublist(2, 3))
-      //     ],
-      //   ));
-      // case 4:
-      //   return Container(
-      //       child: Column(
-      //     children: <Widget>[
-      //       _expandedVideoRow(views.sublist(0, 2)),
-      //       _expandedVideoRow(views.sublist(2, 4))
-      //     ],
-      //   ));
       default:
     }
     return Container();

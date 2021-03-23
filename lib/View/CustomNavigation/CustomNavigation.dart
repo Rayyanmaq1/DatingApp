@@ -10,17 +10,19 @@ import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:livu/Controller/HistoryController.dart';
 import 'package:livu/Controller/lastMessageController.dart';
 import 'package:livu/Controller/PrivateVideoController.dart';
+import 'package:livu/View/Search/Widgets/PopUp.dart';
 //import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:livu/Controller/VideoController.dart';
 
 class CustomNavigation extends StatefulWidget {
+  bool showPopUps = false;
+  CustomNavigation({this.showPopUps});
   @override
   _CustomNavigationState createState() => _CustomNavigationState();
 }
 
 class _CustomNavigationState extends State<CustomNavigation> {
-  PageController controller = PageController();
-  List<Widget> pageList = List<Widget>();
+  PageController controller = PageController(initialPage: 1);
   int index;
   bool userStatus = false;
   int _selectedPage = 1;
@@ -35,57 +37,62 @@ class _CustomNavigationState extends State<CustomNavigation> {
     Get.put(AllVideoController());
     Get.put(PrivateVideoController());
 
-    pageList.add(Explore());
-    pageList.add(Search());
-    pageList.add(ChatPage());
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.showPopUps
+        ? setState(() {
+            widget.showPopUps = false;
+            popUp(context);
+          })
+        : null;
     return Scaffold(
-      body: Stack(
+      body: SizedBox.expand(
+          child: PageView(
+        controller: controller,
         children: [
-          pageList[_selectedPage],
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Theme(
-              data: Theme.of(context).copyWith(canvasColor: Colors.black),
-              child: BottomNavigationBar(
-                showSelectedLabels: false,
-                elevation: 0,
-                iconSize: 28,
-                showUnselectedLabels: false,
-                unselectedItemColor: Colors.grey,
-                type: BottomNavigationBarType.fixed,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.explore),
-                    label: ("Explore"),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
-                    label: ("Search"),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: FaIcon(
-                      FontAwesomeIcons.solidCommentDots,
-                    ),
-                    label: ("Chat"),
-                  ),
-                ],
-                currentIndex: _selectedPage,
-                selectedItemColor: _selectedPage == 0
-                    ? Colors.amber
-                    : _selectedPage == 1
-                        ? Colors.white
-                        : purpleColor,
-                onTap: _onItemTapped,
-              ),
+          Explore(),
+          Search(),
+          ChatPage(),
+        ],
+        onPageChanged: (index) {
+          setState(() => _selectedPage = index);
+        },
+      )),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
+        onTap: _onItemTapped,
+        showSelectedLabels: false,
+        elevation: 0,
+        iconSize: 28,
+        showUnselectedLabels: false,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore),
+            label: ("Explore"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: ("Search"),
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.solidCommentDots,
             ),
+            label: ("Chat"),
           ),
         ],
+        currentIndex: _selectedPage,
+        selectedItemColor: _selectedPage == 0
+            ? Colors.amber
+            : _selectedPage == 1
+                ? Colors.white
+                : purpleColor,
+        // onTap: _onItemTapped,
       ),
     );
   }
@@ -93,6 +100,18 @@ class _CustomNavigationState extends State<CustomNavigation> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedPage = index;
+      //
+      //
+      //using this page controller you can make beautiful animation effects
+      controller.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
   }
+
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedPage = index;
+  //   });
+  // }
+
 }

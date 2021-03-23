@@ -6,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:livu/Model/VideoModel.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/Model/UserModel.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class UserDataServices {
   Stream<UserModel> getUserData() {
@@ -120,6 +122,24 @@ class UserDataServices {
     String uid = FirebaseAuth.instance.currentUser.uid;
     await FirebaseFirestore.instance.collection('UserData').doc(uid).update({
       "Interest": interest,
+    });
+  }
+
+  setImage() async {
+    var gallery = await ImagePicker.pickImage(
+        source: ImageSource.gallery, maxWidth: 200, maxHeight: 300);
+    print(gallery.path);
+    var snapshot = await FirebaseStorage.instance
+        .ref()
+        .child('chat_images/${DateTime.now().toString()}myimage.jpg')
+        .putFile(File(gallery.path));
+
+    await snapshot.ref.getDownloadURL().then((value) {
+      FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(currentUserUid())
+          .update(({'Image': value}));
+      ;
     });
   }
 

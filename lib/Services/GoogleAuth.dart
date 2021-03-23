@@ -28,7 +28,9 @@ class GmailAuthentication {
         .get()
         .then((value) {
       if (value.exists) {
-        Get.offAll(() => CustomNavigation());
+        Get.offAll(() => CustomNavigation(
+              showPopUps: false,
+            ));
       } else {
         Get.offAll(() => UserData());
       }

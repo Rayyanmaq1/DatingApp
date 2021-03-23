@@ -356,7 +356,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       LastMessage.fromHistoryModel(historyModel);
                   Get.to(() => ChatScreen(
                         lastMessage: lastMessage,
-                        friendRequest: true,
+                        friendRequest: false,
                       ));
                 },
                 child: Container(

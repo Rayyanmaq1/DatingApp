@@ -13,6 +13,12 @@ class VideocallPage extends StatelessWidget {
   // final userData = Get.find<UserDataController>().userModel.value;
   @override
   Widget build(BuildContext context) {
+    final deviceRatio =
+        MediaQuery.of(context).size.width / MediaQuery.of(context).size.height;
+    var scale = MediaQuery.of(context).size.aspectRatio *
+        cameraController.value.aspectRatio *
+        1.5;
+
     print(seleted);
     return Scaffold(
       backgroundColor: Colors.black,
@@ -29,11 +35,10 @@ class VideocallPage extends StatelessWidget {
                 'Buy Coins', 'You Dont have enough coin for video call');
           }
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width * 1,
-          height: MediaQuery.of(context).size.height * 0.924,
-          child: new CameraPreview(
-            cameraController,
+        child: Transform.scale(
+          scale: scale,
+          child: Center(
+            child: CameraPreview(cameraController),
           ),
         ),
       ),

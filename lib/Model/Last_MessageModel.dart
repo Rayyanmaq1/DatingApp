@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:livu/Model/FriendRequest_Model.dart';
 import 'package:livu/Model/HistoryModel.dart';
+import 'UserModel.dart';
 
 class LastMessage {
   String lastMessage;
@@ -34,6 +35,20 @@ class LastMessage {
       imageUrl: model.imageUrl,
       name: model.name,
       uid: model.uid,
+    );
+  }
+  factory LastMessage.userModel(UserModel userModel) {
+    return LastMessage(
+      imageUrl: userModel.imageUrl,
+      name: userModel.name,
+      uid: userModel.id,
+    );
+  }
+  factory LastMessage.feomUserInfo(name, image, uid) {
+    return LastMessage(
+      imageUrl: image,
+      name: name,
+      uid: uid,
     );
   }
 }
