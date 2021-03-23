@@ -181,7 +181,7 @@ class _UserDataState extends State<UserData> {
                   },
                   child: PhysicalModel(
                     color: purpleColor,
-                    elevation: 4,
+                    elevation: 4.1,
                     borderRadius: BorderRadius.circular(6),
                     child: Container(
                       child: Center(
