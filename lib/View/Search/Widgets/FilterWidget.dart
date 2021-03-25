@@ -29,7 +29,9 @@ class _FilterWidgetState extends State<FilterWidget> {
             builder: (context) {
               return _buildDialog();
             },
-          );
+          ).then((value) {
+            setState(() {});
+          });
         },
         child: PhysicalModel(
           color: Colors.black,
@@ -51,11 +53,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                   width: SizeConfig.widthMultiplier * 1,
                 ),
                 Text(
-                  widget.seleted == 1
-                      ? 'Both'
-                      : widget.seleted == 2
-                          ? 'Male'
-                          : 'Female',
+                  Select_Gender,
                   style: TextStyle(color: Colors.white),
                 ),
               ],

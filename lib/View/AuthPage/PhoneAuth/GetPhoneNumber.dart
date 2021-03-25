@@ -67,16 +67,18 @@ class GetPhoneNumber extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () async {
-                AuthService().verifyPhone(code + phoneNumber);
-
-                Get.to(() => OptScreen(phoneNumber: phoneNumber, code: code));
-              },
-              child: PhysicalModel(
-                elevation: 4,
-                color: purpleColor,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+            PhysicalModel(
+              elevation: 4,
+              color: purpleColor,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              child: RawMaterialButton(
+                onPressed: () {
+                  AuthService().verifyPhone(code + phoneNumber);
+                  Get.to(() => OptScreen(phoneNumber: phoneNumber, code: code));
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                splashColor: Colors.deepPurple[600],
                 child: Container(
                   child: Center(
                     child: Container(

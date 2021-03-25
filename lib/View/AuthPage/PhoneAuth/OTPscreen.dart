@@ -87,12 +87,12 @@ class OptScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                Text(
-                  'I didnt get the Code',
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: SizeConfig.textMultiplier * 3),
-                ),
+                // Text(
+                //   'I didnt get the Code',
+                //   style: TextStyle(
+                //       color: Colors.grey,
+                //       fontSize: SizeConfig.textMultiplier * 3),
+                // ),
                 SizedBox(
                   height: 40,
                 ),

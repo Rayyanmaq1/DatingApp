@@ -50,7 +50,6 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
     await LiveCamService().checkIfIGotMatched(widget.cameraController);
     getSearchs.bindStream(LiveCamService().getAllsearches());
     if (getSearchs.length != 0) {
-      print("Length " + getSearchs.length.toString());
       randomUser = Random().nextInt(getSearchs.length);
       if (getSearchs[randomUser].uid != userData.userModel.value.id) {
         setState(() {
@@ -111,7 +110,7 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: GestureDetector(
-            onTap: () => _buildCustomDialog(context),
+            onTap: () => Get.back(),
             child: Icon(
               Icons.arrow_back,
               color: Colors.white,
@@ -276,84 +275,6 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
               : Container(),
         ],
       ),
-    );
-  }
-
-  _buildCustomDialog(context) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: greyColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-          child: Stack(
-            overflow: Overflow.visible,
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                height: SizeConfig.heightMultiplier * 28,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 70, 10, 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Are you sure you want to cancel matching',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: SizeConfig.textMultiplier * 2,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            color: greyColor,
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                  color: purpleColor,
-                                  fontSize: SizeConfig.textMultiplier * 2),
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              LiveCamService().deleteUserFromSearch();
-                              Get.back();
-                            },
-                            color: greyColor,
-                            child: Text(
-                              'Accept',
-                              style: TextStyle(
-                                  color: purpleColor,
-                                  fontSize: SizeConfig.textMultiplier * 2),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                  top: -SizeConfig.heightMultiplier * 5,
-                  child: Image.asset(
-                    'assets/userAvatar.png',
-                    width: SizeConfig.widthMultiplier * 20,
-                    height: SizeConfig.widthMultiplier * 20,
-                  )),
-            ],
-          ),
-        );
-      },
     );
   }
 

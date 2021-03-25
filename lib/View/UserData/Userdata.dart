@@ -45,6 +45,7 @@ class _UserDataState extends State<UserData> {
                 data: ThemeData(primaryColor: Colors.grey[800]),
                 child: TextField(
                   controller: _nameController,
+                  textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'NickName',
@@ -168,31 +169,39 @@ class _UserDataState extends State<UserData> {
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {
-                    _groupValue == 0
-                        ? _genderController.text = 'Male'
-                        : _genderController.text = 'Female';
-
-                    UserDataServices().setUserData(
-                        dateTime, _genderController.text, _nameController.text);
-                    Get.offAll(() => CustomNavigation(
-                          showPopUps: true,
-                        ));
-                  },
+                  onTap: () {},
                   child: PhysicalModel(
                     color: purpleColor,
-                    elevation: 4.1,
+                    elevation: 4,
                     borderRadius: BorderRadius.circular(6),
-                    child: Container(
-                      child: Center(
-                          child: Text(
-                        'Submit',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: SizeConfig.textMultiplier * 2.2),
-                      )),
-                      height: SizeConfig.heightMultiplier * 6,
-                      width: SizeConfig.widthMultiplier * 35,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        if (_genderController.text.isNotEmpty &&
+                            _nameController.text.isNotEmpty) {
+                          Get.snackbar('Invaild Input', 'Enter all fields');
+                        } else {
+                          _groupValue == 0
+                              ? _genderController.text = 'Male'
+                              : _genderController.text = 'Female';
+
+                          UserDataServices().setUserData(dateTime,
+                              _genderController.text, _nameController.text);
+                          Get.offAll(() => CustomNavigation(
+                                showPopUps: true,
+                              ));
+                        }
+                      },
+                      child: Container(
+                        child: Center(
+                            child: Text(
+                          'Submit',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: SizeConfig.textMultiplier * 2.2),
+                        )),
+                        height: SizeConfig.heightMultiplier * 6,
+                        width: SizeConfig.widthMultiplier * 35,
+                      ),
                     ),
                   ),
                 ),

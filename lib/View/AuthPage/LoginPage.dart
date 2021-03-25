@@ -35,6 +35,10 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Image.asset(
+                      'assets/Logo.png',
+                      height: SizeConfig.heightMultiplier * 20,
+                    ),
                     Text(
                       'KIM LIVE',
                       style: GoogleFonts.getFont('Bubblegum Sans',
@@ -106,21 +110,17 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      FaceBookAuthentcation().signInWithFacebook();
-                      //     .then((value) {
-                      //   print(value.toString());
-                      // //   if (value.toString() == "true") {
-                      // //     Get.offAll(() => CustomNavigation());
-                      // //   }
-                      // // }
-                      // );
-                    },
-                    child: PhysicalModel(
-                      elevation: 4,
-                      color: Color.fromRGBO(66, 103, 178, 1),
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                  PhysicalModel(
+                    elevation: 4,
+                    color: Color.fromRGBO(66, 103, 178, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    child: RawMaterialButton(
+                      splashColor: Colors.blue[700],
+                      onPressed: () {
+                        FaceBookAuthentcation().signInWithFacebook();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Row(
@@ -150,19 +150,17 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      GmailAuthentication().registerWithGmail();
-                      // .then((value) {
-                      //   if (value.toString() == 'true') {
-                      //     Get.offAll(() => CustomNavigation());
-                      //   }
-                      // });
-                    },
-                    child: PhysicalModel(
-                      elevation: 4,
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                  PhysicalModel(
+                    elevation: 4,
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    child: RawMaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      onPressed: () {
+                        GmailAuthentication().registerWithGmail();
+                      },
+                      splashColor: Colors.black,
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Row(
@@ -196,10 +194,13 @@ class LoginPage extends StatelessWidget {
                     elevation: 4,
                     color: purpleColor,
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    child: GestureDetector(
-                      onTap: () {
+                    child: RawMaterialButton(
+                      onPressed: () {
                         Get.to(() => GetPhoneNumber());
                       },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      splashColor: Colors.deepPurple[600],
                       child: Container(
                         padding: EdgeInsets.all(12),
                         child: Row(

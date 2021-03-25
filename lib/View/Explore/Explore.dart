@@ -141,7 +141,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                     : Container(),
                 Positioned(
                   bottom: 280,
-                  left: 40,
+                  left: 30,
                   child: Text(
                     widget.name,
                     style: TextStyle(
@@ -152,7 +152,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                 ),
                 Positioned(
                   bottom: 250,
-                  left: 40,
+                  left: 30,
                   child: Row(
                     children: [
                       Icon(Icons.location_on, size: 14, color: Colors.white),
@@ -164,6 +164,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                   ),
                 ),
                 Positioned(
+                  left: 30,
                   bottom: 180,
                   child: Container(
                     // width: MediaQuery.of(context).size.width,
@@ -183,8 +184,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                   ),
                 ),
                 Positioned(
-                  bottom: 110,
-                  left: 40,
+                  bottom: 80,
+                  left: 20,
                   child: PhysicalModel(
                     color: purpleColor,
                     borderRadius: BorderRadius.circular(24),

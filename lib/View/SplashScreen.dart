@@ -45,12 +45,24 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: purpleColor,
       body: Center(
-        child: Text(
-          'KIM LIVE',
-          style: GoogleFonts.getFont('Bubblegum Sans',
-              fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.textMultiplier * 8,
-              color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/Logo.png',
+              width: SizeConfig.widthMultiplier * 40,
+              height: SizeConfig.widthMultiplier * 40,
+            ),
+            SizedBox(height: SizeConfig.heightMultiplier * 5),
+            Text(
+              'KIM LIVE',
+              style: GoogleFonts.getFont('Bubblegum Sans',
+                  fontWeight: FontWeight.w700,
+                  fontSize: SizeConfig.textMultiplier * 8,
+                  color: Colors.white),
+            ),
+          ],
         ),
       ),
     );

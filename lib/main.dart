@@ -5,6 +5,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:device_preview/device_preview.dart';
+import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,12 @@ class MyApp extends StatelessWidget {
           DeviceOrientation.portraitUp,
         ]);
         return GetMaterialApp(
+          theme:
+              ThemeData(primarySwatch: Colors.grey, primaryColor: Colors.black),
           // locale: DevicePreview.locale(context), // Add the locale here
           // builder: DevicePreview.appBuilder, // Add the builder here
           debugShowCheckedModeBanner: false,
+
           home: SplashScreen(),
         );
       });

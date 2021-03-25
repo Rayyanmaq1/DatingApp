@@ -16,12 +16,14 @@ class PickupLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.find<UserDataController>().userModel.value.id);
     final userProvider = Get.find<UserDataController>().userModel.value;
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('PrivateCall')
-          .where('receiver_id', isEqualTo: userProvider.id)
+          .where('receiver_id',
+              isEqualTo: Get.find<UserDataController>().userModel.value.id)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data.docs.length != 0) {
