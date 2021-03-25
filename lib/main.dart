@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -9,8 +10,13 @@ import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
-  runApp(MyApp()); // Wrap your app
+  runApp(EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('ar', 'EG')],
+      path: 'lang', // <-- change the path of the translation files
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp())); // Wrap your app
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +30,10 @@ class MyApp extends StatelessWidget {
           DeviceOrientation.portraitUp,
         ]);
         return GetMaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: [Locale('en', 'US'), Locale('ar', 'AE')],
+          locale: Locale(context.locale.languageCode),
+
           theme:
               ThemeData(primarySwatch: Colors.grey, primaryColor: Colors.black),
           // locale: DevicePreview.locale(context), // Add the locale here

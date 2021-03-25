@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/Services/LiveCamSearching.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LiveCamPage extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class LiveCamPage extends StatelessWidget {
           } else {
             Get.to(() => BuyCoins());
             Get.snackbar(
-                'Buy Coins', 'You Dont have enough coin for video call');
+                'buy_coins', 'You Dont have enough coin for video call');
           }
         },
         child: Container(
@@ -60,24 +61,24 @@ class LiveCamPage extends StatelessWidget {
                 height: 40,
               ),
               Text(
-                'Find connections with first impressions',
+                'Live_Cam_Title',
                 style: TextStyle(
                     fontSize: SizeConfig.heightMultiplier * 2,
                     color: Colors.white),
-              ),
+              ).tr(),
               SizedBox(
                 height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  'You will have 10 second to decide if its a match if about the person speaks your interest , tap the heart to connect ',
+                  'Live_Cam_Description',
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   style: TextStyle(
                       fontSize: SizeConfig.heightMultiplier * 2,
                       color: Colors.white),
-                ),
+                ).tr(),
               )
             ],
           ),

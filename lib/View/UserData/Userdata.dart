@@ -6,6 +6,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/Services/UserDataServices.dart';
 import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:livu/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class UserData extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class UserData extends StatefulWidget {
 }
 
 class _UserDataState extends State<UserData> {
-  String dateTime = 'Select your Data of Birth';
+  String dateTime = 'select_birth'.tr();
   int _groupValue = 0;
 
   TextEditingController _nameController = TextEditingController();
@@ -28,7 +29,7 @@ class _UserDataState extends State<UserData> {
       appBar: AppBar(
         backgroundColor: purpleColor,
         elevation: 0,
-        title: Text('Sign Up'),
+        title: Text('sign_up_title').tr(),
       ),
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -48,7 +49,7 @@ class _UserDataState extends State<UserData> {
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    hintText: 'NickName',
+                    hintText: 'nick_name'.tr(),
                     hintStyle: TextStyle(
                       color: Colors.white,
                     ),
@@ -96,9 +97,9 @@ class _UserDataState extends State<UserData> {
                 height: SizeConfig.heightMultiplier * 3,
               ),
               Text(
-                'Choose your gender',
+                'select_gender',
                 style: TextStyle(color: Colors.white),
-              ),
+              ).tr(),
               SizedBox(
                 height: 30,
               ),
@@ -122,9 +123,9 @@ class _UserDataState extends State<UserData> {
                           value: 0,
                           groupValue: _groupValue,
                           title: Text(
-                            "Male",
+                            "male_gender",
                             style: TextStyle(color: Colors.white),
-                          ),
+                          ).tr(),
                           onChanged: (newValue) =>
                               setState(() => _groupValue = newValue),
                           activeColor: Colors.white,
@@ -146,9 +147,9 @@ class _UserDataState extends State<UserData> {
                           value: 1,
                           groupValue: _groupValue,
                           title: Text(
-                            "Female",
+                            "female_gender",
                             style: TextStyle(color: Colors.white),
-                          ),
+                          ).tr(),
                           onChanged: (newValue) =>
                               setState(() => _groupValue = newValue),
                           activeColor: Colors.white,
@@ -162,10 +163,10 @@ class _UserDataState extends State<UserData> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Gender Selection can not be reset.Please make sure it is correct',
+                  'Gender_Select_title',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white),
-                ),
+                ).tr(),
               ),
               Center(
                 child: GestureDetector(
@@ -194,11 +195,11 @@ class _UserDataState extends State<UserData> {
                       child: Container(
                         child: Center(
                             child: Text(
-                          'Submit',
+                          'submit_button',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: SizeConfig.textMultiplier * 2.2),
-                        )),
+                        ).tr()),
                         height: SizeConfig.heightMultiplier * 6,
                         width: SizeConfig.widthMultiplier * 35,
                       ),

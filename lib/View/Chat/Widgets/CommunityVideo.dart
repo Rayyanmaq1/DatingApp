@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:get/get.dart';
 import 'package:livu/View/Explore/Explore.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CommunityVideo extends StatelessWidget {
   @override
@@ -19,7 +20,6 @@ class CommunityVideo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  // color: Colors.amber,
                   width: SizeConfig.widthMultiplier * 60,
                   child: new Stack(
                     alignment: AlignmentDirectional.centerStart,
@@ -36,18 +36,12 @@ class CommunityVideo extends StatelessWidget {
                           'https://images.pexels.com/photos/2904217/pexels-photo-2904217.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
                         ),
                       ),
-
                       Positioned(
                         left: -30,
                         child: OtherUserContainer(
                           'https://images.pexels.com/photos/2697242/pexels-photo-2697242.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
                         ),
                       ),
-
-                      // new Positioned(
-                      //   left: 45.0,
-                      //   child: OtherUserContainer(),
-                      // )
                     ],
                   ),
                 ),
@@ -57,11 +51,11 @@ class CommunityVideo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Comuunity Video',
+                        'Community Video',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.textMultiplier * 1.6),
-                      ),
+                      ).tr(),
                       Container(
                         height: SizeConfig.heightMultiplier * 2,
                         width: SizeConfig.widthMultiplier * 2,

@@ -13,7 +13,7 @@ import 'package:livu/View/History/Pages/VideoMatch_History.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
-import 'Widgets/PopUp.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class Search extends StatefulWidget {
@@ -98,12 +98,12 @@ class _SearchState extends State<Search> {
                     left: MediaQuery.of(context).size.width * 0.3,
                     child: Container(
                       child: Text(
-                        'Click Anywhere to start',
+                        'Click_to_Start',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: SizeConfig.heightMultiplier * 2),
-                      ),
+                      ).tr(),
                     ),
                   )
                 : Container(),
@@ -173,11 +173,11 @@ class _SearchState extends State<Search> {
                         top: 50,
                         left: 5,
                         child: Text(
-                          'Video Match',
+                          'Video_Match',
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                        ),
+                        ).tr(),
                       ),
                       _seleted == 0
                           ? Positioned(
@@ -265,7 +265,7 @@ class _SearchState extends State<Search> {
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                        ),
+                        ).tr(),
                       ),
                       _seleted == 1
                           ? Positioned(

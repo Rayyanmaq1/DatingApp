@@ -12,6 +12,7 @@ import 'package:livu/Controller/lastMessageController.dart';
 import 'package:livu/Controller/PrivateVideoController.dart';
 import 'package:livu/View/Search/Widgets/PopUp.dart';
 import 'package:livu/Controller/VideoController.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomNavigation extends StatefulWidget {
   bool showPopUps = false;

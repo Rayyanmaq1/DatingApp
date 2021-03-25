@@ -12,8 +12,8 @@ import 'Widgets/CustomerService.dart';
 import 'package:get/get.dart';
 import 'package:livu/Controller/lastMessageController.dart';
 import 'package:livu/Controller/FriendRequestController.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
-import 'package:livu/Model/UserModel.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 
 class ChatPage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.textMultiplier * 2),
-                    ),
+                    ).tr(),
                     trailing:
                         GetX<FriendRequestController>(builder: (controller) {
                       // controller.refresh();
@@ -212,7 +212,7 @@ class _ChatPageState extends State<ChatPage> {
             pinned: false,
             floating: true,
             elevation: 0,
-            title: Text('Message'),
+            title: Text('Message').tr(),
             backgroundColor: greyColor,
             actions: [
               Padding(

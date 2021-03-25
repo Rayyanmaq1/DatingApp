@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/View/UserData/Userdata.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 String verificationId;
 
@@ -37,7 +38,7 @@ class AuthService {
       if (e.toString() ==
           '[firebase_auth/invalid-verification-code] The sms verification code used to create the phone auth credential is invalid. Please resend the verification code sms and be sure use the verification code provided by the user.') {
         Fluttertoast.showToast(
-            msg: "Incorrect Code",
+            msg: "invalid_code".tr(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -48,7 +49,7 @@ class AuthService {
       } else if (e.toString() ==
           '[firebase_auth/session-expired] The sms code has expired. Please re-send the verification code to try again.') {
         Fluttertoast.showToast(
-            msg: "Time Expired",
+            msg: "time_out_toast".tr(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,

@@ -6,6 +6,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SearchFriends extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _SearchFriendsState extends State<SearchFriends> {
               style: TextStyle(color: Colors.white),
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration.collapsed(
-                hintText: 'Search',
+                hintText: 'nick_name',
                 hintStyle: TextStyle(color: Colors.white),
               ),
             ),
@@ -48,7 +49,7 @@ class _SearchFriendsState extends State<SearchFriends> {
               Padding(
                 padding: EdgeInsets.only(top: 15, right: 12, bottom: 8),
                 child: Container(
-                  child: Center(child: Text('Search')),
+                  child: Center(child: Text('Search').tr()),
                   decoration: BoxDecoration(
                     color: purpleColor,
                     borderRadius: BorderRadius.all(

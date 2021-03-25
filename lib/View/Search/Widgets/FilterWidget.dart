@@ -8,7 +8,9 @@ import 'package:livu/settings.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+// ignore: must_be_immutable
 class FilterWidget extends StatefulWidget {
   int seleted;
   FilterWidget({this.seleted});
@@ -80,10 +82,10 @@ class _FilterWidgetState extends State<FilterWidget> {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Text('Selet Gender',
+            child: Text('Select_Gender_Alert',
                 style: TextStyle(
                   color: Colors.white,
-                )),
+                )).tr(),
           ),
         ],
       ),
@@ -118,14 +120,16 @@ class _FilterWidgetState extends State<FilterWidget> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Both',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: SizeConfig.textMultiplier * 1.8)),
+                        Text('male_gender',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeConfig.textMultiplier * 1.8))
+                            .tr(),
                         Text('Free',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: SizeConfig.textMultiplier * 1.8)),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeConfig.textMultiplier * 1.8))
+                            .tr(),
                       ],
                     ),
                   ),
@@ -173,10 +177,11 @@ class _FilterWidgetState extends State<FilterWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Male',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: SizeConfig.textMultiplier * 1.8)),
+                        Text('male_gender',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeConfig.textMultiplier * 1.8))
+                            .tr(),
                         Row(
                           children: [
                             Image.asset(
@@ -235,10 +240,11 @@ class _FilterWidgetState extends State<FilterWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Female',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: SizeConfig.textMultiplier * 1.8)),
+                        Text('female_gender',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: SizeConfig.textMultiplier * 1.8))
+                            .tr(),
                         Row(
                           children: [
                             Image.asset(
@@ -297,7 +303,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: SizeConfig.textMultiplier * 1.8),
-                          ),
+                          ).tr(),
                           SizedBox(
                             height: 8,
                           ),
@@ -342,12 +348,12 @@ class _FilterWidgetState extends State<FilterWidget> {
                             child: Container(
                               child: Center(
                                 child: Text(
-                                  'Buy',
+                                  'Buy_Button',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize:
                                           SizeConfig.textMultiplier * 1.8),
-                                ),
+                                ).tr(),
                               ),
                               width: SizeConfig.widthMultiplier * 12,
                               height: SizeConfig.heightMultiplier * 4,

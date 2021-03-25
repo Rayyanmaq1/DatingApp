@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:livu/theme.dart';
-import '../Widgets/CustomerService.dart';
-import 'package:flag/flag.dart';
 import 'package:get/route_manager.dart';
-import 'package:livu/Controller/lastMessageController.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
-import 'online_remender.dart';
 import 'SearchFriends.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class FriendsScreen extends StatelessWidget {
   @override
@@ -26,7 +23,7 @@ class FriendsScreen extends StatelessWidget {
               pinned: false,
               floating: true,
               elevation: 0,
-              title: Text('Friends'),
+              title: Text('Friend').tr(),
               backgroundColor: greyColor,
               actions: [
                 Padding(
@@ -49,10 +46,11 @@ class FriendsScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text('Favourite Friends',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: SizeConfig.textMultiplier * 1.6)),
+                    child: Text('Favourite_Friend',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: SizeConfig.textMultiplier * 1.6))
+                        .tr(),
                   ),
                   FutureBuilder(
                     future: FirebaseFirestore.instance
@@ -80,12 +78,12 @@ class FriendsScreen extends StatelessWidget {
                                 )
                               : Center(
                                   child: Text(
-                                    'No Favourite Friends Available',
+                                    'No_Fav_Friend',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize:
                                             SizeConfig.textMultiplier * 1.3),
-                                  ),
+                                  ).tr(),
                                 );
                     },
                   ),
@@ -103,9 +101,9 @@ class FriendsScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Friends',
+                      'Friend',
                       style: TextStyle(color: Colors.white),
-                    ),
+                    ).tr(),
                   ),
                   FutureBuilder(
                     future: FirebaseFirestore.instance
@@ -133,9 +131,9 @@ class FriendsScreen extends StatelessWidget {
                                 )
                               : Center(
                                   child: Text(
-                                    'No Friends Available',
+                                    'No_Friend',
                                     style: TextStyle(color: Colors.white),
-                                  ),
+                                  ).tr(),
                                 );
                     },
                   ),

@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/Services/PhoneAuth.dart';
 import 'package:livu/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class GetPhoneNumber extends StatelessWidget {
   @override
@@ -28,12 +29,12 @@ class GetPhoneNumber extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Log in with mobile number',
+                      'login_with',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.textMultiplier * 3.2,
                           fontWeight: FontWeight.bold),
-                    ),
+                    ).tr(),
                   ),
                   Theme(
                     data: ThemeData(primaryColor: Colors.grey[800]),
@@ -44,7 +45,7 @@ class GetPhoneNumber extends StatelessWidget {
                       },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: 'Enter Your Phone Number',
+                        hintText: 'enter_number'.tr(),
                         hintStyle: TextStyle(color: Colors.white),
                         prefixIcon: CountryCodePicker(
                           onChanged: (value) {
@@ -83,12 +84,12 @@ class GetPhoneNumber extends StatelessWidget {
                   child: Center(
                     child: Container(
                       child: Text(
-                        'Next',
+                        'next_button',
                         style: TextStyle(
                             fontSize: SizeConfig.textMultiplier * 1.9,
                             color: Colors.white,
                             fontWeight: FontWeight.w300),
-                      ),
+                      ).tr(),
                     ),
                   ),
                   height: SizeConfig.heightMultiplier * 5.5,

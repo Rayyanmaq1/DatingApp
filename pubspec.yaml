@@ -63,6 +63,7 @@ dependencies:
   # shared_preferences: ^2.0.3
   emoji_picker: ^0.1.0
   device_preview: ^0.5.5
+  easy_localization: ^2.3.3
 
 
 
@@ -86,6 +87,8 @@ flutter:
     - assets/
     - assets/buyCoins/
     - assets/Gifts/
+    - lang/ar-EG.json
+    - lang/en-US.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

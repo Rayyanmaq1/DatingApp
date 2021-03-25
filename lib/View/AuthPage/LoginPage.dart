@@ -9,6 +9,7 @@ import 'package:livu/theme.dart';
 import 'package:livu/Services/FaceBookAuthentication.dart';
 import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:livu/Services/GoogleAuth.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -40,12 +41,12 @@ class LoginPage extends StatelessWidget {
                       height: SizeConfig.heightMultiplier * 20,
                     ),
                     Text(
-                      'KIM LIVE',
+                      'app_name',
                       style: GoogleFonts.getFont('Bubblegum Sans',
                           fontWeight: FontWeight.w700,
                           fontSize: SizeConfig.textMultiplier * 8,
                           color: Colors.white),
-                    ),
+                    ).tr(),
                     Text(
                       '542,342,322',
                       style: TextStyle(
@@ -135,12 +136,12 @@ class LoginPage extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                'Connect with Facebook',
+                                'facebook_button',
                                 style: TextStyle(
                                     fontSize: SizeConfig.textMultiplier * 1.9,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
-                              ),
+                              ).tr(),
                             ),
                             Container(),
                           ],
@@ -175,12 +176,12 @@ class LoginPage extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                'Connect with Google',
+                                'google_button',
                                 style: TextStyle(
                                     fontSize: SizeConfig.textMultiplier * 1.9,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
-                              ),
+                              ).tr(),
                             ),
                             Container(),
                           ],
@@ -217,12 +218,12 @@ class LoginPage extends StatelessWidget {
                             Container(
                               //width: SizeConfig.widthMultiplier * 60,
                               child: Text(
-                                'Connect with Phone Number',
+                                'phone_Button',
                                 style: TextStyle(
                                     fontSize: SizeConfig.textMultiplier * 1.9,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
-                              ),
+                              ).tr(),
                             ),
                             Container(),
                           ],

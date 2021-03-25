@@ -7,6 +7,7 @@ import 'package:livu/View/AuthPage/LoginPage.dart';
 import 'package:livu/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -56,12 +57,12 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: SizeConfig.heightMultiplier * 5),
             Text(
-              'KIM LIVE',
+              'app_name',
               style: GoogleFonts.getFont('Bubblegum Sans',
                   fontWeight: FontWeight.w700,
                   fontSize: SizeConfig.textMultiplier * 8,
                   color: Colors.white),
-            ),
+            ).tr(),
           ],
         ),
       ),

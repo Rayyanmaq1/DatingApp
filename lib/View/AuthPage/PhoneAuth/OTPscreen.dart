@@ -8,6 +8,7 @@ import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:livu/View/UserData/Userdata.dart';
 import 'package:livu/Services/PhoneAuth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OptScreen extends StatelessWidget {
   OptScreen({this.phoneNumber, this.code, this.verId});
@@ -34,19 +35,17 @@ class OptScreen extends StatelessWidget {
                   height: SizeConfig.heightMultiplier * 2,
                 ),
                 Text(
-                  'Enter Verification Code ',
+                  'verfication_code',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
                       fontSize: SizeConfig.textMultiplier * 3.5),
-                ),
+                ).tr(),
                 SizedBox(
                   height: 20,
                 ),
                 Text(
-                  'The verification code has been sent to your phone number ' +
-                      code +
-                      phoneNumber,
+                  'sub_title_verification_code'.tr() + " " + code + phoneNumber,
                   style: TextStyle(
                       color: Colors.grey[600],
                       fontWeight: FontWeight.normal,
