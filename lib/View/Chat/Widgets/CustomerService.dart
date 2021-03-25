@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomerService extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class CustomerService extends StatelessWidget {
         ),
       ),
       title: Text(
-        'Customer Service',
+        'Customer Service'.tr(),
         style: TextStyle(
             color: redColor, fontSize: SizeConfig.textMultiplier * 2.3),
       ),

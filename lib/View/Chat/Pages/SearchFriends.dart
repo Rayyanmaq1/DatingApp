@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:livu/Controller/lastMessageController.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
-import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -35,13 +33,14 @@ class _SearchFriendsState extends State<SearchFriends> {
               controller: _controller,
               onChanged: (value) {
                 setState(() {
+                  print('nick_name'.tr());
                   search = value;
                 });
               },
               style: TextStyle(color: Colors.white),
               textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration.collapsed(
-                hintText: 'nick_name',
+                hintText: 'Search'.tr(),
                 hintStyle: TextStyle(color: Colors.white),
               ),
             ),

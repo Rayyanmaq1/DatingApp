@@ -32,6 +32,7 @@ import 'package:livu/Model/VideoCallModel.dart';
 import 'VideoCall/PickupLayout.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/View/Chat/Message_Screen/GiftsList.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // final googleSignIn = new GoogleSignIn();
 // final analytics = new FirebaseAnalytics();
