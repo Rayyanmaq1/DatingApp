@@ -30,6 +30,10 @@
     "Link_Account":"Link third-party social media account",
     "FAQ":"FAQ",
     "Share":"Share",
+    "Image Uploaded":"Image Uploaded",
+    "Uploaded":"Uploaded",
+    "Your Video has been Uploaded successfully":"Your Video has been Uploaded successfully",
+    "Your Image have been uploaded":"Your Image have been uploaded",
     "Edit_profile":"Edit Profile",
     "Preview": "Preview",
     "sutitle_edit_profile": "Touch and hold to chanfe order",
@@ -93,5 +97,13 @@
     ,"Delete_Action_Button":"Continue",
     "Friend_Reuqest_Sent":"Friend Request Sent",
     "They_Missed_History":"They Missed",
-    "I_Missed":"I Missed"
+    "I_Missed":"I Missed",
+    "Send":"Send",
+    "FriendRequestSend":"Friend Request Send",
+    "Your Have":"You Have ",
+    "Left":" left",
+    "Contact us if you have any Question":"Contact us if you have any Question",
+    "Disconnected":"Disconnected",
+    "Call has been Disconnected": "Call has been Disconnected",
+    "Voice Call":"Voice Call"
  }

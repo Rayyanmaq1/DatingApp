@@ -221,8 +221,8 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             _call(false);
                           } else {
                             Get.to(() => BuyCoins());
-                            Get.snackbar('Buy Coins',
-                                'You Dont have enough coin for video call');
+                            Get.snackbar(
+                                'buy_coins'.tr(), 'NoEnoughCoinSubTitle'.tr());
                           }
                         }),
                         _customContainer(
@@ -251,8 +251,8 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             _call(true);
                           } else {
                             Get.to(() => BuyCoins());
-                            Get.snackbar('Buy Coins',
-                                'You Dont have enough coin for video call');
+                            Get.snackbar(
+                                'buy_coins'.tr(), 'NoEnoughCoinSubTitle'.tr());
                           }
                         }),
                       ],

@@ -87,6 +87,7 @@ flutter:
     - assets/
     - assets/buyCoins/
     - assets/Gifts/
+    - assets/User/
     - lang/ar-EG.json
     - lang/en-US.json
 

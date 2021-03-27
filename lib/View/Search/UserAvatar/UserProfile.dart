@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
-import 'package:livu/Model/UserModel.dart';
 import 'package:livu/SizedConfig.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:livu/theme.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class UserProfile extends StatefulWidget {
   //User user;
@@ -28,6 +27,10 @@ class _UserProfileState extends State<UserProfile> {
     final userdataCtr = Get.put(UserDataController());
     return PickupLayout(
       scaffold: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
         backgroundColor: Color(0xff191919),
         body: Column(
           children: [
@@ -63,24 +66,9 @@ class _UserProfileState extends State<UserProfile> {
                               child: Text(
                                 'No Image to show',
                                 style: TextStyle(color: Colors.white),
-                              ),
+                              ).tr(),
                             ));
                 }),
-                Positioned(
-                  top: 40,
-                  left: 10,
-                  child: GestureDetector(
-                    onTap: () => Get.back(),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: litegreycolor,
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: liteblackcolor,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
             userdataCtr.userModel.value.imageList.length != 0

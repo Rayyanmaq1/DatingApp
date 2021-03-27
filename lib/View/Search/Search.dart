@@ -200,27 +200,26 @@ class _SearchState extends State<Search> {
                         left: 8,
                         child: Container(
                           // padding: const EdgeInsets.all(8.0),
-                          width: 100.0,
+                          width: 80,
                           child: new Stack(
                             children: <Widget>[
-                              otherUserContainer(
-                                  'https://images.pexels.com/photos/2904217/pexels-photo-2904217.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
                               //CircleAvatar(radius: 12),
                               Positioned(
                                 left: 15.0,
                                 child: otherUserContainer(
-                                    'https://images.pexels.com/photos/1987301/pexels-photo-1987301.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'),
+                                    'assets/User/user3.jpeg'),
                               ),
                               new Positioned(
                                 left: 30.0,
-                                child: otherUserContainer(
-                                    'https://images.pexels.com/photos/1816606/pexels-photo-1816606.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
+                                child:
+                                    otherUserContainer('assets/User/user5.jpg'),
                               ),
                               new Positioned(
                                 left: 45.0,
-                                child: otherUserContainer(
-                                    'https://images.pexels.com/photos/1816606/pexels-photo-1816606.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
-                              )
+                                child:
+                                    otherUserContainer('assets/User/user7.jpg'),
+                              ),
+                              otherUserContainer('assets/User/user1.jpeg'),
                             ],
                           ),
                         ),
@@ -288,27 +287,29 @@ class _SearchState extends State<Search> {
                         left: 8,
                         child: Container(
                           // padding: const EdgeInsets.all(8.0),
-                          width: 100.0,
+                          width: 80.0,
                           child: new Stack(
                             children: <Widget>[
-                              otherUserContainer(
-                                  'https://images.pexels.com/photos/1987301/pexels-photo-1987301.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260'),
                               //CircleAvatar(radius: 12),
                               Positioned(
                                 left: 15.0,
-                                child: otherUserContainer(
-                                    'https://images.pexels.com/photos/1816606/pexels-photo-1816606.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
+                                child:
+                                    otherUserContainer('assets/User/user4.jpg'),
                               ),
                               new Positioned(
                                 left: 30.0,
-                                child: otherUserContainer(
-                                    'https://images.pexels.com/photos/2904217/pexels-photo-2904217.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
+                                child:
+                                    otherUserContainer('assets/User/user6.jpg'),
                               ),
                               new Positioned(
                                 left: 45.0,
+                                child:
+                                    otherUserContainer('assets/User/user8.jpg'),
+                              ),
+                              Positioned(
                                 child: otherUserContainer(
-                                    'https://images.pexels.com/photos/1816606/pexels-photo-1816606.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'),
-                              )
+                                    'assets/User/user2.jpeg'),
+                              ),
                             ],
                           ),
                         ),
@@ -330,7 +331,7 @@ class _SearchState extends State<Search> {
       width: 20,
       height: 20,
       decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
         color: Colors.blue,
         shape: BoxShape.circle,
         border: Border.all(width: 1, color: Colors.white),

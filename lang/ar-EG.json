@@ -21,11 +21,10 @@
     "sent you friend request":"أرسل لك طلب صداقة ",
     "Do you want to agree":"هل تريد الموافقة",
     "No Image to show":"لا توجد صورة للعرض",
-
-
-
-
-
+    "Image Uploaded":"تم تحميل الصورة",
+    "Your Image have been uploaded":"تم تحميل صورتك",
+    "Uploaded":"تم الرفع",
+    "Your Video has been Uploaded successfully":"تم تحميل الفيديو الخاص بك بنجاح",
     "NoEnoughCoinSubTitle":"ليس لديك عملات كافية",
     "Search":"بحث",
     "select_birth":"اختر تاريخ ميلادك",
@@ -99,5 +98,15 @@
     ,"Delete_Action_Button":"يكمل",
     "Friend_Reuqest_Sent":"تم ارسال طلب صداقة",
     "They_Missed_History":"فاتهم",
-    "I_Missed":"فاتني"
+    "I_Missed":"فاتني",
+    "Send":"إرسال",
+    "FriendRequestSend":"ارسال طلب صداقه",
+    "Your Have":"لديك ",
+    "Left":" اليسار ",
+    "Contact us if you have any Question":"تواصل معنا ان كان لديك اي اسئلة",
+    "Disconnected":"انقطع الاتصال",
+    "Call has been Disconnected": "تم قطع الاتصال",
+    "Voice Call":"مكالمة صوتية"
+
+
   }

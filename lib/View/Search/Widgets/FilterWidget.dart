@@ -3,10 +3,9 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
-import 'package:livu/View/Search/Pages/VideoCall/ConnectVideoCall.dart';
 import 'package:livu/settings.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -146,7 +145,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             groupValue: widget.seleted,
                             onChanged: (int value) {
                               setState(() {
-                                Select_Gender = 'Both';
+                                Select_Gender = 'both_gender'.tr();
                                 widget.seleted = value;
                                 Navigator.pop(context);
                               });
@@ -214,7 +213,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                           groupValue: widget.seleted,
                           onChanged: (int value) {
                             setState(() {
-                              Select_Gender = 'Male';
+                              Select_Gender = 'male_gender'.tr();
                               widget.seleted = value;
                               Navigator.pop(context);
                             });
@@ -276,7 +275,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                           groupValue: widget.seleted,
                           onChanged: (int value) {
                             setState(() {
-                              Select_Gender = 'Female';
+                              Select_Gender = 'female_gender'.tr();
                               widget.seleted = value;
                               Navigator.pop(context);
                             });

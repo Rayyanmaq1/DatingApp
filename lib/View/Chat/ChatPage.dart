@@ -175,32 +175,6 @@ class _ChatPageState extends State<ChatPage> {
             lastmessage.time.substring(0, 10),
             style: TextStyle(color: Colors.grey),
           ),
-          // chats[index].unread
-          //     ? Container(
-          //         width: SizeConfig.widthMultiplier * 9,
-          //         height: SizeConfig.heightMultiplier * 2,
-          //         child: Center(
-          //           child: Text(
-          //             'New',
-          //             style: TextStyle(
-          //                 color: Colors.white,
-          //                 fontSize: SizeConfig.textMultiplier * 1.5),
-          //           ),
-          //         ),
-          //         decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.circular(12),
-          //           gradient: LinearGradient(
-          //             colors: [
-          //               redColor,
-          //               pinkColor,
-          //             ],
-          //           ),
-          //         ),
-          //       )
-          //     : Container(
-          //         width: SizeConfig.widthMultiplier * 8,
-          //         height: SizeConfig.heightMultiplier * 2,
-          //       ),
         ],
       ),
     );

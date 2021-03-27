@@ -1,25 +1,18 @@
 import 'dart:async';
 import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/settings.dart';
-import 'package:get/get.dart';
-import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Services/PrivateVideoCall.dart';
 import 'package:livu/theme.dart';
-import 'package:livu/SizedConfig.dart';
 import 'package:permission_handler/permission_handler.dart';
-// import '../utils/settings.dart';
 import 'package:livu/Model/VideoCallModel.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:livu/Services/PrivateVideoCall.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
 
 class AudioCallPage extends StatefulWidget {
-  /// non-modifiable channel name of the page
   final Call call;
 
   /// non-modifiable client role of the page
@@ -113,7 +106,7 @@ class _AudioCallPageState extends State<AudioCallPage> {
         if (value == false) {
           if (mounted) {
             Get.back();
-            Get.snackbar('Disconnected', 'Call has been Disconnected',
+            Get.snackbar('Disconnected'.tr(), 'Call has been Disconnected'.tr(),
                 snackPosition: SnackPosition.BOTTOM);
           }
         }
@@ -124,13 +117,12 @@ class _AudioCallPageState extends State<AudioCallPage> {
 
   // Create a simple chat UI
   Widget build(BuildContext context) {
-    print('here');
     _getData();
     return Scaffold(
       backgroundColor: greyColor,
       appBar: AppBar(
         title: Text(
-          'Voice Call',
+          'Voice Call'.tr(),
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: greyColor,
@@ -164,18 +156,6 @@ class _AudioCallPageState extends State<AudioCallPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // RawMaterialButton(
-          //   onPressed: _onToggleMute,
-          //   child: Icon(
-          //     muted ? Icons.mic_off : Icons.mic,
-          //     color: muted ? Colors.white : Colors.blueAccent,
-          //     size: 20.0,
-          //   ),
-          //   shape: CircleBorder(),
-          //   elevation: 2.0,
-          //   fillColor: muted ? Colors.blueAccent : Colors.white,
-          //   padding: const EdgeInsets.all(12.0),
-          // ),
           RawMaterialButton(
             onPressed: () => _onCallEnd(context),
             child: Icon(
@@ -194,14 +174,10 @@ class _AudioCallPageState extends State<AudioCallPage> {
   }
 
   void _onCallEnd(BuildContext context) {
-    // print(widget.documentId);
     PrivateCallService().deleteCall(widget.call.callerId);
-    // PrivateCallService().randomVideoCall(widget.documentId);
 
     Future.delayed(Duration.zero, () {
       Get.back();
     });
-
-    // Navigator.pop(context);
   }
 }

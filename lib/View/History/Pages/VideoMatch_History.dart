@@ -5,15 +5,14 @@ import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:livu/Services/HistoryService.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Model/HistoryModel.dart';
 import 'package:livu/Controller/HistoryController.dart';
-import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'SeeUserProfile.dart';
-
 import 'package:livu/Services/PrivateVideoCall.dart';
 
 // ignore: must_be_immutable
@@ -36,7 +35,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           style: TextStyle(
             color: Colors.white,
           ),
-        ),
+        ).tr(),
       ),
       body: GetX<HistoryController>(builder: (controller) {
         return Column(
@@ -205,7 +204,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               top: 12,
               child: GestureDetector(
                 onTap: () {
-                  Get.snackbar('Send', 'FriendRequest Sent',
+                  Get.snackbar('Send'.tr(), 'FriendRequestSend'.tr(),
                       snackPosition: SnackPosition.BOTTOM);
                   PrivateCallService().sendAddFriendRequest(historyModel.uid);
                 },
@@ -401,20 +400,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return AlertDialog(
           backgroundColor: greyColor,
           title: Text(
-            'Report User',
+            'Report_User',
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-          ),
+          ).tr(),
           content: Container(
             height: SizeConfig.heightMultiplier * 30,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildCustomTile('Sexual content'),
-                  _buildCustomTile('Genter Did not match profile'),
-                  _buildCustomTile('Scam'),
-                  _buildCustomTile('Abusive Language'),
-                  _buildCustomTile('Underage use'),
-                  _buildCustomTile('Illegel acivities'),
+                  _buildCustomTile('Sexual_Context'.tr()),
+                  _buildCustomTile('Not_Matched'.tr()),
+                  _buildCustomTile('Scam'.tr()),
+                  _buildCustomTile('Abusive_Language'.tr()),
+                  _buildCustomTile('UnderAge'.tr()),
+                  _buildCustomTile('Illegel_Activities'.tr()),
                 ],
               ),
             ),
@@ -443,11 +442,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             height: MediaQuery.of(context).size.height * 0.078,
             child: Column(
               children: [
-                Text('Are you sure you want to delete this record?',
+                Text('Delete Dialog',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: SizeConfig.textMultiplier * 2,
-                    ))
+                    )).tr()
               ],
             ),
           ),
@@ -460,12 +459,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 Navigator.pop(context);
               },
               child: Text(
-                'Continue',
+                'Delete_Action_Button',
                 style: TextStyle(
                   color: greenColor,
                   fontSize: SizeConfig.textMultiplier * 2,
                 ),
-              ),
+              ).tr(),
             )
           ],
         );

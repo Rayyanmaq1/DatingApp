@@ -27,19 +27,19 @@ class CommunityVideo extends StatelessWidget {
                       new Positioned(
                         left: 70.0,
                         child: OtherUserContainer(
-                          'https://images.pexels.com/photos/4026110/pexels-photo-4026110.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+                          'assets/User/user6.jpg',
                         ),
                       ),
                       Positioned(
                         left: 20,
                         child: OtherUserContainer(
-                          'https://images.pexels.com/photos/2904217/pexels-photo-2904217.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+                          'assets/User/user7.jpg',
                         ),
                       ),
                       Positioned(
                         left: -30,
                         child: OtherUserContainer(
-                          'https://images.pexels.com/photos/2697242/pexels-photo-2697242.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+                          'assets/User/user8.jpg',
                         ),
                       ),
                     ],
@@ -87,7 +87,7 @@ class CommunityVideo extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.black,
         image:
-            DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+            DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.contain),
         shape: BoxShape.circle,
         border: Border.all(width: 2, color: Colors.black),
       ),

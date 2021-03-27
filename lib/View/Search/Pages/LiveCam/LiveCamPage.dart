@@ -3,7 +3,7 @@ import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/SizedConfig.dart';
 import 'ConnectLiveCam.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/Services/LiveCamSearching.dart';
@@ -22,8 +22,7 @@ class LiveCamPage extends StatelessWidget {
             // });
           } else {
             Get.to(() => BuyCoins());
-            Get.snackbar(
-                'buy_coins', 'You Dont have enough coin for video call');
+            Get.snackbar('buy_coins'.tr(), 'NoEnoughCoinSubTitle'.tr());
           }
         },
         child: Container(

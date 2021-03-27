@@ -11,11 +11,10 @@ import 'language.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/View/Search/UserAvatar/Interest.dart';
 import 'UserProfile.dart';
-// import 'package:video_player/video_player.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Services/UserDataServices.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:get/get.dart';
-import 'package:livu/Services/UserDataServices.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 
@@ -96,7 +95,7 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     setState(() {
-      Get.snackbar('Image Uploaded', 'Your Image have been uploaded',
+      Get.snackbar('Image Uploaded'.tr(), 'Your Image have been uploaded'.tr(),
           duration: Duration(seconds: 1), snackPosition: SnackPosition.BOTTOM);
     });
   }
@@ -287,8 +286,8 @@ class _EditProfileState extends State<EditProfile> {
                             setState(() {});
                           });
 
-                    Get.snackbar(
-                        'Uploaded', 'Your Video has been Uploaded successfully',
+                    Get.snackbar('Uploaded'.tr(),
+                        'Your Video has been Uploaded successfully'.tr(),
                         snackPosition: SnackPosition.BOTTOM);
                     setState(() {});
                   },
@@ -337,16 +336,16 @@ class _EditProfileState extends State<EditProfile> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0, top: 20),
                     child: Text(
-                      "Touch and hold to change order",
+                      "sutitle_edit_profile",
                       style: TextStyle(color: Color(0xff5f5f5f), fontSize: 16),
-                    ),
+                    ).tr(),
                   ),
                 ],
               ),
               GetX<UserDataController>(
                 builder: (controller) {
                   return listbar(
-                    textTitle: "Name",
+                    textTitle: "Name".tr(),
                     subTittle: controller.userModel.value.name,
                     textTraling:
                         controller.userModel.value.name.length.toString() +
@@ -360,7 +359,7 @@ class _EditProfileState extends State<EditProfile> {
               GetX<UserDataController>(
                 builder: (controller) {
                   return listbar(
-                    textTitle: "Birthday",
+                    textTitle: "Birthday".tr(),
                     subTittle: controller.userModel.value.birthDay,
                     id: 1,
                     ontap: () async {
@@ -382,8 +381,10 @@ class _EditProfileState extends State<EditProfile> {
               GetX<UserDataController>(
                 builder: (controller) {
                   return listbar(
-                    textTitle: "Personal Bio",
-                    subTittle: controller.userModel.value.bio,
+                    textTitle: "Personal_Bio".tr(),
+                    subTittle: controller.userModel.value.bio == ''
+                        ? 'Bio_Detail'.tr()
+                        : controller.userModel.value.bio,
                     textTraling:
                         controller.userModel.value.bio.length.toString() +
                             "/140",
@@ -396,10 +397,10 @@ class _EditProfileState extends State<EditProfile> {
               GetX<UserDataController>(
                 builder: (controller) {
                   return listbar(
-                    textTitle: "Location",
+                    textTitle: "Location".tr(),
                     textTraling: '',
                     subTittle: controller.userModel.value.location == ''
-                        ? 'Select Location'
+                        ? 'Location_detail'.tr()
                         : controller.userModel.value.location,
                     ontap: () {
                       _buildBottomModelforLocation();
@@ -410,10 +411,10 @@ class _EditProfileState extends State<EditProfile> {
               GetX<UserDataController>(
                 builder: (controller) {
                   return listbar(
-                    textTitle: "Age",
+                    textTitle: "Age".tr(),
                     textTraling: '',
                     subTittle: controller.userModel.value.age == ''
-                        ? 'Select Your Age'
+                        ? 'Age_detail'
                         : controller.userModel.value.age,
                     ontap: () {
                       _buildBottomModelforAge();
@@ -438,9 +439,9 @@ class _EditProfileState extends State<EditProfile> {
       elevation: 4,
       backgroundColor: greyColor,
       title: Text(
-        "Edit Profile",
+        "Edit_profile",
         style: TextStyle(color: Colors.white),
-      ),
+      ).tr(),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
@@ -461,7 +462,7 @@ class _EditProfileState extends State<EditProfile> {
                 Text(
                   "Preview",
                   style: TextStyle(color: grey_color),
-                )
+                ).tr()
               ],
             ),
           ),
@@ -698,9 +699,9 @@ class _EditProfileState extends State<EditProfile> {
                       width: MediaQuery.of(context).size.width * 1,
                       child: Center(
                         child: Text(
-                          'Save',
+                          'Save_Button',
                           style: TextStyle(color: Colors.white),
-                        ),
+                        ).tr(),
                       ),
                       color: purpleColor,
                     ),
@@ -742,11 +743,11 @@ class _EditProfileState extends State<EditProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Bio',
+                        'Personal_Bio',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.textMultiplier * 2),
-                      ),
+                      ).tr(),
                       SizedBox(
                         height: SizeConfig.heightMultiplier * 2,
                       ),
@@ -766,7 +767,7 @@ class _EditProfileState extends State<EditProfile> {
                             },
                             decoration: InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.white),
-                              hintText: 'Bio',
+                              hintText: 'Personal_Bio'.tr(),
                             ),
                             autofocus: true,
                           ),
@@ -788,9 +789,9 @@ class _EditProfileState extends State<EditProfile> {
                       width: MediaQuery.of(context).size.width * 1,
                       child: Center(
                         child: Text(
-                          'Save',
+                          'Save_Button',
                           style: TextStyle(color: Colors.white),
-                        ),
+                        ).tr(),
                       ),
                       color: purpleColor,
                     ),
@@ -813,7 +814,7 @@ class _EditProfileState extends State<EditProfile> {
         title: Text(
           "Language",
           style: TextStyle(color: grey_color),
-        ),
+        ).tr(),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Row(
@@ -852,10 +853,10 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           );
                         })
-                    : Text('No Language Seleted yet',
+                    : Text('LanguageDetail',
                         style: TextStyle(
                           color: Colors.grey,
-                        )),
+                        )).tr(),
               )
             ],
           ),
@@ -874,7 +875,7 @@ class _EditProfileState extends State<EditProfile> {
         title: Text(
           "Interest",
           style: TextStyle(color: grey_color),
-        ),
+        ).tr(),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Row(
@@ -914,10 +915,10 @@ class _EditProfileState extends State<EditProfile> {
                             );
                           }),
                     )
-                  : Text('No Interest Seleted yet',
+                  : Text('Interest_Detail',
                       style: TextStyle(
                         color: Colors.grey,
-                      )),
+                      )).tr(),
             ],
           ),
         ),
@@ -957,7 +958,7 @@ class _EditProfileState extends State<EditProfile> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.textMultiplier * 2),
-                      ),
+                      ).tr(),
                       SizedBox(
                         height: SizeConfig.heightMultiplier * 2,
                       ),
@@ -976,7 +977,7 @@ class _EditProfileState extends State<EditProfile> {
                             },
                             decoration: InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.white),
-                              hintText: 'Age',
+                              hintText: 'Age'.tr(),
                             ),
                             autofocus: true,
                           ),
@@ -1000,7 +1001,7 @@ class _EditProfileState extends State<EditProfile> {
                       width: MediaQuery.of(context).size.width * 1,
                       child: Center(
                         child: Text(
-                          'Save',
+                          'Save_Button'.tr(),
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -1048,7 +1049,7 @@ class _EditProfileState extends State<EditProfile> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.textMultiplier * 2),
-                      ),
+                      ).tr(),
                       SizedBox(
                         height: SizeConfig.heightMultiplier * 2,
                       ),
@@ -1067,7 +1068,7 @@ class _EditProfileState extends State<EditProfile> {
                             },
                             decoration: InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.white),
-                              hintText: 'Location',
+                              hintText: 'Location'.tr(),
                             ),
                             autofocus: true,
                           ),
@@ -1091,9 +1092,9 @@ class _EditProfileState extends State<EditProfile> {
                       width: MediaQuery.of(context).size.width * 1,
                       child: Center(
                         child: Text(
-                          'Save',
+                          'Save_Button',
                           style: TextStyle(color: Colors.white),
-                        ),
+                        ).tr(),
                       ),
                       color: purpleColor,
                     ),

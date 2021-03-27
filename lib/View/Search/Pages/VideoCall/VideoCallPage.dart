@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'ConnectVideoCall.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/Services/VideoCallSearching.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class VideocallPage extends StatelessWidget {
   int seleted;
@@ -34,8 +35,7 @@ class VideocallPage extends StatelessWidget {
             // });
           } else {
             Get.to(() => BuyCoins());
-            Get.snackbar(
-                'Buy Coins', 'You Dont have enough coin for video call');
+            Get.snackbar('buy_coins'.tr(), 'NoEnoughCoinSubTitle'.tr());
           }
         },
         child: Transform.scale(

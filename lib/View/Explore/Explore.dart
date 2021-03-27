@@ -1,12 +1,8 @@
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
-import 'package:livu/Model/UserModel.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
-// import 'package:video_player/video_player.dart';
-import 'Widgets/AppBar.dart';
 import 'package:livu/Model/VideoModel.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/VideoController.dart';
 import 'package:livu/View/Search/UserAvatar/Interest.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
@@ -14,6 +10,7 @@ import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/Model/VideoCallModel.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:livu/View/Chat/Message_Screen/VideoCall/Dial.dart';
 
@@ -201,8 +198,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                           _call(true);
                         } else {
                           Get.to(() => BuyCoins());
-                          Get.snackbar('Buy Coins',
-                              'You Dont have enough coin for video call');
+                          Get.snackbar(
+                              'buy_coins'.tr(), 'NoEnoughCoinSubTitle'.tr());
                         }
                       },
                       child: Container(

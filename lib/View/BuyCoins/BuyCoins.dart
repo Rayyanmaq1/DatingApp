@@ -4,8 +4,9 @@ import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/Model/Coin.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class BuyCoins extends StatelessWidget {
   @override
@@ -20,13 +21,14 @@ class BuyCoins extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Contact us if you have any question',
+                'Contact us if you have any Question',
                 style: TextStyle(color: Colors.white),
-              ),
-              Text('Community Service',
-                  style: TextStyle(
-                      color: Colors.orange[800],
-                      decoration: TextDecoration.underline)),
+              ).tr(),
+              Text('Community_Service',
+                      style: TextStyle(
+                          color: Colors.orange[800],
+                          decoration: TextDecoration.underline))
+                  .tr(),
             ],
           ),
         ),
@@ -35,7 +37,7 @@ class BuyCoins extends StatelessWidget {
           slivers: [
             SliverAppBar(
               pinned: true,
-              title: Text('Buy Coin'),
+              title: Text('buy_coins').tr(),
               backgroundColor: greyColor,
             ),
             SliverToBoxAdapter(
@@ -44,7 +46,7 @@ class BuyCoins extends StatelessWidget {
                 children: [
                   RichText(
                     text: TextSpan(
-                        text: 'You have',
+                        text: 'Your Have'.tr(),
                         style: TextStyle(
                             fontSize: SizeConfig.textMultiplier * 2,
                             color: orangeColor),
@@ -55,7 +57,7 @@ class BuyCoins extends StatelessWidget {
                                   fontSize: SizeConfig.textMultiplier * 3),
                               children: [
                                 TextSpan(
-                                  text: ' left',
+                                  text: 'Left'.tr(),
                                   style: TextStyle(
                                       fontSize: SizeConfig.textMultiplier * 2),
                                 )

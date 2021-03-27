@@ -3,9 +3,10 @@ import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/HistoryController.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Services/HistoryService.dart';
@@ -248,19 +249,19 @@ class _ImissedState extends State<Imissed> {
         return AlertDialog(
           backgroundColor: greyColor,
           title: Text(
-            'Report User',
+            'Report_User',
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-          ),
+          ).tr(),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.42,
             child: Column(
               children: [
-                _buildCustomTile('Sexual content'),
-                _buildCustomTile('Genter Did not match profile'),
-                _buildCustomTile('Scam'),
-                _buildCustomTile('Abusive Language'),
-                _buildCustomTile('Underage use'),
-                _buildCustomTile('Illegel acivities'),
+                _buildCustomTile('Sexual_Context'.tr()),
+                _buildCustomTile('Not_Matched'.tr()),
+                _buildCustomTile('Scam'.tr()),
+                _buildCustomTile('Abusive_Language'.tr()),
+                _buildCustomTile('UnderAge'.tr()),
+                _buildCustomTile('Illegel_Activities'.tr()),
               ],
             ),
           ),
@@ -285,13 +286,13 @@ class _ImissedState extends State<Imissed> {
         return AlertDialog(
           backgroundColor: greyColor,
           content: Container(
-            height: MediaQuery.of(context).size.height * 0.046,
+            height: MediaQuery.of(context).size.height * 0.05,
             child: Column(
               children: [
-                Text('Are you sure you want to delete this record?',
+                Text('Delete Dialog',
                     style: TextStyle(
                       color: Colors.white,
-                    ))
+                    )).tr()
               ],
             ),
           ),
@@ -302,9 +303,9 @@ class _ImissedState extends State<Imissed> {
                 Navigator.pop(context);
               },
               child: Text(
-                'Continue',
+                'Delete_Action_Button',
                 style: TextStyle(color: greenColor),
-              ),
+              ).tr(),
             )
           ],
         );
