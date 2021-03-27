@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AddFriend extends StatefulWidget {
   @override
@@ -22,48 +23,25 @@ class _AddFriendState extends State<AddFriend> {
   @override
   Widget build(BuildContext context) {
     final friendRequest = Get.find<FriendRequestController>();
-    //friendRequest.onInit();
-    // print('this');
-    // print(friendRequest.friendRequestModel.value.time);
+
     return PickupLayout(
       scaffold: Scaffold(
         backgroundColor: greyColor,
-        appBar: showAppbar
-            ? AppBar(
-                backgroundColor: purpleColor,
-                title: Text('Hi'),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: GestureDetector(
-                        onTap: () => setState(() {
-                              showAppbar = false;
-                              //friendRequest.onInit();
-                            }),
-                        child: Icon(Icons.sort)),
-                  ),
-                ],
-              )
-            : AppBar(
-                backgroundColor: purpleColor,
-                title: Text('Messages'),
-                actions: [
-                  GestureDetector(
-                    onTap: () => setState(() {
-                      friendRequest.onInit();
-                      showAppbar = true;
-                    }),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(Icons.message),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Icon(Icons.delete),
-                  ),
-                ],
-              ),
+        appBar: AppBar(
+          backgroundColor: purpleColor,
+          title: Text('Hi').tr(),
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.all(12.0),
+          //     child: GestureDetector(
+          //         onTap: () => setState(() {
+          //               showAppbar = false;
+          //               //friendRequest.onInit();
+          //             }),
+          //         child: Icon(Icons.sort)),
+          //   ),
+          // ],
+        ),
         body: Column(
           children: [
             Expanded(
@@ -114,7 +92,8 @@ class _AddFriendState extends State<AddFriend> {
         ),
         subtitle: Text(
           dataController.friendRequestCtr[index].name +
-              ' sent you friend request',
+              " " +
+              'sent you friend request'.tr(),
           style: TextStyle(
             fontSize: SizeConfig.textMultiplier * 1.5,
             color: Colors.grey[500],

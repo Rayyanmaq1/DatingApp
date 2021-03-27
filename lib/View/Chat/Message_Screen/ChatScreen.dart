@@ -10,11 +10,9 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:livu/Services/Last_MessageService.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'VideoCall/Dial.dart';
-import 'VideoCall/call.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../Model/MessageModel.dart';
@@ -24,9 +22,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ChatMessageListItem.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:livu/Services/FriendRequestService.dart';
-import 'package:get/get.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
-import 'package:livu/Model/FriendRequest_Model.dart';
 import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:livu/Model/VideoCallModel.dart';
 import 'VideoCall/PickupLayout.dart';
@@ -127,7 +123,6 @@ class ChatScreenState extends State<ChatScreen> {
                                       widget.lastMessage.uid ||
                                   messageSnapshot.value[RECEIVER_UID] ==
                                       widget.lastMessage.uid)) {
-                            print("item called");
                             return new ChatMessageListItem(
                               messageSnapshot: messageSnapshot,
                               animation: animation,
@@ -158,7 +153,9 @@ class ChatScreenState extends State<ChatScreen> {
                             children: [
                               Text(
                                   widget.lastMessage.name +
-                                      ' has sent you friend request. Do you want to agree',
+                                      " " +
+                                      'sent you friend request'.tr() +
+                                      "Do you want to agree".tr(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(color: purpleColor)),
                               SizedBox(
@@ -309,7 +306,7 @@ class ChatScreenState extends State<ChatScreen> {
                           onSubmitted: _textMessageSubmitted,
                           decoration: new InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.grey),
-                              hintText: "Send a message"),
+                              hintText: "Send a message".tr()),
                         ),
                       ),
                     ),
@@ -356,7 +353,8 @@ class ChatScreenState extends State<ChatScreen> {
 
                       await snapshot.ref.getDownloadURL().then((value) {
                         _sendMessage(
-                            messageText: 'Image', imageUrl: value.toString());
+                            messageText: 'Image'.tr(),
+                            imageUrl: value.toString());
                       });
                     },
                     child: Icon(
@@ -390,8 +388,8 @@ class ChatScreenState extends State<ChatScreen> {
                       _call(false);
                     } else {
                       Get.to(() => BuyCoins());
-                      Get.snackbar('Buy Coins',
-                          'You Dont have enough coin for video call');
+                      Get.snackbar(
+                          'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
                     }
                   },
                   child: Icon(
@@ -407,8 +405,8 @@ class ChatScreenState extends State<ChatScreen> {
                       _call(true);
                     } else {
                       Get.to(() => BuyCoins());
-                      Get.snackbar('Buy Coins',
-                          'You Dont have enough coin for video call');
+                      Get.snackbar(
+                          'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
                     }
                   },
                   child: Icon(
@@ -455,11 +453,11 @@ class ChatScreenState extends State<ChatScreen> {
                         Get.find<UserDataController>().userModel.value.coins,
                         getGifts[index].coins);
                     _sendMessage(
-                        messageText: 'Gift',
+                        messageText: 'Gift'.tr(),
                         imageUrl: getGifts[index].imageUrl);
                   } else {
                     Get.snackbar(
-                        'No Enough Coins', 'You donnt have enough coins');
+                        'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
                   }
                 },
                 child: Column(
@@ -517,10 +515,11 @@ class ChatScreenState extends State<ChatScreen> {
                         Get.find<UserDataController>().userModel.value.coins,
                         getData[index].coins);
                     _sendMessage(
-                        messageText: 'Gift', imageUrl: getData[index].imageUrl);
+                        messageText: 'Gift'.tr(),
+                        imageUrl: getData[index].imageUrl);
                   } else {
                     Get.snackbar(
-                        'No Enough Coins', 'You donnt have enough coins');
+                        'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
                   }
                 },
                 child: Column(
@@ -666,12 +665,12 @@ class ChatScreenState extends State<ChatScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _customTile('Alias', Icons.edit, () {
+                  _customTile('Alias'.tr(), Icons.edit, () {
                     Get.back();
                     _buildBottomModelForName();
                   }),
                   _customTileWithTailing(
-                    'Add to Favourite',
+                    'Add to Favourite'.tr(),
                     Icons.star,
                     favFriend == false
                         ? GestureDetector(
@@ -702,7 +701,7 @@ class ChatScreenState extends State<ChatScreen> {
                           ),
                   ),
                   _customTileWithTailing(
-                    'Online reminder',
+                    'Online Reminder'.tr(),
                     Icons.notifications,
                     Switch(
                       value: switchButton,
@@ -714,15 +713,15 @@ class ChatScreenState extends State<ChatScreen> {
                       activeTrackColor: greenColor,
                     ),
                   ),
-                  _customTile('Block', Icons.block, () {}),
-                  _customTile('Report', Icons.report, () {}),
-                  _customTile('Delete', Icons.delete, () {
+                  _customTile('Block'.tr(), Icons.block, () {}),
+                  _customTile('Report'.tr(), Icons.report, () {}),
+                  _customTile('Deleted'.tr(), Icons.delete, () {
                     LastMessageService().deleteUser(widget.lastMessage.uid);
                     Get.back();
                     Get.back();
-                    Get.snackbar('Deleted', 'Chat Have been Deleted');
+                    Get.snackbar('Deleted'.tr(), 'Chat Have been Deleted'.tr());
                   }),
-                  _customTile('Cancel', Icons.arrow_back, () {
+                  _customTile('Cancel'.tr(), Icons.arrow_back, () {
                     Get.back();
                   }),
                 ],

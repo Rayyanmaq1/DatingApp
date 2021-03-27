@@ -13,6 +13,20 @@
     "sign_up_title":"اشتراك",
     "nick_name":"اسم الشهرة",
     "Send a message":"ارسل رسالة",
+    "Gift": "هدية",
+    "NoEnoughCoin":"عملات غير كافية",
+    "Image": "صورة",
+    "DeletedSubTitle":"تم حذف الدردشة",
+    "Deleted":"حذف",
+    "sent you friend request":"أرسل لك طلب صداقة ",
+    "Do you want to agree":"هل تريد الموافقة",
+    "No Image to show":"لا توجد صورة للعرض",
+
+
+
+
+
+    "NoEnoughCoinSubTitle":"ليس لديك عملات كافية",
     "Search":"بحث",
     "select_birth":"اختر تاريخ ميلادك",
     "select_gender":"اختيار جنسك",

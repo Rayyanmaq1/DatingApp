@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
-import 'package:livu/Model/UserModel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/get.dart';
@@ -38,20 +37,15 @@ class _ImissedState extends State<Imissed> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.to(() => SeeUserProfile(
-                              uid: controller
-                                  .iMissedhistoryController[index].uid,
-                            ));
+                        Get.to(
+                          () => SeeUserProfile(
+                            uid: controller.iMissedhistoryController[index].uid,
+                          ),
+                        );
                       },
                       child: Stack(
                         children: [
                           GestureDetector(
-                            // onTap: () {
-                            //   currentIndex = index;
-                            //   setState(() {
-                            //     showGrid = false;
-                            //   });
-                            // },
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(

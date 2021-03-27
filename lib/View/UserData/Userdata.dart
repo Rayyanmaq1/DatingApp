@@ -24,7 +24,7 @@ class _UserDataState extends State<UserData> {
 
   @override
   Widget build(BuildContext context) {
-    print(dateTime);
+    print("dateTime".tr());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: purpleColor,

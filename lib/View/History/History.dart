@@ -3,9 +3,8 @@ import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'Pages/Imissed.dart';
 import 'Pages/TheyMissed.dart';
-import 'package:get/get.dart';
-import 'package:livu/Controller/HistoryController.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class History extends StatefulWidget {
   @override
@@ -32,7 +31,7 @@ class _HistoryState extends State<History> {
         backgroundColor: greyColor,
         appBar: AppBar(
           elevation: 0,
-          title: Text('History'),
+          title: Text('History').tr(),
           backgroundColor: greyColor,
         ),
         body: Column(
@@ -49,11 +48,11 @@ class _HistoryState extends State<History> {
                     height: SizeConfig.heightMultiplier * 4,
                     child: Center(
                       child: Text(
-                        'They missed',
+                        'They_Missed_History',
                         style: TextStyle(
                             color: seleted == 0 ? Colors.white : Colors.grey,
                             fontWeight: FontWeight.bold),
-                      ),
+                      ).tr(),
                     ),
                     decoration: BoxDecoration(
                         color: seleted == 0 ? purpleColor : Colors.grey[850],
@@ -69,11 +68,11 @@ class _HistoryState extends State<History> {
                     height: SizeConfig.heightMultiplier * 4,
                     child: Center(
                       child: Text(
-                        'I missed',
+                        'I_Missed',
                         style: TextStyle(
                             color: seleted == 1 ? Colors.white : Colors.grey,
                             fontWeight: FontWeight.bold),
-                      ),
+                      ).tr(),
                     ),
                     decoration: BoxDecoration(
                         color: seleted == 1 ? purpleColor : Colors.grey[850],

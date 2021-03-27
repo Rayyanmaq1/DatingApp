@@ -173,18 +173,24 @@ class FullImageViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () => Get.back(),
-        child: Center(
-            child: CachedNetworkImage(
-          imageUrl: url,
-          imageBuilder: (context, imageProvider) => Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
+        child: Container(
+          color: greyColor,
+          child: Center(
+              child: CachedNetworkImage(
+            imageUrl: url,
+            imageBuilder: (context, imageProvider) => Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
-          ),
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        )));
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          )),
+        ));
   }
 }

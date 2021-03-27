@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:livu/SizedConfig.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:livu/Model/UserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +13,7 @@ import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/Dial.dart';
 import 'package:livu/Model/VideoCallModel.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class SeeUserProfile extends StatefulWidget {
@@ -46,6 +47,10 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
         backgroundColor: Color(0xff191919),
         body: userModel != null
             ? Column(
@@ -80,26 +85,11 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                               : Container(
                                   child: Center(
                                     child: Text(
-                                      'No Image to show',
+                                      'No Image to show'.tr(),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 )),
-                      Positioned(
-                        top: 40,
-                        left: 10,
-                        child: GestureDetector(
-                          onTap: () => Get.back(),
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.grey,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.black38,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   userModel.imageList.length != 0
