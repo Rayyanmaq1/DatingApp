@@ -349,8 +349,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               right: 20,
               left: 20,
               bottom: 20,
-              child: GestureDetector(
-                onTap: () {
+              child: RawMaterialButton(
+                splashColor: Colors.purple,
+                onPressed: () {
                   LastMessage lastMessage =
                       LastMessage.fromHistoryModel(historyModel);
                   Get.to(() => ChatScreen(
@@ -377,7 +378,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         width: SizeConfig.widthMultiplier * 4,
                       ),
                       Text(
-                        'Send a message',
+                        'Send a message'.tr(),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: SizeConfig.textMultiplier * 2),

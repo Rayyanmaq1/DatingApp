@@ -3,9 +3,10 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/Services/UserDataServices.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Interest extends StatefulWidget {
   @override
@@ -59,8 +60,8 @@ class _InterestState extends State<Interest> {
                                   if (selectedValue.length >= 5) {
                                     if (interestData[index].checkValue ==
                                         false) {
-                                      Get.snackbar('Attention',
-                                          'You Can only selete 5 Interest',
+                                      Get.snackbar('Attention'.tr(),
+                                          'InterestSubTitle'.tr(),
                                           snackPosition: SnackPosition.BOTTOM);
                                     } else {
                                       interestData[index].checkValue =

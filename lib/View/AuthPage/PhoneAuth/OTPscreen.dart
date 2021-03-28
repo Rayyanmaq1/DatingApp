@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
-import 'package:livu/View/UserData/Userdata.dart';
 import 'package:livu/Services/PhoneAuth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class OptScreen extends StatelessWidget {

@@ -16,7 +16,7 @@ class VideoCallService {
       'Name': currentUser.name,
       'ImageUrl': currentUser.imageUrl,
       'Likes': currentUser.likes,
-      'SeletedGender': Select_Gender,
+      'SeletedGender': Seleted_Genter_value,
       'Location': currentUser.location,
       'ChannelId': 'Id',
       'Age': currentUser.age,
@@ -31,7 +31,7 @@ class VideoCallService {
   Stream<List<CallModel>> getAllsearches() {
     return FirebaseFirestore.instance
         .collection('SearchVideoCall')
-        .where('SeletedGender', isEqualTo: Select_Gender)
+        .where('SeletedGender', isEqualTo: Seleted_Genter_value)
         .snapshots()
         .map((QuerySnapshot query) {
       List<CallModel> retVal = List();

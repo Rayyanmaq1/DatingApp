@@ -145,6 +145,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             groupValue: widget.seleted,
                             onChanged: (int value) {
                               setState(() {
+                                Seleted_Genter_value = 1;
                                 Select_Gender = 'both_gender'.tr();
                                 widget.seleted = value;
                                 Navigator.pop(context);
@@ -213,6 +214,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                           groupValue: widget.seleted,
                           onChanged: (int value) {
                             setState(() {
+                              Seleted_Genter_value = 2;
                               Select_Gender = 'male_gender'.tr();
                               widget.seleted = value;
                               Navigator.pop(context);
@@ -275,6 +277,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                           groupValue: widget.seleted,
                           onChanged: (int value) {
                             setState(() {
+                              Seleted_Genter_value = 3;
                               Select_Gender = 'female_gender'.tr();
                               widget.seleted = value;
                               Navigator.pop(context);

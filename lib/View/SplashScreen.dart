@@ -8,6 +8,7 @@ import 'package:livu/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/Services/FirebaseMessaging.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -36,6 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await FirebaseMessage().initailize();
+
     setState(() {
       login = prefs.getBool('Login');
     });

@@ -3,14 +3,11 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:livu/SizedConfig.dart';
 import 'package:livu/settings.dart';
-import 'package:get/get.dart';
-import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Services/PrivateVideoCall.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
-// import '../utils/settings.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 
 class CallPage extends StatefulWidget {
@@ -177,9 +174,9 @@ class _CallPageState extends State<CallPage> {
             _videoView(views[0]),
             Center(
               child: Text(
-                'Connecting...',
+                'Connecting',
                 style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
+              ).tr(),
             ),
           ],
         ));

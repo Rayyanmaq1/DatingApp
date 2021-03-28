@@ -6,13 +6,14 @@ import 'package:get/route_manager.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:livu/Model/UserModel.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/View/Search/UserAvatar/Interest.dart';
 import 'package:livu/Services/LiveCamSearching.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart' hide Color;
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/settings.dart';
 import 'package:livu/View/Search/Pages/LiveCam/ConnectLiveCam.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
@@ -45,6 +46,7 @@ class _LiveCamState extends State<LiveCam> {
 
   final _infoStrings = <String>[];
   bool muted = false;
+  bool runGetBack = true;
   RtcEngine _engine;
   @override
   void initState() {
@@ -192,23 +194,29 @@ class _LiveCamState extends State<LiveCam> {
       });
     });
     if (seacondHeartColor && runOnce) {
+      LiveCamService().deleteVideoCall(widget.id);
       Get.back();
+      Get.snackbar('Contragulation'.tr(), 'NowYouAreFriends'.tr());
       LiveCamService().addFriend(widget.matchedData);
-      Get.snackbar('Contragulation',
-          'You Both Liked Each Other You Both Are Friends Now');
     }
   }
 
   _getBack() {
-    Future.delayed(Duration(seconds: 20), () {
+    Future.delayed(Duration(seconds: 20), () async {
       if (seacondHeartColor) {
         LiveCamService().history('IMissed', widget.matchedData);
       }
       if (runOnce) {
         LiveCamService().history('TheyMissed', widget.matchedData);
       }
-
-      _onCallEnd(context);
+      print("here");
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('ConnectedLiveCam')
+          .doc(widget.id)
+          .get();
+      if (snapshot.exists) {
+        _onCallEnd(context);
+      }
     });
   }
 
@@ -227,8 +235,8 @@ class _LiveCamState extends State<LiveCam> {
         elevation: 0,
         leading: GestureDetector(
             onTap: () {
-              _onCallEnd(context);
-              Get.off(() => ConnectLiveCam());
+              dispose();
+              Get.back();
               // Get.back();
             },
             child: Icon(Icons.arrow_back)),
@@ -452,7 +460,12 @@ class _LiveCamState extends State<LiveCam> {
                   left: MediaQuery.of(context).size.width * 0.45,
                   child: GestureDetector(
                     onTap: () {
-                      _onCallEnd(context);
+                      setState(() {
+                        Get.back();
+                        LiveCamService().deleteVideoCall(widget.id);
+                        Get.to(() => ConnectLiveCam());
+                        runGetBack = false;
+                      });
                     },
                     child: Text(
                       'Next',
@@ -473,12 +486,12 @@ class _LiveCamState extends State<LiveCam> {
                       height: SizeConfig.heightMultiplier * 20,
                     ),
                     Text(
-                      'Connecting...',
+                      'Connecting',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: SizeConfig.textMultiplier * 2,
                       ),
-                    ),
+                    ).tr(),
                   ],
                 ),
               ),
@@ -487,18 +500,14 @@ class _LiveCamState extends State<LiveCam> {
   }
 
   void _onCallEnd(BuildContext context) {
-    // print(widget.documentId);
-    // PrivateCallService().deleteCall(widget.documentId);
-    // PrivateCallService().randomVideoCall(widget.documentId);
     LiveCamService().deleteVideoCall(widget.id);
-    Future.delayed(Duration.zero, () {
-      Get.off(() => ConnectLiveCam());
-    });
+    Get.back();
+    // Future.delayed(Duration.zero, () {
+    //   Get.off(() => ConnectLiveCam());
+    // });
     _users.clear();
     // destroy sdk
     _engine.leaveChannel();
     _engine.destroy();
   }
-
-  // Navigator.pop(context);
 }

@@ -24,7 +24,7 @@ class _UserDataState extends State<UserData> {
 
   @override
   Widget build(BuildContext context) {
-    print("dateTime".tr());
+    print("select_birth".tr());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: purpleColor,
@@ -177,8 +177,9 @@ class _UserDataState extends State<UserData> {
                     borderRadius: BorderRadius.circular(6),
                     child: RawMaterialButton(
                       onPressed: () {
-                        if (_genderController.text.isNotEmpty &&
-                            _nameController.text.isNotEmpty) {
+                        if (_genderController.text.isEmpty &&
+                            dateTime == "select_birth".tr() &&
+                            _nameController.text.isEmpty) {
                           Get.snackbar('Invaild Input', 'Enter all fields');
                         } else {
                           _groupValue == 0

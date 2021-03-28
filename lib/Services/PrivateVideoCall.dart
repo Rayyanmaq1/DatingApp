@@ -99,7 +99,7 @@ class PrivateCallService {
       MESSAGE_TEXT: messageText,
       SENDER_UID: currentUserData.id,
       RECEIVER_UID: tosendUid,
-      MESSAGE_IMAGE_URL: null,
+      MESSAGE_IMAGE_URL: imageUrl,
       SENDER_NAME: currentUserData.name,
       SENDER_IMAGE_URL: currentUserData.imageUrl,
     }).catchError((e) {

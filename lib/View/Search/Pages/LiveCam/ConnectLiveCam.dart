@@ -6,9 +6,10 @@ import 'dart:async';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/theme.dart';
 import 'package:camera/camera.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/Services/LiveCamSearching.dart';
 import 'package:livu/Model/LiveCamModel.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class ConnectLiveCam extends StatefulWidget {
@@ -30,14 +31,14 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
   bool end = false;
 
   List quotes = [
-    'The best and most beautiful things in this world cannot be seen or even heard, but must be felt with the heart.',
-    'Life without love is like a tree without blossoms or fruit.',
-    'The best thing to hold onto in life is each other.',
-    'Tis better to have loved and lost than never to have loved at all.',
-    'You know you are in love when you cant fall asleep because reality is finally better than your dreams.',
-    'Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.',
-    'Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.',
-    'The real lover is the man who can thrill you by kissing your forehead or smiling into your eyes or just staring into space.',
+    'Quote1'.tr(),
+    'Quote2'.tr(),
+    'Quote3'.tr(),
+    'Quote4'.tr(),
+    'Quote5'.tr(),
+    'Quote6'.tr(),
+    'Quote7'.tr(),
+    'Quote8'.tr(),
   ];
   int seleteQuote = 5;
   int randomUser;
@@ -86,18 +87,8 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
               LiveCamService().checkIfIGotMatched(widget.cameraController);
             })
           : null;
-      // 5s over, navigate to a new page
       if (mounted) {
         setState(() {
-          // callConnected
-          //     ? widget.seletedIndex == 1
-          //         ? Get.to(() => VideoCall(
-          //               cameraController: widget.cameraController,
-          //             ))
-          //         : Get.to(() => LiveCam(
-          //               cameraController: widget.cameraController,
-          //             ))
-          //     : print(null);
           seleteQuote = Random().nextInt(8);
         });
       }
@@ -264,12 +255,12 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
                     width: MediaQuery.of(context).size.width * 1,
                     height: 80,
                     child: Text(
-                      'Connecting....',
+                      'Connecting',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.textMultiplier * 2),
-                    ),
+                    ).tr(),
                   ),
                 )
               : Container(),

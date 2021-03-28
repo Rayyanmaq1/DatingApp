@@ -80,7 +80,6 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.videoUrl);
     _videoPlayerController = VlcPlayerController.network(widget.videoUrl)

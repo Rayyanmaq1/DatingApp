@@ -64,6 +64,8 @@ dependencies:
   emoji_picker: ^0.1.0
   device_preview: ^0.5.5
   easy_localization: ^2.3.3
+  firebase_messaging: ^7.0.3
+  flutter_local_notifications: ^4.0.1+1
 
 
 

@@ -7,3 +7,5 @@ const APP_ID = '8fb2945198154d93b38762cc42dc10b3';
 
 // ignore: non_constant_identifier_names
 String Select_Gender = "both_gender".tr();
+// ignore: non_constant_identifier_names
+int Seleted_Genter_value = 1;

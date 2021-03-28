@@ -104,7 +104,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
       //
       //using this page controller you can make beautiful animation effects
       controller.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
     });
   }
 
