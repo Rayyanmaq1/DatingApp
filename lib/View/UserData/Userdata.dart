@@ -14,7 +14,7 @@ class UserData extends StatefulWidget {
 }
 
 class _UserDataState extends State<UserData> {
-  String dateTime = 'select_birth'.tr();
+  String dateTime;
   int _groupValue = 0;
 
   TextEditingController _nameController = TextEditingController();
@@ -24,7 +24,6 @@ class _UserDataState extends State<UserData> {
 
   @override
   Widget build(BuildContext context) {
-    print("select_birth".tr());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: purpleColor,
@@ -81,7 +80,7 @@ class _UserDataState extends State<UserData> {
                   },
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: dateTime,
+                    hintText: dateTime == null ? "select_birth".tr() : dateTime,
                     hintStyle: TextStyle(
                       color: Colors.white,
                     ),
@@ -177,9 +176,7 @@ class _UserDataState extends State<UserData> {
                     borderRadius: BorderRadius.circular(6),
                     child: RawMaterialButton(
                       onPressed: () {
-                        if (_genderController.text.isEmpty &&
-                            dateTime == "select_birth".tr() &&
-                            _nameController.text.isEmpty) {
+                        if (dateTime == null || _nameController.text.isEmpty) {
                           Get.snackbar('Invaild Input', 'Enter all fields');
                         } else {
                           _groupValue == 0

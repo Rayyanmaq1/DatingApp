@@ -34,8 +34,7 @@ class UserDataServices {
       'Gender': gender,
       'Name': name,
       'Likes': 0,
-      'Bio':
-          'Describe yourself, make it fun. This is how the commmuniity gets to know you',
+      'Bio': '',
       'Age': int.parse(DateTime.now().toString().substring(0, 4)) -
           int.parse(birthday.substring(0, 4)),
       'Language': [],

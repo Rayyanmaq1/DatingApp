@@ -216,6 +216,7 @@ class _LiveCamState extends State<LiveCam> {
           .get();
       if (snapshot.exists) {
         _onCallEnd(context);
+        Get.to(() => ConnectLiveCam());
       }
     });
   }
@@ -228,6 +229,12 @@ class _LiveCamState extends State<LiveCam> {
     Future.delayed(Duration(seconds: 1), () {
       _getData();
     });
+    views.length == 1
+        ? Future.delayed(Duration(seconds: 6), () {
+            final getViews = _getRenderViews();
+            getViews.length == 1 ? _onCallEnd(context) : null;
+          })
+        : null;
     return Scaffold(
       backgroundColor: greyColor,
       extendBodyBehindAppBar: true,
@@ -460,11 +467,9 @@ class _LiveCamState extends State<LiveCam> {
                   left: MediaQuery.of(context).size.width * 0.45,
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        Get.back();
-                        LiveCamService().deleteVideoCall(widget.id);
+                      Get.back();
+                      LiveCamService().deleteVideoCall(widget.id).then(() {
                         Get.to(() => ConnectLiveCam());
-                        runGetBack = false;
                       });
                     },
                     child: Text(
