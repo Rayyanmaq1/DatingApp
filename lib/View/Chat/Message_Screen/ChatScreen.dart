@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:livu/Services/FirebaseMessaging.dart';
 import 'package:livu/Services/Last_MessageService.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'VideoCall/Dial.dart';
@@ -256,7 +257,6 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   IconButton getDefaultSendButton() {
-    print('tapped');
     return new IconButton(
       icon: new Icon(
         Icons.send,
@@ -596,6 +596,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage({String messageText, String imageUrl}) {
+   
     reference.push().set({
       MESSAGE_TEXT: messageText,
       SENDER_UID: userId,

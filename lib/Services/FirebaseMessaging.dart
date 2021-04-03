@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:livu/Services/LocalNotification.dart';
+import 'package:http/http.dart' as http;
 
 class FirebaseMessage {
   Future initailize() async {
@@ -37,5 +39,35 @@ class FirebaseMessage {
     }).catchError((err) {
       Fluttertoast.showToast(msg: err.message.toString());
     });
+  }
+
+  Future<bool> sendFcmMessage(String title, String message) async {
+    try {
+      var url = 'https://fcm.googleapis.com/fcm/send';
+      var header = {
+        "Content-Type": "application/json",
+        "Authorization":
+            "key=AAAAiFjVFR0:APA91bHLTBwPK34HKn-xKRYyp1gMLMGA-63DsULG9A-E42xQUBL5stRDPxBvwM3G-X66yrCmvaUrJdN03srigrqj6l8MFNO9JKX8jH5kL_VzRcQXrbt-fJftHsH4QmmOyI-XHkzCoHI6",
+      };
+      var request = {
+        "notification": {
+          "title": title,
+          "text": message,
+          "sound": "default",
+          "color": "#990000",
+        },
+        "priority": "high",
+        "to": "/topics/all",
+      };
+
+      // var client = new Client();
+      var response =
+          await http.post(url, headers: header, body: jsonEncode(request));
+      print(response.headers);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
