@@ -32,8 +32,8 @@ List<BuyCoin> getCoinData() {
     BuyCoin(
         imageUrl: 'assets/buyCoins/Chest.png',
         title: 'Basic',
-        coins: '250',
-        price: '5.99',
+        coins: '5000',
+        price: '24.99',
         offer: Offer.NONE),
     BuyCoin(
         imageUrl: 'assets/buyCoins/CoinBag1.png',

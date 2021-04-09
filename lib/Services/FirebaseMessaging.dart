@@ -16,7 +16,11 @@ class FirebaseMessage {
     }
     _messaging.configure(onMessage: (Map<String, dynamic> message) {
       print('onMessage: $message');
-      // LocalNotification(title: message['notification']);
+      final data = message['data'];
+
+      final title = data['title'];
+      final body = data['message'];
+      LocalNotification(title: title, body: body);
 
       return;
     }, onResume: (Map<String, dynamic> message) {
@@ -39,35 +43,5 @@ class FirebaseMessage {
     }).catchError((err) {
       Fluttertoast.showToast(msg: err.message.toString());
     });
-  }
-
-  Future<bool> sendFcmMessage(String title, String message) async {
-    try {
-      var url = 'https://fcm.googleapis.com/fcm/send';
-      var header = {
-        "Content-Type": "application/json",
-        "Authorization":
-            "key=AAAAiFjVFR0:APA91bHLTBwPK34HKn-xKRYyp1gMLMGA-63DsULG9A-E42xQUBL5stRDPxBvwM3G-X66yrCmvaUrJdN03srigrqj6l8MFNO9JKX8jH5kL_VzRcQXrbt-fJftHsH4QmmOyI-XHkzCoHI6",
-      };
-      var request = {
-        "notification": {
-          "title": title,
-          "text": message,
-          "sound": "default",
-          "color": "#990000",
-        },
-        "priority": "high",
-        "to": "/topics/all",
-      };
-
-      // var client = new Client();
-      var response =
-          await http.post(url, headers: header, body: jsonEncode(request));
-      print(response.headers);
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
   }
 }

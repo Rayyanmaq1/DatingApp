@@ -141,7 +141,7 @@ class _CallPageState extends State<CallPage> {
   Widget _expandedVideoRow(List<Widget> views) {
     final wrappedViews = views.map<Widget>(_videoView).toList();
 
-    return Container(
+    return Expanded(
       child: Row(
         children: wrappedViews,
       ),
