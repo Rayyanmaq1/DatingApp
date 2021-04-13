@@ -13,6 +13,7 @@ import 'package:livu/Controller/PrivateVideoController.dart';
 import 'package:livu/View/Search/Widgets/PopUp.dart';
 import 'package:livu/Controller/VideoController.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/Services/Payment_service.dart';
 
 class CustomNavigation extends StatefulWidget {
   bool showPopUps = false;
@@ -29,6 +30,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
 
   @override
   void initState() {
+    StripeService.init();
     Get.put(UserDataController());
     Get.put(FriendRequestController());
     Get.put(LastMessageController());

@@ -52,14 +52,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     await VideoCallService().checkIfIGotMatched(widget.cameraController);
     getSearchs.bindStream(VideoCallService().getAllsearches());
 
-    print("Length " + getSearchs.length.toString());
-    randomUser = Random().nextInt(getSearchs.length);
-    if (getSearchs[randomUser].uid != userData.userModel.value.id) {
-      print(callConnected);
-      setState(() {
-        connectedCall = getSearchs[randomUser];
-        callConnected = true;
-      });
+    if (getSearchs.length != 0) {
+      randomUser = Random().nextInt(getSearchs.length);
+      if (getSearchs[randomUser].uid != userData.userModel.value.id) {
+        print(callConnected);
+        setState(() {
+          connectedCall = getSearchs[randomUser];
+          callConnected = true;
+        });
+      }
     }
   }
 

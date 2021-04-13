@@ -7,11 +7,21 @@ import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/View/BuyCoins/ExistingCard.dart';
 
-class BuyCoins extends StatelessWidget {
+class BuyCoins extends StatefulWidget {
+  @override
+  _BuyCoinsState createState() => _BuyCoinsState();
+}
+
+class _BuyCoinsState extends State<BuyCoins> {
   @override
   List<BuyCoin> data = getCoinData();
+
+// add you merchantId as per apple developer account      androidPayMode: 'test',     ),  );}
+
   final userData = Get.find<UserDataController>().userModel.value;
+
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
@@ -140,20 +150,25 @@ class BuyCoins extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.heightMultiplier * 1,
               ),
-              Container(
-                height: SizeConfig.heightMultiplier * 4,
-                width: SizeConfig.widthMultiplier * 35,
-                child: Center(
-                    child: Text(
-                  '\$ ' + data[index].price,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: SizeConfig.textMultiplier * 2),
-                )),
-                decoration: BoxDecoration(
-                  color: purpleColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+              RawMaterialButton(
+                onPressed: () {
+                  startPayment(data[index].price);
+                },
+                child: Container(
+                  height: SizeConfig.heightMultiplier * 4,
+                  width: SizeConfig.widthMultiplier * 35,
+                  child: Center(
+                      child: Text(
+                    '\$ ' + data[index].price,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.textMultiplier * 2),
+                  )),
+                  decoration: BoxDecoration(
+                    color: purpleColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
                 ),
               ),
@@ -163,7 +178,7 @@ class BuyCoins extends StatelessWidget {
         Positioned(
           top: 18,
           left: 8,
-          child: data[index].offer.toString().substring(6) != 'NONE'
+          child: data[index].offer != Offer.NONE
               ? ClipPath(
                   clipper: StarClipper(8),
                   child: Center(
@@ -240,20 +255,25 @@ class BuyCoins extends StatelessWidget {
           Positioned(
             bottom: 25,
             left: 20,
-            child: Container(
-              height: SizeConfig.heightMultiplier * 4,
-              width: SizeConfig.widthMultiplier * 35,
-              child: Center(
-                  child: Text(
-                '\$ ' + data[index].price,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: SizeConfig.textMultiplier * 2),
-              )),
-              decoration: BoxDecoration(
-                color: purpleColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
+            child: RawMaterialButton(
+              onPressed: () {
+                startPayment(data[index].price);
+              },
+              child: Container(
+                height: SizeConfig.heightMultiplier * 4,
+                width: SizeConfig.widthMultiplier * 35,
+                child: Center(
+                    child: Text(
+                  '\$ ' + data[index].price,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: SizeConfig.textMultiplier * 2),
+                )),
+                decoration: BoxDecoration(
+                  color: purpleColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
                 ),
               ),
             ),
@@ -261,5 +281,15 @@ class BuyCoins extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  startPayment(price) async {
+    double amount = double.parse(price) * 100;
+    int finalAmount = amount.toInt();
+    print(finalAmount);
+
+    Get.to(() => Payment(
+          finalAmount: finalAmount,
+        ));
   }
 }
