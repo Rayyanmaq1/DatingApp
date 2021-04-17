@@ -35,7 +35,7 @@ dependencies:
   pin_code_fields: ^6.1.0
   flutter_datetime_picker: ^1.5.0
   camera: ^0.7.0+2
-  flag: ^3.2.2
+  # flag: ^3.2.2
   image_picker: ^0.6.7+22
   modal_bottom_sheet: ^1.0.0+1
   flutter_switch: ^0.2.0
@@ -65,6 +65,7 @@ dependencies:
   stripe_payment: ^1.0.9
   progress_dialog: ^1.2.0
   translator: ^0.1.3
+  # change_app_package_name: ^0.1.3
 
 
 

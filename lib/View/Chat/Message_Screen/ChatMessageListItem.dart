@@ -1,11 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:livu/theme.dart';
 import '../../../Model/MessageModel.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
+import 'package:translator/translator.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 var currentUserEmail;
 
@@ -17,11 +19,10 @@ class ChatMessageListItem extends StatelessWidget {
   final receiverEmail;
   ChatMessageListItem(
       {this.messageSnapshot, this.animation, this.receiverEmail});
+  GoogleTranslator translator = GoogleTranslator();
 
   @override
   Widget build(BuildContext context) {
-    print(messageSnapshot.value[SENDER_UID]);
-    print(Get.find<UserDataController>().userModel.value.id);
     return new SizeTransition(
       sizeFactor:
           new CurvedAnimation(parent: animation, curve: Curves.decelerate),
@@ -105,6 +106,7 @@ class ChatMessageListItem extends StatelessWidget {
 
   List<Widget> getReceivedMessageLayout() {
     print("recieved layout called");
+
     return <Widget>[
       new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,10 +155,39 @@ class ChatMessageListItem extends StatelessWidget {
                       //   width: 250.0,
                       // ),
                     )
-                  : new Text(
-                      messageSnapshot.value[MESSAGE_TEXT],
-                      style: TextStyle(color: Colors.grey),
-                    ),
+                  : 'app_name'.tr() == 'KIM LIVE'
+                      ? FutureBuilder(
+                          future: translator.translate(
+                              messageSnapshot.value[MESSAGE_TEXT],
+                              from: 'ar',
+                              to: 'en'),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            }
+                            return Text(
+                              snapshot.data.toString(),
+                              style: TextStyle(color: Colors.grey),
+                            );
+                          },
+                        )
+                      : FutureBuilder(
+                          future: translator.translate(
+                              messageSnapshot.value[MESSAGE_TEXT],
+                              from: 'en',
+                              to: 'ar'),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            }
+                            return Text(
+                              snapshot.data.toString(),
+                              style: TextStyle(color: Colors.grey),
+                            );
+                          },
+                        ),
             ),
           ],
         ),

@@ -139,6 +139,7 @@ class _CallPageState extends State<CallPage> {
 
   /// Video view row wrapper
   Widget _expandedVideoRow(List<Widget> views) {
+    views.map<Widget>(_videoView);
     final wrappedViews = views.map<Widget>(_videoView).toList();
 
     return Expanded(
@@ -148,20 +149,20 @@ class _CallPageState extends State<CallPage> {
     );
   }
 
-  Widget _positionedVideoRow(List<Widget> views) {
-    views.map<Widget>(_videoView);
+  // Widget _positionedVideoRow(List<Widget> views) {
+  //   views.map<Widget>(_videoView);
 
-    final wrappedViews = views.map<Widget>(_videoView).toList();
-    return Positioned(
-      height: 200,
-      width: 120,
-      right: 0.0,
-      top: 0.0,
-      child: Row(
-        children: wrappedViews,
-      ),
-    );
-  }
+  //   final wrappedViews = views.map<Widget>(_videoView).toList();
+  //   return Positioned(
+  //     height: 200,
+  //     width: 120,
+  //     left: 10.5,
+  //     bottom: 25.0,
+  //     child: Row(
+  //       children: wrappedViews,
+  //     ),
+  //   );
+  // }
 
   /// Video layout wrapper
   Widget _viewRows() {
@@ -169,15 +170,15 @@ class _CallPageState extends State<CallPage> {
     switch (views.length) {
       case 1:
         return Container(
-            child: Stack(
+            child: Column(
           children: <Widget>[
             _videoView(views[0]),
-            Center(
-              child: Text(
-                'Connecting',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ).tr(),
-            ),
+            // Center(
+            //   child: Text(
+            //     'Connecting',
+            //     style: TextStyle(color: Colors.white, fontSize: 24),
+            //   ).tr(),
+            // ),
           ],
         ));
       case 2:
@@ -191,10 +192,10 @@ class _CallPageState extends State<CallPage> {
         setState(() {
           runOnce = false;
         });
-        return Stack(
+        return Column(
           children: <Widget>[
             _expandedVideoRow([views[1]]),
-            _positionedVideoRow([views[0]])
+            _expandedVideoRow([views[0]])
           ],
         );
       default:

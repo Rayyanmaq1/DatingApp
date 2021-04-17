@@ -1,4 +1,4 @@
-package com.example.livu
+package com.virtualsoft.livu
 
 import io.flutter.embedding.android.FlutterActivity
 
