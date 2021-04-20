@@ -22,3 +22,6 @@ String LATEST_REFERENCE = 'lastestRederence';
 String MESSAGE_TIME = 'messageTime';
 // ignore: non_constant_identifier_names
 String Message_Read = 'messageSeen';
+
+// ignore: non_constant_identifier_names
+String ADMINUID = '1Jwuocmyf8cG5V3Hq5qCZwrMDO33';

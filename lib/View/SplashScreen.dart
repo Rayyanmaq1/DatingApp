@@ -37,7 +37,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await FirebaseMessage().initailize();
 
     setState(() {
       login = prefs.getBool('Login');

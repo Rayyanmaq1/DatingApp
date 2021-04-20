@@ -7,7 +7,7 @@ import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:livu/View/BuyCoins/ExistingCard.dart';
+import 'package:livu/View/BuyCoins/payment.dart';
 
 class BuyCoins extends StatefulWidget {
   @override
@@ -152,7 +152,7 @@ class _BuyCoinsState extends State<BuyCoins> {
               ),
               RawMaterialButton(
                 onPressed: () {
-                  startPayment(data[index].price);
+                  startPayment(data[index].price, data[index].coins);
                 },
                 child: Container(
                   height: SizeConfig.heightMultiplier * 4,
@@ -257,7 +257,7 @@ class _BuyCoinsState extends State<BuyCoins> {
             left: 20,
             child: RawMaterialButton(
               onPressed: () {
-                startPayment(data[index].price);
+                startPayment(data[index].price, data[index].coins);
               },
               child: Container(
                 height: SizeConfig.heightMultiplier * 4,
@@ -283,13 +283,16 @@ class _BuyCoinsState extends State<BuyCoins> {
     );
   }
 
-  startPayment(price) async {
+  startPayment(price, coins) async {
+    print(coins);
     double amount = double.parse(price) * 100;
     int finalAmount = amount.toInt();
+    int coin = int.parse(coins);
     print(finalAmount);
 
     Get.to(() => Payment(
           finalAmount: finalAmount,
+          coins: coin,
         ));
   }
 }

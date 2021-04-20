@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:livu/Services/Payment_service.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:livu/theme.dart';
-
+import 'package:livu/Services/CoinsDeduction.dart';
+import 'package:get/get.dart';
 class Payment extends StatefulWidget {
+  int coins;
   int finalAmount;
-  Payment({Key key, this.finalAmount}) : super(key: key);
+  Payment({Key key, this.finalAmount, this.coins}) : super(key: key);
 
   @override
   PaymentState createState() => PaymentState();
@@ -36,6 +38,12 @@ class PaymentState extends State<Payment> {
       duration:
           new Duration(milliseconds: response.success == true ? 1200 : 3000),
     ));
+    if(response.success){
+      CoinsDeduction().addCoins(widget.coins);
+      Future.delayed(Duration(seconds: 2),(){
+        Get.back();
+      });
+    }
   }
 
   @override

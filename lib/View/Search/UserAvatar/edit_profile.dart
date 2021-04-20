@@ -447,7 +447,9 @@ class _EditProfileState extends State<EditProfile> {
           padding: const EdgeInsets.only(right: 8.0),
           child: GestureDetector(
             onTap: () {
-              Get.to(() => UserProfile());
+              Get.to(() => UserProfile(
+                    userData: Get.find<UserDataController>().userModel.value,
+                  ));
             },
             child: Row(
               children: [
