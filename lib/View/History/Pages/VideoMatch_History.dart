@@ -14,6 +14,7 @@ import 'package:livu/Model/HistoryModel.dart';
 import 'package:livu/Controller/HistoryController.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Services/PrivateVideoCall.dart';
+import 'package:livu/Services/ReportService.dart';
 
 // ignore: must_be_immutable
 class HistoryScreen extends StatefulWidget {
@@ -183,7 +184,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               left: 12,
               top: 12,
               child: GestureDetector(
-                onTap: () => _buildSecurityDialog(),
+                onTap: () => _buildSecurityDialog(historyModel),
                 child: Container(
                   width: SizeConfig.widthMultiplier * 12,
                   height: SizeConfig.heightMultiplier * 6,
@@ -394,7 +395,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  _buildSecurityDialog() {
+  _buildSecurityDialog(HistoryModel historyModel) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -409,12 +410,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildCustomTile('Sexual_Context'.tr()),
-                  _buildCustomTile('Not_Matched'.tr()),
-                  _buildCustomTile('Scam'.tr()),
-                  _buildCustomTile('Abusive_Language'.tr()),
-                  _buildCustomTile('UnderAge'.tr()),
-                  _buildCustomTile('Illegel_Activities'.tr()),
+                  _buildCustomTile('Sexual_Context'.tr(), historyModel),
+                  _buildCustomTile('Not_Matched'.tr(), historyModel),
+                  _buildCustomTile('Scam'.tr(), historyModel),
+                  _buildCustomTile('Abusive_Language'.tr(), historyModel),
+                  _buildCustomTile('UnderAge'.tr(), historyModel),
+                  _buildCustomTile('Illegel_Activities'.tr(), historyModel),
                 ],
               ),
             ),
@@ -424,8 +425,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  _buildCustomTile(title) {
+  _buildCustomTile(title, HistoryModel historyModel) {
     return ListTile(
+      onTap: () {
+        ReportService().reportUser(title, historyModel.uid, historyModel.name);
+        Get.back();
+        Get.snackbar('Reported', 'User have Been Reported');
+      },
       title: Text(
         title,
         style: TextStyle(color: Colors.grey[500]),

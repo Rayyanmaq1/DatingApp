@@ -74,6 +74,7 @@ class ChatScreenState extends State<ChatScreen> {
                     .collection('UserData')
                     .doc(Get.find<UserDataController>().userModel.value.id)
                     .collection('CustomerService')
+                    .orderBy('messageTime', descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (ConnectionState.waiting == snapshot.connectionState) {
@@ -83,6 +84,7 @@ class ChatScreenState extends State<ChatScreen> {
                   }
                   return ListView.builder(
                       itemCount: snapshot.data.docs.length,
+                      reverse: true,
                       // ignore: missing_return
                       itemBuilder: (context, index) {
                         return ChatMessageListItem(
@@ -113,22 +115,18 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   IconButton getDefaultSendButton() {
-    print('Tapped');
-    print(_textEditingController.text.length);
     return new IconButton(
       icon: new Icon(
         Icons.send,
         color: purpleColor,
       ),
-      onPressed: _textEditingController.text.length != 0
-          ? () {
-              setState(() {
-                focusNode.unfocus();
-                focusNode.canRequestFocus = false;
-              });
-              // _textMessageSubmitted(_textEditingController.text);
-            }
-          : null,
+      onPressed: () {
+        setState(() {
+          focusNode.unfocus();
+          focusNode.canRequestFocus = false;
+        });
+        _textMessageSubmitted(_textEditingController.text);
+      },
     );
   }
 

@@ -14,6 +14,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:livu/Services/LiveCamSearching.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
 import 'package:livu/settings.dart';
+import 'package:livu/Services/ReportService.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:livu/View/Chat/Message_Screen/GiftsList.dart';
 
@@ -476,6 +477,19 @@ class _VideoCallState extends State<VideoCall> {
 
   _buildCustomTile(title) {
     return ListTile(
+      onTap: () {
+        ReportService().reportUser(
+          title,
+          widget.matchedInfo['SenderUid'] == userModel.id
+              ? widget.matchedInfo['ReciverUid']
+              : widget.matchedInfo['SenderUid'],
+          widget.matchedInfo['SenderName'] == userModel.id
+              ? widget.matchedInfo['ReciverName']
+              : widget.matchedInfo['SenderName'],
+        );
+        Get.back();
+        Get.snackbar('Reported', 'User have Been Reported');
+      },
       title: Text(
         title,
         style: TextStyle(color: Colors.grey[500]),

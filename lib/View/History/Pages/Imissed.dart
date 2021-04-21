@@ -10,6 +10,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Services/HistoryService.dart';
+import 'package:livu/Model/HistoryModel.dart';
+import 'package:livu/Services/ReportService.dart';
 
 class Imissed extends StatefulWidget {
   @override
@@ -90,7 +92,8 @@ class _ImissedState extends State<Imissed> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    onTap: () => _buildSecurityDialog(),
+                                    onTap: () => _buildSecurityDialog(controller
+                                        .iMissedhistoryController[index]),
                                     child: Icon(Icons.security,
                                         size: 20,
                                         color: Colors.white.withOpacity(0.4)),
@@ -242,7 +245,7 @@ class _ImissedState extends State<Imissed> {
     );
   }
 
-  _buildSecurityDialog() {
+  _buildSecurityDialog(HistoryModel historyModel) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -256,12 +259,12 @@ class _ImissedState extends State<Imissed> {
             height: MediaQuery.of(context).size.height * 0.42,
             child: Column(
               children: [
-                _buildCustomTile('Sexual_Context'.tr()),
-                _buildCustomTile('Not_Matched'.tr()),
-                _buildCustomTile('Scam'.tr()),
-                _buildCustomTile('Abusive_Language'.tr()),
-                _buildCustomTile('UnderAge'.tr()),
-                _buildCustomTile('Illegel_Activities'.tr()),
+                _buildCustomTile('Sexual_Context'.tr(), historyModel),
+                _buildCustomTile('Not_Matched'.tr(), historyModel),
+                _buildCustomTile('Scam'.tr(), historyModel),
+                _buildCustomTile('Abusive_Language'.tr(), historyModel),
+                _buildCustomTile('UnderAge'.tr(), historyModel),
+                _buildCustomTile('Illegel_Activities'.tr(), historyModel),
               ],
             ),
           ),
@@ -270,8 +273,13 @@ class _ImissedState extends State<Imissed> {
     );
   }
 
-  _buildCustomTile(title) {
+  _buildCustomTile(title, HistoryModel historyModel) {
     return ListTile(
+      onTap: () {
+        ReportService().reportUser(title, historyModel.uid, historyModel.name);
+        Get.back();
+        Get.snackbar('Reported', 'User have Been Reported');
+      },
       title: Text(
         title,
         style: TextStyle(color: Colors.grey[500]),

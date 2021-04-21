@@ -10,6 +10,7 @@ import 'package:livu/Model/VideoCallModel.dart';
 import 'package:livu/Model/HistoryModel.dart';
 import 'package:livu/Services/HistoryService.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/Services/ReportService.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/Dial.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 
@@ -80,7 +81,10 @@ class TheyMissed extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    onTap: () => _buildSecurityDialog(context),
+                                    onTap: () => _buildSecurityDialog(
+                                        context,
+                                        controller.theyMissedhistoryController[
+                                            index]),
                                     child: Icon(Icons.security,
                                         size: 20,
                                         color: Colors.white.withOpacity(0.4)),
@@ -247,7 +251,7 @@ class TheyMissed extends StatelessWidget {
     );
   }
 
-  _buildSecurityDialog(context) {
+  _buildSecurityDialog(context, HistoryModel theyMissed) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -261,12 +265,12 @@ class TheyMissed extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.42,
             child: Column(
               children: [
-                _buildCustomTile('Sexual_Context'.tr()),
-                _buildCustomTile('Not_Matched'.tr()),
-                _buildCustomTile('Scam'.tr()),
-                _buildCustomTile('Abusive_Language'.tr()),
-                _buildCustomTile('UnderAge'.tr()),
-                _buildCustomTile('Illegel_Activities'.tr()),
+                _buildCustomTile('Sexual_Context'.tr(), theyMissed),
+                _buildCustomTile('Not_Matched'.tr(), theyMissed),
+                _buildCustomTile('Scam'.tr(), theyMissed),
+                _buildCustomTile('Abusive_Language'.tr(), theyMissed),
+                _buildCustomTile('UnderAge'.tr(), theyMissed),
+                _buildCustomTile('Illegel_Activities'.tr(), theyMissed),
               ],
             ),
           ),
@@ -275,8 +279,13 @@ class TheyMissed extends StatelessWidget {
     );
   }
 
-  _buildCustomTile(title) {
+  _buildCustomTile(title, HistoryModel theyMissed) {
     return ListTile(
+      onTap: () {
+        ReportService().reportUser(title, theyMissed.uid, theyMissed.name);
+        Get.back();
+        Get.snackbar('Reported', 'User have Been Reported');
+      },
       title: Text(
         title,
         style: TextStyle(color: Colors.grey[500]),

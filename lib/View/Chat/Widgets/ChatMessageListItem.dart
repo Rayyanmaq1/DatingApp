@@ -22,6 +22,7 @@ class ChatMessageListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(messageSnapshot.get('Uid'));
     return new Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: new Row(
@@ -69,8 +70,6 @@ class ChatMessageListItem extends StatelessWidget {
   }
 
   List<Widget> getReceivedMessageLayout() {
-    print("recieved layout called");
-
     return <Widget>[
       new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +78,7 @@ class ChatMessageListItem extends StatelessWidget {
               margin: const EdgeInsets.only(right: 8.0),
               child: new CircleAvatar(
                 backgroundImage:
-                    new NetworkImage(messageSnapshot.get(SENDER_IMAGE_URL)),
+                    new NetworkImage(messageSnapshot.get('ImageUrl')),
               )),
         ],
       ),
@@ -87,73 +86,17 @@ class ChatMessageListItem extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(messageSnapshot.get(SENDER_NAME),
+            new Text(messageSnapshot.get('Name'),
                 style: new TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey[300],
                     fontWeight: FontWeight.bold)),
             new Container(
                 margin: const EdgeInsets.only(top: 5.0),
-                child: messageSnapshot.get(MESSAGE_IMAGE_URL) != null
-                    ? GestureDetector(
-                        onTap: () {
-                          Get.to(() => FullImageViewScreen(
-                              url: messageSnapshot.get(MESSAGE_IMAGE_URL)));
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: messageSnapshot.get(MESSAGE_IMAGE_URL),
-                          imageBuilder: (context, imageProvider) => Container(
-                            height: SizeConfig.heightMultiplier * 14,
-                            width: SizeConfig.widthMultiplier * 48,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.contain),
-                            ),
-                          ),
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
-                        //       new Image.network(
-                        //   messageSnapshot.value[MESSAGE_IMAGE_URL],
-                        //   width: 250.0,
-                        // ),
-                      )
-                    : 'app_name' == 'KIM LIVE'
-                // ? FutureBuilder(
-                //     future: translator.translate(
-                //         messageSnapshot.value[MESSAGE_TEXT],
-                //         from: 'ar',
-                //         to: 'en'),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState ==
-                //           ConnectionState.waiting) {
-                //         return Container();
-                //       }
-                //       return Text(
-                //         snapshot.data.toString(),
-                //         style: TextStyle(color: Colors.grey),
-                //       );
-                //     },
-                //   )
-                // : FutureBuilder(
-                //     future: translator.translate(
-                //         messageSnapshot.value[MESSAGE_TEXT],
-                //         from: 'en',
-                //         to: 'ar'),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState ==
-                //           ConnectionState.waiting) {
-                //         return Container();
-                //       }
-                //       return Text(
-                //         snapshot.data.toString(),
-                //         style: TextStyle(color: Colors.grey),
-                //       );
-                //     },
-                //   ),
-                ),
+                child: Text(
+                  messageSnapshot.get('last_message'),
+                  style: TextStyle(color: Colors.grey),
+                )),
           ],
         ),
       ),
