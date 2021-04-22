@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:livu/View/Search/UserAvatar/setting_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:share/share.dart';
 import 'edit_profile.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
@@ -119,7 +121,9 @@ class ProfileScreen extends StatelessWidget {
                                 child: Text(
                                   controller.userModel.value.age.toString(),
                                   style: TextStyle(
-                                      color: Colors.grey, fontSize: 20),
+                                      color: Colors.grey,
+                                      fontSize:
+                                          SizeConfig.textMultiplier * 1.3),
                                 ),
                               );
                             }),
@@ -134,19 +138,21 @@ class ProfileScreen extends StatelessWidget {
                               controller.userModel.value.name != null
                                   ? '${controller.userModel.value.id}'
                                   : '',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: SizeConfig.textMultiplier * 1.3),
                             );
                           },
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 8, left: 10),
-                        child: Icon(
-                          FontAwesomeIcons.solidCopy,
-                          size: 16,
-                          color: Colors.grey[300],
-                        ),
-                      )
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: 8, left: 10),
+                      //   child: Icon(
+                      //     FontAwesomeIcons.solidCopy,
+                      //     size: 16,
+                      //     color: Colors.grey[300],
+                      //   ),
+                      // )
                     ],
                   ),
                   Padding(
@@ -212,11 +218,21 @@ class ProfileScreen extends StatelessWidget {
                   title: "buy_coins".tr(),
                   image: "assets/Coin.png",
                   ontap: () => Get.to(() => BuyCoins())),
+              // listBar(
+              //     title: "Link_Account".tr(),
+              //     image: "assets/conntectAccounts.png"),
               listBar(
-                  title: "Link_Account".tr(),
-                  image: "assets/conntectAccounts.png"),
-              listBar(title: "FAQ".tr(), image: "assets/FAQs.png"),
-              listBar(title: "Share".tr(), image: "assets/Share.png"),
+                  title: "FAQ".tr(),
+                  image: "assets/FAQs.png",
+                  ontap: () {
+                    Get.to(() => ChatScreen());
+                  }),
+              listBar(
+                  title: "Share".tr(),
+                  image: "assets/Share.png",
+                  ontap: () {
+                    Share.share('check out my website https://example.com');
+                  }),
             ],
           ),
         ),

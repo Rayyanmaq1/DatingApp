@@ -224,12 +224,14 @@ class _ImissedState extends State<Imissed> {
                           Get.back();
                         },
                         child: Container(
-                          width: SizeConfig.widthMultiplier * 30,
+                          width: SizeConfig.widthMultiplier * 40,
                           height: SizeConfig.heightMultiplier * 6,
                           child: Center(
                             child: Text(
                               'Start a Match',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: SizeConfig.textMultiplier * 2),
                             ),
                           ),
                           decoration: BoxDecoration(

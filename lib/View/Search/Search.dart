@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/Services/BlockedUser.dart';
 
 // ignore: must_be_immutable
 class Search extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SearchState extends State<Search> {
 
   CameraController cameraController;
   void initState() {
-    // print(friendRequest.friendRequestModel.value.otherUserUid);
+    BlockedUser().checkifuserBlocked(context);
     getCamera();
     _setData();
 

@@ -54,7 +54,7 @@ class CommunityVideo extends StatelessWidget {
                         'Community Video',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: SizeConfig.textMultiplier * 1.6),
+                            fontSize: SizeConfig.textMultiplier * 1.2),
                       ).tr(),
                       Container(
                         height: SizeConfig.heightMultiplier * 2,
@@ -65,6 +65,7 @@ class CommunityVideo extends StatelessWidget {
                       Icon(
                         Icons.arrow_forward,
                         color: Colors.white,
+                        size: SizeConfig.imageSizeMultiplier * 5,
                       ),
                     ],
                   ),

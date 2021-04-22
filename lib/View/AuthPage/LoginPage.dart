@@ -10,56 +10,61 @@ import 'package:livu/Services/FaceBookAuthentication.dart';
 import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:livu/Services/GoogleAuth.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:particles_flutter/particles_flutter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: purpleColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Icon(Icons.question_answer),
-          ),
-        ],
-      ),
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Container(
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
                   children: [
-                    Image.asset(
-                      'assets/Logo.png',
-                      height: SizeConfig.heightMultiplier * 20,
-                    ),
-                    Text(
-                      'app_name',
-                      style: GoogleFonts.getFont('Bubblegum Sans',
-                          fontWeight: FontWeight.w700,
-                          fontSize: SizeConfig.textMultiplier * 8,
-                          color: Colors.white),
-                    ).tr(),
-                    Text(
-                      '542,342,322',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: SizeConfig.textMultiplier * 3,
-                      ),
-                    ),
-                    Text(
-                      'Matches',
-                      style: TextStyle(
-                        color: Colors.grey[200],
-                        fontWeight: FontWeight.w200,
-                        fontSize: SizeConfig.textMultiplier * 2,
+                    CircularParticle(
+                        key: UniqueKey(),
+                        awayRadius: 8,
+                        numberOfParticles: 35,
+                        speedOfParticles: 0.5,
+                        height: SizeConfig.heightMultiplier * 60,
+                        width: MediaQuery.of(context).size.width,
+                        onTapAnimation: true,
+                        particleColor: Colors.grey,
+                        awayAnimationDuration: Duration(milliseconds: 600),
+                        maxParticleSize: 4,
+                        isRandSize: false,
+                        isRandomColor: false,
+                        awayAnimationCurve: Curves.easeInOutBack,
+                        enableHover: false,
+                        hoverColor: Colors.white,
+                        hoverRadius: 90,
+                        connectDots: true),
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/Logo.png',
+                            height: SizeConfig.heightMultiplier * 20,
+                          ),
+                          Text(
+                            'app_name',
+                            style: GoogleFonts.getFont('Bubblegum Sans',
+                                fontWeight: FontWeight.w700,
+                                fontSize: SizeConfig.textMultiplier * 8,
+                                color: Colors.white),
+                          ).tr(),
+                        ],
                       ),
                     ),
                   ],

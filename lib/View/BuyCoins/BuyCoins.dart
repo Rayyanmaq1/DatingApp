@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:livu/View/BuyCoins/paypal_payment/make_payment.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/Model/Coin.dart';
@@ -290,9 +291,10 @@ class _BuyCoinsState extends State<BuyCoins> {
     int coin = int.parse(coins);
     print(finalAmount);
 
-    Get.to(() => Payment(
-          finalAmount: finalAmount,
-          coins: coin,
-        ));
+    // Get.to(() => Payment(
+    //       finalAmount: finalAmount,
+    //       coins: coin,
+    //     ));
+    Get.to(() => MakePayment());
   }
 }
