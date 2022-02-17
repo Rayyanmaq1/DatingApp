@@ -8,16 +8,18 @@ class PaypalServices {
 //  String domain = "https://api.paypal.com"; // for production mode
 
   // change clientId and secret with your own, provided by paypal
-  String clientId = 'AXhi0WhKcBn5N8fB5A6gquBn44F2LAYI-IdMI0g9gWyNhdBUboGLqpTQepxixJo7dhyZhNcE-kZCZBxX';
-  String secret = 'EBxZofW7L9fGCI2CvnKjJy5-3uQsnmARcgdImQfmpKtJIWMxMesQk9y94gGqB58Xbwkh8m8L9M9PEFMw';
+  String clientId =
+      'AXhi0WhKcBn5N8fB5A6gquBn44F2LAYI-IdMI0g9gWyNhdBUboGLqpTQepxixJo7dhyZhNcE-kZCZBxX';
+  String secret =
+      'EBxZofW7L9fGCI2CvnKjJy5-3uQsnmARcgdImQfmpKtJIWMxMesQk9y94gGqB58Xbwkh8m8L9M9PEFMw';
 
   // for getting the access token from Paypal
   Future<String> getAccessToken() async {
     try {
       var client = BasicAuthClient(clientId, secret);
 
-      var response = await client
-          .post('$domain/v1/oauth2/token?grant_type=client_credentials');
+      var response = await client.post(
+          Uri.parse('$domain/v1/oauth2/token?grant_type=client_credentials'));
       print("access token is:${response.body}");
       print("status code is:${response.statusCode}");
       if (response.statusCode == 200) {
@@ -35,7 +37,7 @@ class PaypalServices {
   Future<Map<String, String>> createPaypalPayment(
       transactions, accessToken) async {
     try {
-      var response = await http.post("$domain/v1/payments/payment",
+      var response = await http.post(Uri.parse("$domain/v1/payments/payment"),
           body: convert.jsonEncode(transactions),
           headers: {
             "content-type": "application/json",

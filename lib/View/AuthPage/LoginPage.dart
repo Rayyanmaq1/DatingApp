@@ -2,12 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/AuthPage/PhoneAuth/GetPhoneNumber.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/Services/FaceBookAuthentication.dart';
-import 'package:livu/View/CustomNavigation/CustomNavigation.dart';
 import 'package:livu/Services/GoogleAuth.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:particles_flutter/particles_flutter.dart';
@@ -55,15 +53,8 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Image.asset(
                             'assets/Logo.png',
-                            height: SizeConfig.heightMultiplier * 20,
+                            height: SizeConfig.heightMultiplier * 40,
                           ),
-                          Text(
-                            'app_name',
-                            style: GoogleFonts.getFont('Bubblegum Sans',
-                                fontWeight: FontWeight.w700,
-                                fontSize: SizeConfig.textMultiplier * 8,
-                                color: Colors.white),
-                          ).tr(),
                         ],
                       ),
                     ),
@@ -83,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: 'By using LuiV, you agree to the ',
+                        text: 'By using Livu, you agree to the ',
                         style: TextStyle(
                             color: Colors.grey[300],
                             fontSize: SizeConfig.textMultiplier * 1.5),

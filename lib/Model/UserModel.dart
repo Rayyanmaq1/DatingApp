@@ -36,7 +36,7 @@ class UserModel {
 
   factory UserModel.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     return UserModel(
-      id: snapshot.documentID,
+      id: snapshot.id,
       name: snapshot.get('Name'),
       imageUrl: snapshot.get('Image'),
       birthDay: snapshot.get('BirthDay'),

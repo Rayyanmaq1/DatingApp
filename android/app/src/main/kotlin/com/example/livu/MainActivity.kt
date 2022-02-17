@@ -1,4 +1,4 @@
-package com.virtualsoft.livu
+package com.dating.livu
 
 import io.flutter.embedding.android.FlutterActivity
 

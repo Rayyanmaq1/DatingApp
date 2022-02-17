@@ -50,12 +50,12 @@ class _EditProfileState extends State<EditProfile> {
 
   List imageList = [];
   final _picker = ImagePicker();
-  File video;
+  XFile video;
   dynamic uploadedVideoLink;
   Future getImageLibrary({indexValue}) async {
     imageList = userdataCtr.userModel.value.imageList;
-    var gallery =
-        await ImagePicker.pickImage(source: ImageSource.gallery, maxWidth: 700);
+    var gallery = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, maxWidth: 700);
     var imagePath = File(gallery.path);
 
     if (gallery != null) {
@@ -275,8 +275,8 @@ class _EditProfileState extends State<EditProfile> {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () async {
-                    video = await ImagePicker.pickVideo(
-                        source: ImageSource.gallery);
+                    video = await ImagePicker()
+                        .pickVideo(source: ImageSource.gallery);
                     uploadedVideoLink = await UserDataServices()
                         .uploadpetImage(video, UniqueKey().toString());
                     await UserDataServices().setVideo(uploadedVideoLink);

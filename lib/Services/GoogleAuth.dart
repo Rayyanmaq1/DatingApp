@@ -19,6 +19,7 @@ class GmailAuthentication {
 
     final User user =
         await _auth.signInWithCredential(credential).then((value) {
+      print("USER $value");
       return value.user;
     });
 

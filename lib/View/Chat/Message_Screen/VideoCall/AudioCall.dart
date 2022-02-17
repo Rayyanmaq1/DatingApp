@@ -7,7 +7,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:livu/Services/PrivateVideoCall.dart';
 import 'package:livu/theme.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:livu/Model/VideoCallModel.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
@@ -54,9 +53,9 @@ class _AudioCallPageState extends State<AudioCallPage> {
   // Initialize the app
   Future<void> initPlatformState() async {
     // Get microphone permission
-    await PermissionHandler().requestPermissions(
-      [PermissionGroup.microphone],
-    );
+    // await PermissionHandler().requestPermissions(
+    //   [PermissionGroup.microphone],
+    // );
 
     // Create RTC client instance
     await RtcEngine.create(APP_ID).then((value) {

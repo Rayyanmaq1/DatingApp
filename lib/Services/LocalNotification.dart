@@ -25,7 +25,7 @@ class _LocalNotificationState extends State<LocalNotification> {
 
   Future<void> _demoNotification() async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'channel_ID', 'channel name', 'channel description',
+        'channel_ID', 'channel name',
         importance: Importance.max,
         priority: Priority.high,
         ticker: 'test ticker');

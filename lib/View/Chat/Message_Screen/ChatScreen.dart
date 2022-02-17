@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker/emoji_picker.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:livu/Services/FirebaseMessaging.dart';
 import 'package:livu/Services/Last_MessageService.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'VideoCall/Dial.dart';
@@ -116,12 +115,18 @@ class ChatScreenState extends State<ChatScreen> {
                         //comparing timestamp of messages to check which one would appear first
                         itemBuilder: (_, DataSnapshot messageSnapshot,
                             Animation<double> animation, ref) {
-                          if ((messageSnapshot.value[SENDER_UID] == userId ||
-                                  messageSnapshot.value[RECEIVER_UID] ==
+                          final json =
+                              messageSnapshot.value as Map<String, dynamic>;
+
+                          if (((messageSnapshot.value as Map)[SENDER_UID] ==
+                                      userId ||
+                                  (messageSnapshot.value
+                                          as Map)[RECEIVER_UID] ==
                                       userId) &&
-                              (messageSnapshot.value[SENDER_UID] ==
+                              ((messageSnapshot.value as Map)[SENDER_UID] ==
                                       widget.lastMessage.uid ||
-                                  messageSnapshot.value[RECEIVER_UID] ==
+                                  (messageSnapshot.value
+                                          as Map)[RECEIVER_UID] ==
                                       widget.lastMessage.uid)) {
                             return new ChatMessageListItem(
                               messageSnapshot: messageSnapshot,
@@ -339,7 +344,7 @@ class ChatScreenState extends State<ChatScreen> {
                 ),
                 GestureDetector(
                     onTap: () async {
-                      var gallery = await ImagePicker.pickImage(
+                      var gallery = await ImagePicker().pickImage(
                           source: ImageSource.gallery,
                           maxWidth: 200,
                           maxHeight: 300);
@@ -566,19 +571,39 @@ class ChatScreenState extends State<ChatScreen> {
       height: showEmoji ? SizeConfig.heightMultiplier * 35 : 0,
       // duration: Duration(seconds: 1),
       child: EmojiPicker(
-        rows: 3,
-        columns: 7,
-        selectedCategory: Category.SMILEYS,
-        buttonMode: ButtonMode.CUPERTINO,
-        bgColor: greyColor,
-        onEmojiSelected: (emoji, category) {
-          // print(emoji);
-          setState(() {
-            _isComposingMessage = true;
-            _textEditingController.text =
-                _textEditingController.text + emoji.emoji;
-          });
+        onEmojiSelected: (category, emoji) {
+          // Do something when emoji is tapped
         },
+        onBackspacePressed: () {
+          // Backspace-Button tapped logic
+          // Remove this line to also remove the button in the UI
+        },
+        config: Config(
+            columns: 7,
+            emojiSizeMax: 32 *
+                (Platform.isIOS
+                    ? 1.30
+                    : 1.0), // Issue: https://github.com/flutter/flutter/issues/28894
+            verticalSpacing: 0,
+            horizontalSpacing: 0,
+            initCategory: Category.RECENT,
+            bgColor: Color(0xFFF2F2F2),
+            indicatorColor: Colors.blue,
+            iconColor: Colors.grey,
+            iconColorSelected: Colors.blue,
+            progressIndicatorColor: Colors.blue,
+            backspaceColor: Colors.blue,
+            skinToneDialogBgColor: Colors.white,
+            skinToneIndicatorColor: Colors.grey,
+            enableSkinTones: true,
+            showRecentsTab: true,
+            recentsLimit: 28,
+            noRecentsText: "No Recents",
+            noRecentsStyle:
+                const TextStyle(fontSize: 20, color: Colors.black26),
+            tabIndicatorAnimDuration: kTabScrollDuration,
+            categoryIcons: const CategoryIcons(),
+            buttonMode: ButtonMode.MATERIAL),
       ),
     );
   }

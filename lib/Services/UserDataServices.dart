@@ -125,8 +125,8 @@ class UserDataServices {
   }
 
   setImage() async {
-    var gallery = await ImagePicker.pickImage(
-        source: ImageSource.gallery, maxWidth: 200, maxHeight: 300);
+    var gallery = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, maxWidth: 200, maxHeight: 300);
     print(gallery.path);
     var snapshot = await FirebaseStorage.instance
         .ref()

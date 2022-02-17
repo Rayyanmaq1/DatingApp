@@ -11,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 var currentUserEmail;
 
+// ignore: must_be_immutable
 class ChatMessageListItem extends StatelessWidget {
   final DataSnapshot messageSnapshot;
   final Animation animation;
@@ -30,7 +31,7 @@ class ChatMessageListItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         child: new Row(
           children: Get.find<UserDataController>().userModel.value.id ==
-                  messageSnapshot.value[SENDER_UID]
+                  (messageSnapshot.value as Map)[SENDER_UID]
               ? getSentMessageLayout()
               : getReceivedMessageLayout(),
         ),
@@ -44,23 +45,26 @@ class ChatMessageListItem extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            new Text(messageSnapshot.value[SENDER_NAME],
+            new Text((messageSnapshot.value as Map)[SENDER_NAME],
                 style: new TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey[300],
                     fontWeight: FontWeight.bold)),
             new Container(
               margin: const EdgeInsets.only(top: 12.0),
-              child: messageSnapshot.value[MESSAGE_IMAGE_URL] != null
+              child: (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
-                        print(messageSnapshot.value[MESSAGE_IMAGE_URL]);
+                        print(
+                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL]);
 
                         Get.to(() => FullImageViewScreen(
-                            url: messageSnapshot.value[MESSAGE_IMAGE_URL]));
+                            url: (messageSnapshot.value
+                                as Map)[MESSAGE_IMAGE_URL]));
                       },
                       child: CachedNetworkImage(
-                        imageUrl: messageSnapshot.value[MESSAGE_IMAGE_URL],
+                        imageUrl:
+                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
                         imageBuilder: (context, imageProvider) => Container(
                           height: SizeConfig.heightMultiplier * 14,
                           width: SizeConfig.widthMultiplier * 48,
@@ -74,16 +78,16 @@ class ChatMessageListItem extends StatelessWidget {
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                       //       new Image.network(
-                      //   messageSnapshot.value[MESSAGE_IMAGE_URL],
+                      //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
                       //   width: 250.0,
                       // ),
                     )
                   // new Image.network(
-                  //   messageSnapshot.value[MESSAGE_IMAGE_URL],
+                  //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
                   //   width: 250.0,
                   // )
                   : new Text(
-                      messageSnapshot.value[MESSAGE_TEXT],
+                      (messageSnapshot.value as Map)[MESSAGE_TEXT],
                       style: TextStyle(color: Colors.grey),
                     ),
             ),
@@ -96,8 +100,8 @@ class ChatMessageListItem extends StatelessWidget {
           new Container(
               margin: const EdgeInsets.only(left: 8.0),
               child: new CircleAvatar(
-                backgroundImage:
-                    new NetworkImage(messageSnapshot.value[SENDER_IMAGE_URL]),
+                backgroundImage: new NetworkImage(
+                    (messageSnapshot.value as Map)[SENDER_IMAGE_URL]),
               )),
         ],
       ),
@@ -114,8 +118,8 @@ class ChatMessageListItem extends StatelessWidget {
           new Container(
               margin: const EdgeInsets.only(right: 8.0),
               child: new CircleAvatar(
-                backgroundImage:
-                    new NetworkImage(messageSnapshot.value[SENDER_IMAGE_URL]),
+                backgroundImage: new NetworkImage(
+                    (messageSnapshot.value as Map)[SENDER_IMAGE_URL]),
               )),
         ],
       ),
@@ -123,21 +127,23 @@ class ChatMessageListItem extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(messageSnapshot.value[SENDER_NAME],
+            new Text((messageSnapshot.value as Map)[SENDER_NAME],
                 style: new TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey[300],
                     fontWeight: FontWeight.bold)),
             new Container(
               margin: const EdgeInsets.only(top: 5.0),
-              child: messageSnapshot.value[MESSAGE_IMAGE_URL] != null
+              child: (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
                         Get.to(() => FullImageViewScreen(
-                            url: messageSnapshot.value[MESSAGE_IMAGE_URL]));
+                            url: (messageSnapshot.value
+                                as Map)[MESSAGE_IMAGE_URL]));
                       },
                       child: CachedNetworkImage(
-                        imageUrl: messageSnapshot.value[MESSAGE_IMAGE_URL],
+                        imageUrl:
+                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
                         imageBuilder: (context, imageProvider) => Container(
                           height: SizeConfig.heightMultiplier * 14,
                           width: SizeConfig.widthMultiplier * 48,
@@ -151,14 +157,14 @@ class ChatMessageListItem extends StatelessWidget {
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                       //       new Image.network(
-                      //   messageSnapshot.value[MESSAGE_IMAGE_URL],
+                      //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
                       //   width: 250.0,
                       // ),
                     )
                   : 'app_name'.tr() == 'KIM LIVE'
                       ? FutureBuilder(
                           future: translator.translate(
-                              messageSnapshot.value[MESSAGE_TEXT],
+                              (messageSnapshot.value as Map)[MESSAGE_TEXT],
                               from: 'ar',
                               to: 'en'),
                           builder: (context, snapshot) {
@@ -174,7 +180,7 @@ class ChatMessageListItem extends StatelessWidget {
                         )
                       : FutureBuilder(
                           future: translator.translate(
-                              messageSnapshot.value[MESSAGE_TEXT],
+                              (messageSnapshot.value as Map)[MESSAGE_TEXT],
                               from: 'en',
                               to: 'ar'),
                           builder: (context, snapshot) {

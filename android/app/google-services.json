@@ -1,87 +1,41 @@
 {
   "project_info": {
-    "project_number": "585605911837",
-    "firebase_url": "https://kimapp-d73b4-default-rtdb.firebaseio.com",
-    "project_id": "kimapp-d73b4",
-    "storage_bucket": "kimapp-d73b4.appspot.com"
+    "project_number": "372004875041",
+    "project_id": "livu-d5848",
+    "storage_bucket": "livu-d5848.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585605911837:android:1b012d878077d263ce7df4",
+        "mobilesdk_app_id": "1:372004875041:android:874249d43ca287bbc7ac60",
         "android_client_info": {
-          "package_name": "com.example.livu"
+          "package_name": "com.dating.livu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "585605911837-21188vr7dh1sphdd2q1ki7rb6ia290j7.apps.googleusercontent.com",
+          "client_id": "372004875041-bnq8c4s0rqfo85mlh26kmu16abr28551.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.livu",
-            "certificate_hash": "e351e2e7d1c37f2b66662e284056c4e8f551a5cd"
+            "package_name": "com.dating.livu",
+            "certificate_hash": "02263f05cb14ec7dce8d1d07d50326c51de2d0c7"
           }
         },
         {
-          "client_id": "585605911837-p6kmf5unjok7ke6dqvql2vb41foutkqj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.livu",
-            "certificate_hash": "fbc261dd88692b2d8aa130671f847c3f241d1a9d"
-          }
-        },
-        {
-          "client_id": "585605911837-bv1u8eluuhog8un5bu98dl62lt144lh5.apps.googleusercontent.com",
+          "client_id": "372004875041-kv097n8pkoc1bppinbad1pttrq8ia20g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCb5JVTXYCSl9nhYrvBhg6QUZSK5BXdt2Q"
+          "current_key": "AIzaSyDT_GVtyfcUrKFNgLLblOCzXmzoQ2970go"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "585605911837-bv1u8eluuhog8un5bu98dl62lt144lh5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:585605911837:android:e1c266b93bc32f27ce7df4",
-        "android_client_info": {
-          "package_name": "com.virtualsoft.livu"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "585605911837-eqr5a1a8475pdb77vt77gdchfplrso6i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.virtualsoft.livu",
-            "certificate_hash": "fbc261dd88692b2d8aa130671f847c3f241d1a9d"
-          }
-        },
-        {
-          "client_id": "585605911837-bv1u8eluuhog8un5bu98dl62lt144lh5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCb5JVTXYCSl9nhYrvBhg6QUZSK5BXdt2Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "585605911837-bv1u8eluuhog8un5bu98dl62lt144lh5.apps.googleusercontent.com",
+              "client_id": "372004875041-kv097n8pkoc1bppinbad1pttrq8ia20g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
