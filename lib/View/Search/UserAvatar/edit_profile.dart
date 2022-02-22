@@ -442,6 +442,7 @@ class _EditProfileState extends State<EditProfile> {
         "Edit_profile",
         style: TextStyle(color: Colors.white),
       ).tr(),
+      iconTheme: IconThemeData(color: Colors.white),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 8.0),

@@ -12,6 +12,7 @@ import 'package:livu/Services/HistoryService.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:livu/Model/HistoryModel.dart';
 import 'package:livu/Controller/HistoryController.dart';
+import 'package:lottie/lottie.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Services/PrivateVideoCall.dart';
 import 'package:livu/Services/ReportService.dart';
@@ -30,6 +31,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       backgroundColor: greyColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: greyColor,
         title: Text(
           "History",
@@ -39,6 +41,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ).tr(),
       ),
       body: GetX<HistoryController>(builder: (controller) {
+        if (controller.videoCallhistoryController.length == 0) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/lotiesAnimation/History.json'),
+              Text(
+                'No History',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ],
+          );
+        }
         return Column(
           children: [
             Container(

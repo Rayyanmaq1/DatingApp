@@ -4,6 +4,7 @@ import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
+import 'package:lottie/lottie.dart';
 import 'SearchFriends.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +24,13 @@ class FriendsScreen extends StatelessWidget {
               pinned: false,
               floating: true,
               elevation: 0,
-              title: Text('Friend').tr(),
+              iconTheme: IconThemeData(color: Colors.white),
+              title: Text(
+                'Friend',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ).tr(),
               backgroundColor: greyColor,
               actions: [
                 Padding(
@@ -77,14 +84,31 @@ class FriendsScreen extends StatelessWidget {
                                   },
                                 )
                               : Center(
-                                  child: Text(
-                                    'No_Fav_Friend',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize:
-                                            SizeConfig.textMultiplier * 1.3),
-                                  ).tr(),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height:
+                                            SizeConfig.heightMultiplier * 25,
+                                        width: SizeConfig.heightMultiplier * 25,
+                                        child: Lottie.asset(
+                                            'assets/lotiesAnimation/AddFriend.json'),
+                                      ),
+                                      // SizedBox(
+                                      //   height: SizeConfig.heightMultiplier * 1,
+                                      // ),
+                                      Text(
+                                        'No_Friend',
+                                        style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.heightMultiplier * 2.5,
+                                          color: purpleColor,
+                                        ),
+                                      ).tr(),
+                                    ],
+                                  ),
                                 );
+                      ;
                     },
                   ),
                   SizedBox(
@@ -130,10 +154,29 @@ class FriendsScreen extends StatelessWidget {
                                   },
                                 )
                               : Center(
-                                  child: Text(
-                                    'No_Friend',
-                                    style: TextStyle(color: Colors.white),
-                                  ).tr(),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height:
+                                            SizeConfig.heightMultiplier * 25,
+                                        width: SizeConfig.heightMultiplier * 25,
+                                        child: Lottie.asset(
+                                            'assets/lotiesAnimation/AddFriend.json'),
+                                      ),
+                                      // SizedBox(
+                                      //   height: SizeConfig.heightMultiplier * 1,
+                                      // ),
+                                      Text(
+                                        'No_Friend',
+                                        style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.heightMultiplier * 2.5,
+                                          color: purpleColor,
+                                        ),
+                                      ).tr(),
+                                    ],
+                                  ),
                                 );
                     },
                   ),

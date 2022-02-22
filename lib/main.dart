@@ -33,8 +33,11 @@ class MyApp extends StatelessWidget {
           supportedLocales: [Locale('en', 'US'), Locale('ar', 'AE')],
           locale: Locale(context.locale.languageCode),
 
-          theme:
-              ThemeData(primarySwatch: Colors.grey, primaryColor: Colors.black),
+          theme: ThemeData(
+            primarySwatch: Colors.grey,
+            primaryColor: Colors.black,
+            iconTheme: IconThemeData(color: Colors.white),
+          ),
           // locale: DevicePreview.locale(context), // Add the locale here
           // builder: DevicePreview.appBuilder, // Add the builder here
           debugShowCheckedModeBanner: false,

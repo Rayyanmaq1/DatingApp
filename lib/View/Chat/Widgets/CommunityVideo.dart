@@ -16,11 +16,11 @@ class CommunityVideo extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: SizeConfig.heightMultiplier * 10,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: SizeConfig.widthMultiplier * 60,
+                  width: SizeConfig.widthMultiplier * 50,
                   child: new Stack(
                     alignment: AlignmentDirectional.centerStart,
                     children: <Widget>[

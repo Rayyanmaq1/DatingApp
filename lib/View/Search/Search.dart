@@ -333,7 +333,6 @@ class _SearchState extends State<Search> {
       height: 20,
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
-        color: Colors.blue,
         shape: BoxShape.circle,
         border: Border.all(width: 1, color: Colors.white),
       ),

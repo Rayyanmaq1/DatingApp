@@ -67,7 +67,7 @@ dependencies:
   http_auth: ^1.0.1
   particles_flutter: ^0.1.4
   share: ^2.0.4
-
+  lottie: ^1.2.2
 
 
 dev_dependencies:
@@ -92,6 +92,7 @@ flutter:
     - assets/User/
     - lang/ar-EG.json
     - lang/en-US.json
+    - assets/lotiesAnimation/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -5,6 +5,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:lottie/lottie.dart';
 
 class SearchFriends extends StatefulWidget {
   @override
@@ -27,6 +28,7 @@ class _SearchFriendsState extends State<SearchFriends> {
       scaffold: Scaffold(
           backgroundColor: greyColor,
           appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
             backgroundColor: greyColor,
             elevation: 0,
             title: TextField(
@@ -60,62 +62,110 @@ class _SearchFriendsState extends State<SearchFriends> {
               )
             ],
           ),
-          body: FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('UserData')
-                  .doc(FirebaseAuth.instance.currentUser.uid)
-                  .collection('last_message')
-                  .get(),
-              builder: (context, snapshot) {
-                if (ConnectionState.waiting == snapshot.connectionState) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        return search.length != 0
-                            ? search.toString().toUpperCase() ==
-                                    snapshot.data.docs[index]
-                                        .get('Name')
-                                        .toString()
-                                        .toUpperCase()
-                                        .substring(0, search.length)
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        backgroundImage: NetworkImage(
+          body: search == ''
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: SizeConfig.heightMultiplier * 30,
+                        width: SizeConfig.heightMultiplier * 30,
+                        child: Lottie.asset(
+                            'assets/lotiesAnimation/NoSearch.json'),
+                      ),
+
+                      // SizedBox(
+                      //   height: SizeConfig.heightMultiplier * 1,
+                      // ),
+                    ],
+                  ),
+                )
+              : FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection('UserData')
+                      .doc(FirebaseAuth.instance.currentUser.uid)
+                      .collection('last_message')
+                      .get(),
+                  builder: (context, snapshot) {
+                    if (ConnectionState.waiting == snapshot.connectionState) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      if (snapshot.data.docs.length != 0) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              return search.length != 0
+                                  ? search.toString().toUpperCase() ==
                                           snapshot.data.docs[index]
-                                              .get('ImageUrl'),
+                                              .get('Name')
+                                              .toString()
+                                              .toUpperCase()
+                                              .substring(0, search.length)
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                snapshot.data.docs[index]
+                                                    .get('ImageUrl'),
+                                              ),
+                                              radius: 30,
+                                            ),
+                                            title: Text(
+                                              snapshot.data.docs[index]
+                                                  .get('Name'),
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        )
+                                      : Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            snapshot.data.docs[index]
+                                                .get('ImageUrl'),
+                                          ),
+                                          radius: 30,
                                         ),
-                                        radius: 30,
+                                        title: Text(
+                                          snapshot.data.docs[index].get('Name'),
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
-                                      title: Text(
-                                        snapshot.data.docs[index].get('Name'),
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  )
-                                : Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                      snapshot.data.docs[index].get('ImageUrl'),
-                                    ),
-                                    radius: 30,
-                                  ),
-                                  title: Text(
-                                    snapshot.data.docs[index].get('Name'),
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                    );
+                            });
+                      } else {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: SizeConfig.heightMultiplier * 30,
+                                width: SizeConfig.heightMultiplier * 30,
+                                child: Lottie.asset(
+                                    'assets/lotiesAnimation/NoSearch.json'),
+                              ),
+
+                              // SizedBox(
+                              //   height: SizeConfig.heightMultiplier * 1,
+                              // ),
+                              Text(
+                                'No_Friend',
+                                style: TextStyle(
+                                  fontSize: SizeConfig.heightMultiplier * 2.5,
+                                  color: purpleColor,
                                 ),
-                              );
-                      });
-                }
-              })),
+                              ).tr(),
+                            ],
+                          ),
+                        );
+                      }
+                    }
+                  })),
     );
   }
 }

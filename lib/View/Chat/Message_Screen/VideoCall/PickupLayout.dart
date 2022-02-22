@@ -17,7 +17,7 @@ class PickupLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(Get.find<UserDataController>().userModel.value.id);
-    final userProvider = Get.find<UserDataController>().userModel.value;
+    // final userProvider = Get.find<UserDataController>().userModel.value;
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance

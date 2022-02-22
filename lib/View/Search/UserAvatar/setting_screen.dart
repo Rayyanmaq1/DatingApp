@@ -35,6 +35,7 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: lite_black_color,
         appBar: AppBar(
           elevation: 2,
+          iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: black_color,
           title: Text(
             "Setting Screen",

@@ -17,6 +17,7 @@ class BuyCoins extends StatefulWidget {
 
 class _BuyCoinsState extends State<BuyCoins> {
   @override
+  // ignore: override_on_non_overriding_member
   List<BuyCoin> data = getCoinData();
 
 // add you merchantId as per apple developer account      androidPayMode: 'test',     ),  );}
@@ -48,8 +49,10 @@ class _BuyCoinsState extends State<BuyCoins> {
           slivers: [
             SliverAppBar(
               pinned: true,
-              title: Text('buy_coins').tr(),
+              title:
+                  Text('buy_coins', style: TextStyle(color: Colors.white)).tr(),
               backgroundColor: greyColor,
+              iconTheme: IconThemeData(color: Colors.white),
             ),
             SliverToBoxAdapter(
               child: Row(

@@ -63,7 +63,11 @@ class ChatScreenState extends State<ChatScreen> {
       backgroundColor: greyColor,
       appBar: new AppBar(
         backgroundColor: greyColor,
-        title: Text('Customer Service'),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'Customer Service',
+          style: TextStyle(color: Colors.white),
+        ),
         elevation: 0,
       ),
       body: Column(

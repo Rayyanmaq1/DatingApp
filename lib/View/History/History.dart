@@ -31,7 +31,11 @@ class _HistoryState extends State<History> {
         backgroundColor: greyColor,
         appBar: AppBar(
           elevation: 0,
-          title: Text('History').tr(),
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text(
+            'History',
+            style: TextStyle(color: Colors.white),
+          ).tr(),
           backgroundColor: greyColor,
         ),
         body: Column(

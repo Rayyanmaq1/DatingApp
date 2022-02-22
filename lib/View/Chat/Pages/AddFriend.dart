@@ -8,6 +8,7 @@ import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:lottie/lottie.dart';
 
 class AddFriend extends StatefulWidget {
   @override
@@ -28,8 +29,12 @@ class _AddFriendState extends State<AddFriend> {
       scaffold: Scaffold(
         backgroundColor: greyColor,
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: purpleColor,
-          title: Text('Hi').tr(),
+          title: Text(
+            'Hi',
+            style: TextStyle(color: Colors.white),
+          ).tr(),
           // actions: [
           //   Padding(
           //     padding: const EdgeInsets.all(12.0),
@@ -47,6 +52,31 @@ class _AddFriendState extends State<AddFriend> {
             Expanded(
               child: GetX<FriendRequestController>(builder: (controller) {
                 // print(controller.otherUserData.length);
+                if (controller.friendRequestCtr.length == 0) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: SizeConfig.heightMultiplier * 25,
+                          width: SizeConfig.heightMultiplier * 25,
+                          child: Lottie.asset(
+                              'assets/lotiesAnimation/AddFriend.json'),
+                        ),
+                        // SizedBox(
+                        //   height: SizeConfig.heightMultiplier * 1,
+                        // ),
+                        Text(
+                          'No_Friend',
+                          style: TextStyle(
+                            fontSize: SizeConfig.heightMultiplier * 2.5,
+                            color: purpleColor,
+                          ),
+                        ).tr(),
+                      ],
+                    ),
+                  );
+                }
                 return ListView.separated(
                   separatorBuilder: (context, index) {
                     return Divider(

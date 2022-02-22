@@ -186,11 +186,14 @@ class _ChatPageState extends State<ChatPage> {
             pinned: false,
             floating: true,
             elevation: 0,
-            title: Text('Message').tr(),
+            title: Text(
+              'Message',
+              style: TextStyle(color: Colors.white),
+            ).tr(),
             backgroundColor: greyColor,
             actions: [
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(16.0),
                 child: GestureDetector(
                   onTap: () => Get.to(() => FriendsScreen()),
                   child: FaIcon(
