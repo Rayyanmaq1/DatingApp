@@ -48,7 +48,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               Lottie.asset('assets/lotiesAnimation/History.json'),
               Text(
                 'No History',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: purpleColor, fontSize: 20),
               ),
             ],
           );

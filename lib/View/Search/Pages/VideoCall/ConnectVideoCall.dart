@@ -92,17 +92,22 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             )),
         elevation: 0,
       ),
-      body: FutureBuilder(
-          future:
-              FirebaseFirestore.instance.collection('SearchVideoCall').get(),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('SearchVideoCall')
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: Lottie.asset('assets/lotiesAnimation/Loading.json'),
+                child: Container(
+                    height: Get.height,
+                    width: Get.width,
+                    color: greyColor,
+                    child: Lottie.asset('assets/lotiesAnimation/Loading.json')),
               );
             }
 
-            if (snapshot.data.docs.length >= 0) {
+            if (snapshot.data.docs.length >= 2) {
               return StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('ConnectedVideoCall')
@@ -308,7 +313,28 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     );
                   });
             }
-            return Container();
+            return Center(
+              child: Container(
+                color: greyColor,
+                height: Get.height,
+                width: Get.width,
+                child: Column(
+                  children: [
+                    Lottie.asset(
+                      'assets/lotiesAnimation/NoSearch.json',
+                      height: Get.height * 0.5,
+                      width: Get.width * 0.5,
+                    ),
+                    Text(
+                      'No one Avaiable yet',
+                      style: TextStyle(
+                          color: purpleColor,
+                          fontSize: SizeConfig.textMultiplier * 3),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }),
     );
   }

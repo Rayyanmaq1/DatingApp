@@ -1,4 +1,4 @@
-import 'package:get/get.dart ';
+import 'package:get/get.dart';
 import 'package:livu/Model/VideoModel.dart';
 import 'package:livu/Services/VideoLinkServices.dart';
 

@@ -3,6 +3,7 @@ import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:lottie/lottie.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/Controller/HistoryController.dart';
@@ -215,10 +216,9 @@ class TheyMissed extends StatelessWidget {
                 )
               : Container(
                   child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: SizeConfig.heightMultiplier * 10,
-                    ),
+                    Lottie.asset('assets/lotiesAnimation/missed.json'),
                     Text(
                       'No Match history yet, out there and connect',
                       style: TextStyle(color: Colors.white),

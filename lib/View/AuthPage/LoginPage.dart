@@ -69,44 +69,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'By using Livu, you agree to the ',
-                        style: TextStyle(
-                            color: Colors.grey[300],
-                            fontSize: SizeConfig.textMultiplier * 1.5),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Term of Service',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                print('tapped');
-                              },
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: SizeConfig.textMultiplier * 1.5,
-                                decoration: TextDecoration.underline),
-                            children: [],
-                          ),
-                          TextSpan(text: ' and '),
-                          TextSpan(
-                            text: '\nPrivacy Policy',
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                print('23');
-                              },
-                            style: TextStyle(
-                                fontSize: SizeConfig.textMultiplier * 1.5,
-                                color: Colors.white,
-                                decoration: TextDecoration.underline),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   PhysicalModel(
                     elevation: 4,
                     color: Color.fromRGBO(66, 103, 178, 1),
@@ -228,6 +190,44 @@ class _LoginPageState extends State<LoginPage> {
                         width: MediaQuery.of(context).size.width * 0.9,
                       ),
                     ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(12),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'By using Livu, you agree to the ',
+                style: TextStyle(
+                    color: Colors.grey[300],
+                    fontSize: SizeConfig.textMultiplier * 1.5),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Term of Service',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        print('tapped');
+                      },
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.textMultiplier * 1.5,
+                        decoration: TextDecoration.underline),
+                    children: [],
+                  ),
+                  TextSpan(text: ' and '),
+                  TextSpan(
+                    text: '\nPrivacy Policy',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        print('23');
+                      },
+                    style: TextStyle(
+                        fontSize: SizeConfig.textMultiplier * 1.5,
+                        color: Colors.white,
+                        decoration: TextDecoration.underline),
                   ),
                 ],
               ),

@@ -8,6 +8,7 @@ import 'package:livu/Controller/HistoryController.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
+import 'package:lottie/lottie.dart';
 import 'SeeUserProfile.dart';
 import 'package:livu/Services/HistoryService.dart';
 import 'package:livu/Model/HistoryModel.dart';
@@ -208,10 +209,9 @@ class _ImissedState extends State<Imissed> {
                 )
               : Container(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 10,
-                      ),
+                      Lottie.asset('assets/lotiesAnimation/missed.json'),
                       Text(
                         'No Match history yet, out there and connect',
                         style: TextStyle(color: Colors.white),
