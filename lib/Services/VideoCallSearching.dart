@@ -16,10 +16,11 @@ class VideoCallService {
       'Name': currentUser.name,
       'ImageUrl': currentUser.imageUrl,
       'Likes': currentUser.likes,
-      'SeletedGender': Seleted_Genter_value,
+      'SelectedGender': Seleted_Genter_value,
       'Location': currentUser.location,
       'ChannelId': 'Id',
       'Age': currentUser.age,
+      'timeStamp': DateTime.now().millisecondsSinceEpoch,
     };
 
     FirebaseFirestore.instance
