@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'dart:math';
 import 'package:get/route_manager.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'dart:async';
 import 'package:livu/SizedConfig.dart';
+import 'package:livu/View/Search/Pages/VideoCall/VideoCall.dart';
 import 'package:livu/theme.dart';
 import 'package:camera/camera.dart';
 import 'package:get/get.dart' hide Trans;
@@ -111,6 +113,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               return StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('ConnectedVideoCall')
+                      .where('connectedUid',
+                          arrayContains: userData.userModel.value.id)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -125,18 +129,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       );
                     }
                     if (snapshot.hasData) {
-                      print("STEAM LENGTH${snapshot.data.docs}");
-                      // if (snapshot.data.docs.length >= 0) {
-                      //   return Container(
-                      //     height: Get.height,
-                      //     width: Get.width,
-                      //     color: greyColor,
-                      //     child: Center(
-                      //       child: Lottie.asset(
-                      //           'assets/lotiesAnimation/NoSearch.json'),
-                      //     ),
-                      //   );
-                      // }
+                      if (snapshot.data.docs.length != 0)
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Get.off(() => VideoCall(
+                                id: snapshot.data.docs[0].id,
+                                cameraController: widget.cameraController,
+                                matchedInfo: snapshot.data.docs[0].data(),
+                              ));
+                          //yourcode
+                        });
                     }
                     return Stack(
                       children: [

@@ -10,41 +10,33 @@ var fcm=admin.messaging();
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 exports.connectVideocall= functions.firestore.document('SearchVideoCall/{id}').onCreate(async(snap,context)=>{
-   const newValue =await snap.data();
+   const newValue =snap.data();
 
   const genderSearch =await newValue.SelectedGender;
     console.log('selected',genderSearch);
-    if(genderSearch == 1){
-        await fb.collection('SearchVideoCall').where('SelectedGender', '==' ,1).orderBy('timeStamp','desc').get().then(snapshot => {
-        if(snapshot.docs.length>2){
-            snapshot.docs.map((e)=>{
-                if(e.Uid != newValue.Uid){
+        await fb.collection('SearchVideoCall').orderBy('timeStamp','desc').get().then(snapshot => {
+            for (var i = 0; i < snapshot.docs.length; i++) {
+                if(snapshot.docs[i].data().Uid != newValue.Uid && snapshot.docs[i].data().SelectedGender == genderSearch){
                     let uniqueID = (Math.random() + 1).toString(36).substring(7);
-                     fb.collection('${ConnectedVideocall}').add({ 
-
-                      }).then(ref => {
-                    console.log('Added document with ID: ', ref.id)
+                    fb.collection('ConnectedVideoCall').add({
+                        'ReciverUid': snapshot.docs[i].data().Uid,
+                        'ReciverName': snapshot.docs[i].data().Name,
+                        'ReciverImageUrl': snapshot.docs[i].data().ImageUrl,
+                        'ReciverLikes': snapshot.docs[i].data().Likes,
+                        'ReciverLocation': snapshot.docs[i].data().Location,
+                        'ReciverAge': snapshot.docs[i].data().Age,
+                        'SenderUid': newValue.Uid,
+                        'SenderName': newValue.Name,
+                        'SenderImageUrl': newValue.ImageUrl,
+                        'SenderLikes': newValue.Likes,
+                        'SenderLocation': newValue.Location,
+                        'SenderAge': newValue.Age,
+                        "ChannelID":uniqueID,
+                        "timeStamp":new Date().getTime(),
+                        "connectedUid":[newValue.Uid,snapshot.docs[i].data().Uid],
                     });
-
-
                     break;
                 }
-            });
-        }
-        
-    });
-    }
-   else if(genderSearch == 2){
-        await fb.collection('SearchVideoCall').where('SelectedGender', '==' ,2).orderBy('timeStamp','desc').get().then(snapshot => {
-        size = snapshot.docs.length;
-        console.log("MALE SIZE" , size);
-    });
-   }
-   else if(genderSearch == 3){
-        await fb.collection('SearchVideoCall').where('SelectedGender', '==' ,3).orderBy('timeStamp','desc').get().then(snapshot => {
-        size = snapshot.docs.length;
-        console.log("FEMALE SIZE" , size);
-    });
- }
-   
-});
+              }        
+    });  
+ });
