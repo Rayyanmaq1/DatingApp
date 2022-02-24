@@ -13,6 +13,7 @@ import 'package:livu/Model/VideoCallModel.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:livu/View/Chat/Message_Screen/VideoCall/Dial.dart';
+import 'package:lottie/lottie.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -31,25 +32,43 @@ class _ExploreState extends State<Explore> {
     //print(getData.length);
     return PickupLayout(
       scaffold: Scaffold(
-          backgroundColor: greyColor,
-          body: PageView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: videoList.length,
-            itemBuilder: (context, index) {
-              return VideoPlayerItem(
-                videoUrl: videoList[index].videoLink,
-                name: videoList[index].userName,
-                location: videoList[index].location,
-                uid: videoList[index].uid,
-                interest: videoList[index].interest,
-                size: MediaQuery.of(context).size,
-              );
-            },
-          )),
+        backgroundColor: greyColor,
+        body: videoList.length != 0
+            ? PageView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: videoList.length,
+                itemBuilder: (context, index) {
+                  return VideoPlayerItem(
+                    videoUrl: videoList[index].videoLink,
+                    name: videoList[index].userName,
+                    location: videoList[index].location,
+                    uid: videoList[index].uid,
+                    interest: videoList[index].interest,
+                    size: MediaQuery.of(context).size,
+                  );
+                },
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      'assets/lotiesAnimation/CommunityVideo.json',
+                    ),
+                  ),
+                  Text(
+                    'No Video to show',
+                    style: TextStyle(color: purpleColor, fontSize: 18),
+                  )
+                ],
+              ),
+      ),
     );
   }
 }
 
+// ignore: must_be_immutable
 class VideoPlayerItem extends StatefulWidget {
   final String videoUrl;
   final String name;
