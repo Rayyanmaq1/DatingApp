@@ -115,8 +115,7 @@ class ChatScreenState extends State<ChatScreen> {
                         //comparing timestamp of messages to check which one would appear first
                         itemBuilder: (_, DataSnapshot messageSnapshot,
                             Animation<double> animation, ref) {
-                          final json =
-                              messageSnapshot.value as Map<String, dynamic>;
+                          final json = messageSnapshot.value;
 
                           if (((messageSnapshot.value as Map)[SENDER_UID] ==
                                       userId ||
