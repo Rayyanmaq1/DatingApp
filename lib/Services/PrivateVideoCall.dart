@@ -111,24 +111,10 @@ class PrivateCallService {
 
   void _sendLatestMessage(
       String latestMessage, String tosendUid, tosendImage, tosendName) {
-    print(USERS_COLLECTION + ' here  ' + LATEST_MESSAGES);
-    CollectionReference _receiverColl = FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(tosendUid)
-        .collection('last_message');
-    CollectionReference _userColl = FirebaseFirestore.instance
-        .collection(USERS_COLLECTION)
-        .doc(currentUserData.id)
-        .collection('last_message');
+    CollectionReference docRef =
+        FirebaseFirestore.instance.collection('lastMessage');
 
-    // DocumentReference _recRef = FirebaseFirestore.instance
-    //     .collection(USERS_COLLECTION)
-    //     .doc(widget.lastMessage.uid);
-    // DocumentReference _userRef = FirebaseFirestore.instance
-    //     .collection(USERS_COLLECTION)
-    //     .doc(Get.find<UserDataController>().userModel.value.id);
-
-    _userColl.doc(tosendUid).set({
+    docRef.doc().set({
       LATEST_MESSAGE: latestMessage,
       // LATEST_REFERENCE: _recRef,
       'chatters': [
@@ -154,16 +140,5 @@ class PrivateCallService {
       // print(e);
     });
     print('asdasd');
-    // print(_userRef);
-    _receiverColl.doc(Get.find<UserDataController>().userModel.value.id).set({
-      LATEST_MESSAGE: latestMessage,
-      'Uid': Get.find<UserDataController>().userModel.value.id,
-      'ImageUrl': Get.find<UserDataController>().userModel.value.imageUrl,
-      'Name': Get.find<UserDataController>().userModel.value.name,
-      // ignore: equal_keys_in_map
-      // LATEST_REFERENCE: _userRef,
-      // ignore: equal_keys_in_map
-      MESSAGE_TIME: DateTime.now().toString()
-    });
   }
 }

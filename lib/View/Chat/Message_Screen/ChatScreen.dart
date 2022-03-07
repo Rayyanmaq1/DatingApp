@@ -29,26 +29,26 @@ import 'package:firebase_database/firebase_database.dart';
 import 'ChatMessageListItem.dart';
 import 'VideoCall/Dial.dart';
 
-class ChatPage extends StatefulWidget {
+class ChattingScreen extends StatefulWidget {
   final String dp, userName, chatID, selfUid, partnerUid;
   final dynamic userData;
   final LastMessage lastMessage;
   bool friendRequest;
 
-  ChatPage({
-    this.chatID,
-    this.dp,
-    this.userName,
-    this.userData,
-    this.partnerUid,
-    this.selfUid,
-    this.lastMessage,
-  });
+  ChattingScreen(
+      {this.chatID,
+      this.dp,
+      this.userName,
+      this.userData,
+      this.partnerUid,
+      this.selfUid,
+      this.lastMessage,
+      this.friendRequest});
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChattingScreenState createState() => _ChattingScreenState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChattingScreenState extends State<ChattingScreen> {
   bool _uploading = false;
   XFile _image;
   // ignore: unused_field
@@ -187,7 +187,7 @@ class _ChatPageState extends State<ChatPage> {
   bool favourite;
   final TextEditingController controller = TextEditingController();
   XFile image;
-  final reference = FirebaseDatabase.instance.reference().child('messages');
+  final reference = FirebaseDatabase.instance.ref().child('messages');
   String userId = Get.find<UserDataController>().userModel.value.id;
   final friendRequest = Get.put(FriendRequestController());
   String name;
@@ -210,9 +210,9 @@ class _ChatPageState extends State<ChatPage> {
     Animation<double> animation = kAlwaysCompleteAnimation;
     double _topPadding = MediaQuery.of(context).padding.top;
     double _width = MediaQuery.of(context).size.width;
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      child: MediaQuery(
+      body: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Column(
           children: [
@@ -226,8 +226,7 @@ class _ChatPageState extends State<ChatPage> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<Map<String, dynamic>> messaages = [];
-                        final json =
-                            snapshot.data.value as Map<dynamic, dynamic>;
+                        final json = snapshot.data.snapshot.value;
 
                         json.forEach((key, value) {
                           if ((value[SENDER_UID] ==
@@ -245,8 +244,8 @@ class _ChatPageState extends State<ChatPage> {
                             messaages.add({'value': value, 'key': key});
                           }
                         });
-                        messaages.sort((a, b) => b['value']['timeStamp']
-                            .compareTo(a['value']['timeStamp']));
+                        // messaages.sort((a, b) => b['value']['timeStamp']
+                        //     .compareTo(a['value']['timeStamp']));
 
                         return Column(
                           children: [
@@ -512,6 +511,7 @@ class _ChatPageState extends State<ChatPage> {
                                       builder: (BuildContext context,
                                           AsyncSnapshot<dynamic> snapshot) {
                                         if (snapshot.hasData) {
+                                          print(snapshot.data.data());
                                           for (int i = 0;
                                               i <
                                                   snapshot.data

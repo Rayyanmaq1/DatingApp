@@ -23,9 +23,8 @@ class LastMessageService {
 
   Stream<List<LastMessage>> getfriendRequests() {
     return FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(currentUid())
-        .collection('last_message')
+        .collection('lastMessage')
+        .where('chattersUid', arrayContains: currentUid())
         .snapshots()
         .map((QuerySnapshot query) {
       List<LastMessage> retVal = List();

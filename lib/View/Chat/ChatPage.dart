@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'Widgets/CommunityVideo.dart';
@@ -139,9 +140,21 @@ class _ChatPageState extends State<ChatPage> {
       tileColor:
           seletedUser.contains(lastmessage.uid) ? Colors.grey[800] : greyColor,
       onTap: () {
+        ChattingUserData chattinguser;
+        lastmessage.chatters.forEach((element) {
+          if (element.uid !=
+              Get.find<UserDataController>().userModel.value.id) {
+            chattinguser = element;
+          }
+        });
         appBar == true
-            ? Get.to(() => ChatScreen(
-                  // lastMessage: lastmessage,
+            ? Get.to(() => ChattingScreen(
+                  lastMessage: lastmessage,
+                  chatID: lastmessage.docId,
+                  dp: chattinguser.dp,
+                  userName: chattinguser.userName,
+                  partnerUid: chattinguser.uid,
+                  selfUid: Get.find<UserDataController>().userModel.value.id,
                   friendRequest: false,
                   // lastMessage: lastmessage,
                 ))
