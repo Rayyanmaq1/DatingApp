@@ -113,37 +113,37 @@ class _ChattingScreenState extends State<ChattingScreen> {
   }
 
   void _sendLatestMessage(String latestMessage) {
-    print(USERS_COLLECTION + ' here  ' + LATEST_MESSAGES);
-    CollectionReference _receiverColl = FirebaseFirestore.instance
-        .collection(USERS_COLLECTION)
-        .doc(widget.lastMessage.uid)
-        .collection('last_message');
-    CollectionReference _userColl = FirebaseFirestore.instance
-        .collection(USERS_COLLECTION)
-        .doc(Get.find<UserDataController>().userModel.value.id)
-        .collection('last_message');
-    _userColl.doc(widget.lastMessage.uid).set({
+    CollectionReference docRef =
+        FirebaseFirestore.instance.collection('lastMessage');
+
+    docRef.doc(widget.chatID).update({
       LATEST_MESSAGE: latestMessage,
       // LATEST_REFERENCE: _recRef,
+      'chatters': [
+        {
+          'uid': Get.find<UserDataController>().userModel.value.id,
+          'dp': Get.find<UserDataController>().userModel.value.imageUrl,
+          'name': Get.find<UserDataController>().userModel.value.name,
+          'isTyping': false
+        },
+        {
+          'uid': widget.partnerUid,
+          'dp': widget.dp,
+          'name': widget.userName,
+          'isTyping': false
+        }
+      ],
+      'chattersUid': [
+        Get.find<UserDataController>().userModel.value.id,
+        widget.partnerUid
+      ],
       MESSAGE_TIME: DateTime.now().toString(),
-      'Uid': widget.lastMessage.uid,
-      'ImageUrl': widget.lastMessage.imageUrl,
-      'Name': widget.lastMessage.name,
+      'uid': widget.partnerUid,
+      'dp': widget.dp,
     }).catchError((e) {
       // print(e);
     });
     print('asdasd');
-    // print(_userRef);
-    _receiverColl.doc(Get.find<UserDataController>().userModel.value.id).set({
-      LATEST_MESSAGE: latestMessage,
-      'Uid': Get.find<UserDataController>().userModel.value.id,
-      'ImageUrl': Get.find<UserDataController>().userModel.value.imageUrl,
-      'Name': Get.find<UserDataController>().userModel.value.name,
-      // ignore: equal_keys_in_map
-      // LATEST_REFERENCE: _userRef,
-      // ignore: equal_keys_in_map
-      MESSAGE_TIME: DateTime.now().toString()
-    });
   }
 
   // void _markSeen(List messages) {
@@ -244,8 +244,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                             messaages.add({'value': value, 'key': key});
                           }
                         });
-                        // messaages.sort((a, b) => b['value']['timeStamp']
-                        //     .compareTo(a['value']['timeStamp']));
+                        messaages.sort((a, b) => b['key'].compareTo(a['key']));
 
                         return Column(
                           children: [
@@ -511,7 +510,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                       builder: (BuildContext context,
                                           AsyncSnapshot<dynamic> snapshot) {
                                         if (snapshot.hasData) {
-                                          print(snapshot.data.data());
                                           for (int i = 0;
                                               i <
                                                   snapshot.data
@@ -606,6 +604,15 @@ class _ChattingScreenState extends State<ChattingScreen> {
                           onChanged: (String messageText) {
                             setState(() {
                               _isComposingMessage = messageText.length > 0;
+                              if (_isComposingMessage) {
+                                Get.find<LastMessageController>().typing(
+                                    messageText,
+                                    widget.chatID,
+                                    widget.lastMessage);
+                              } else {
+                                Get.find<LastMessageController>().typingFalse(
+                                    widget.chatID, widget.lastMessage);
+                              }
                             });
                           },
                           style: TextStyle(color: Colors.white),
@@ -962,9 +969,9 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   Widget _appBar() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      // margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.only(),
-      color: Colors.white,
+      color: greyColor,
       child: Row(
         children: [
           Container(

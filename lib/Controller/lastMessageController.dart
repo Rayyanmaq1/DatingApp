@@ -17,8 +17,9 @@ class LastMessageController extends GetxController {
     lastMessage.bindStream(LastMessageService().getfriendRequests());
   }
 
-  bool runOnce = true;
   typing(String message, String id, LastMessage messageModel) {
+    bool runOnce = true;
+
     FirebaseFirestore.instance
         .collection('lastMessage')
         .doc(id)
