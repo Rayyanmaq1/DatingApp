@@ -38,7 +38,8 @@ class LastMessage {
       docId: docID,
       timeStamp: data['timeStamp'],
       chattersUid: List<String>.from(data['chattersUid']),
-      chatters: List<ChattingUserData>.from(data['chatters']),
+      chatters: List<ChattingUserData>.from(
+          data['chatters'].map((x) => ChattingUserData.fromJson(x))),
     );
   }
 

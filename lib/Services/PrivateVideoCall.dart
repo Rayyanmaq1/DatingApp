@@ -131,6 +131,21 @@ class PrivateCallService {
     _userColl.doc(tosendUid).set({
       LATEST_MESSAGE: latestMessage,
       // LATEST_REFERENCE: _recRef,
+      'chatters': [
+        {
+          'uid': currentUserData.id,
+          'dp': currentUserData.imageUrl,
+          'name': currentUserData.name,
+          'isTyping': false
+        },
+        {
+          'uid': tosendUid,
+          'dp': tosendImage,
+          'name': tosendName,
+          'isTyping': false
+        }
+      ],
+      'chattersUid': [currentUserData.id, tosendUid],
       MESSAGE_TIME: DateTime.now().toString(),
       'Uid': tosendUid,
       'ImageUrl': tosendImage,
