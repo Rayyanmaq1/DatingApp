@@ -1,60 +1,192 @@
-import 'dart:async';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:livu/Services/CoinsDeduction.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:livu/Services/Last_MessageService.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'VideoCall/Dial.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide Trans;
-import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../../Model/MessageModel.dart';
-import 'package:livu/theme.dart';
-import 'package:livu/SizedConfig.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'ChatMessageListItem.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:livu/Services/FriendRequestService.dart';
-import 'package:livu/Model/Last_MessageModel.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/Controller/FriendRequestController.dart';
+import 'package:livu/Controller/lastMessageController.dart';
+import 'package:livu/Model/Last_MessageModel.dart';
+import 'package:livu/Model/MessageModel.dart';
 import 'package:livu/Model/VideoCallModel.dart';
-import 'VideoCall/PickupLayout.dart';
+import 'package:livu/Services/CoinsDeduction.dart';
+import 'package:livu/Services/FriendRequestService.dart';
+import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/BuyCoins/BuyCoins.dart';
 import 'package:livu/View/Chat/Message_Screen/GiftsList.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/View/Chat/Widgets/typingAnimation.dart';
+import 'package:livu/theme.dart';
+import 'package:path/path.dart' as path;
+import 'package:firebase_database/firebase_database.dart';
 
-// final googleSignIn = new GoogleSignIn();
-// final analytics = new FirebaseAnalytics();
-final auth = FirebaseAuth.instance;
-var currentUserEmail;
-var _scaffoldContext;
+import 'ChatMessageListItem.dart';
+import 'VideoCall/Dial.dart';
 
-class ChatScreen extends StatefulWidget {
-  LastMessage lastMessage;
+class ChatPage extends StatefulWidget {
+  final String dp, userName, chatID, selfUid, partnerUid;
+  final dynamic userData;
+  final LastMessage lastMessage;
   bool friendRequest;
-  ChatScreen({this.lastMessage, this.friendRequest});
 
+  ChatPage({
+    this.chatID,
+    this.dp,
+    this.userName,
+    this.userData,
+    this.partnerUid,
+    this.selfUid,
+    this.lastMessage,
+  });
   @override
-  ChatScreenState createState() {
-    return new ChatScreenState();
-  }
+  _ChatPageState createState() => _ChatPageState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class _ChatPageState extends State<ChatPage> {
+  bool _uploading = false;
+  XFile _image;
+  // ignore: unused_field
+  String _selectedImageName;
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController _editingController;
+  ScrollController _listController;
+  final _imagePicker = ImagePicker();
+
+  Future _getCameraImage() async {
+    _imagePicker
+        // ignore: deprecated_member_use
+        .getImage(
+          source: ImageSource.camera,
+          imageQuality: 80,
+          maxHeight: 1620,
+          maxWidth: 1080,
+        )
+        .then(
+          (value) => setState(() {
+            if (value != null) {
+              _image = XFile(value.path);
+              _selectedImageName = 'captured-image.jpg';
+            } else
+              _selectedImageName = '';
+          }),
+        );
+  }
+
+  Future _getGalleryImage() async {
+    _imagePicker
+        // ignore: deprecated_member_use
+        .getImage(
+          source: ImageSource.gallery,
+          imageQuality: 80,
+          maxHeight: 1620,
+          maxWidth: 1080,
+        )
+        .then((value) => setState(() {
+              if (value != null) {
+                _image = XFile(value.path);
+                _selectedImageName = path.basename(_image.path);
+              } else
+                _selectedImageName = '';
+            }));
+  }
+
+  void _sendMessage({String messageText, String imageUrl}) {
+    reference.push().set({
+      MESSAGE_TEXT: messageText,
+      SENDER_UID: userId,
+      RECEIVER_UID: widget.lastMessage.uid,
+      MESSAGE_IMAGE_URL: imageUrl,
+      SENDER_NAME: Get.find<UserDataController>().userModel.value.name,
+      SENDER_IMAGE_URL: Get.find<UserDataController>().userModel.value.imageUrl,
+    }).catchError((e) {
+      print(e);
+    });
+
+    _sendLatestMessage(messageText);
+  }
+
+  void _sendLatestMessage(String latestMessage) {
+    print(USERS_COLLECTION + ' here  ' + LATEST_MESSAGES);
+    CollectionReference _receiverColl = FirebaseFirestore.instance
+        .collection(USERS_COLLECTION)
+        .doc(widget.lastMessage.uid)
+        .collection('last_message');
+    CollectionReference _userColl = FirebaseFirestore.instance
+        .collection(USERS_COLLECTION)
+        .doc(Get.find<UserDataController>().userModel.value.id)
+        .collection('last_message');
+    _userColl.doc(widget.lastMessage.uid).set({
+      LATEST_MESSAGE: latestMessage,
+      // LATEST_REFERENCE: _recRef,
+      MESSAGE_TIME: DateTime.now().toString(),
+      'Uid': widget.lastMessage.uid,
+      'ImageUrl': widget.lastMessage.imageUrl,
+      'Name': widget.lastMessage.name,
+    }).catchError((e) {
+      // print(e);
+    });
+    print('asdasd');
+    // print(_userRef);
+    _receiverColl.doc(Get.find<UserDataController>().userModel.value.id).set({
+      LATEST_MESSAGE: latestMessage,
+      'Uid': Get.find<UserDataController>().userModel.value.id,
+      'ImageUrl': Get.find<UserDataController>().userModel.value.imageUrl,
+      'Name': Get.find<UserDataController>().userModel.value.name,
+      // ignore: equal_keys_in_map
+      // LATEST_REFERENCE: _userRef,
+      // ignore: equal_keys_in_map
+      MESSAGE_TIME: DateTime.now().toString()
+    });
+  }
+
+  // void _markSeen(List messages) {
+  //   bool changed = false;
+  //   for (int i = 0; i < messages.length; i++) {
+  //     if (messages[i]['sender'] != widget.selfUid) {
+  //       if (!messages[i]['seen']) {
+  //         changed = true;
+  //         messages[i]['seen'] = true;
+  //       }
+  //     }
+  //   }
+  //   if (changed) {
+  //     FirebaseFirestore.instance.collection('chats').doc(widget.chatID).update({
+  //       'messages': messages,
+  //     });
+  //   }
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    _listController = ScrollController();
+    _editingController = TextEditingController(text: '');
+  }
+
+  @override
+  void dispose() {
+    _listController.dispose();
+    _editingController.dispose();
+    Get.find<LastMessageController>()
+        .typingFalse(widget.chatID, widget.lastMessage);
+    super.dispose();
+  }
+
+  int length = 0;
   final TextEditingController _textEditingController =
       new TextEditingController();
   bool _isComposingMessage = false;
   bool switchButton = false;
   bool favourite;
   final TextEditingController controller = TextEditingController();
-  File image;
+  XFile image;
   final reference = FirebaseDatabase.instance.reference().child('messages');
   String userId = Get.find<UserDataController>().userModel.value.id;
   final friendRequest = Get.put(FriendRequestController());
@@ -75,208 +207,380 @@ class ChatScreenState extends State<ChatScreen> {
   );
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      scaffold: new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: greyColor,
-          title: Text(widget.lastMessage.name),
-          elevation: 0,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: GestureDetector(
-                onTap: () => _buildBottomModel(context),
-                child: widget.friendRequest == false
-                    ? Icon(Icons.more_horiz)
-                    : SizedBox(),
-              ),
-            ),
-          ],
-        ),
-        body: GestureDetector(
-          onTap: () {
-            setState(() {
-              showGifts == true ? showGifts = false : null;
-              showEmoji == true ? showEmoji = false : null;
-            });
-          },
-          child: new Container(
-            color: greyColor,
-            child: Stack(
-              children: [
-                new Column(
-                  children: <Widget>[
-                    new Flexible(
-                      child: new FirebaseAnimatedList(
-                        query: reference,
-                        padding: const EdgeInsets.all(8.0),
-                        reverse: true,
-                        sort: (a, b) => b.key.compareTo(a.key),
-                        //comparing timestamp of messages to check which one would appear first
-                        itemBuilder: (_, DataSnapshot messageSnapshot,
-                            Animation<double> animation, ref) {
-                          final json = messageSnapshot.value;
+    Animation<double> animation = kAlwaysCompleteAnimation;
+    double _topPadding = MediaQuery.of(context).padding.top;
+    double _width = MediaQuery.of(context).size.width;
+    return CupertinoPageScaffold(
+      backgroundColor: Colors.white,
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: Column(
+          children: [
+            SizedBox(height: _topPadding),
+            _appBar(),
+            Expanded(
+              child: Container(
+                color: greyColor,
+                child: StreamBuilder(
+                    stream: reference.onValue,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Map<String, dynamic>> messaages = [];
+                        final json =
+                            snapshot.data.value as Map<dynamic, dynamic>;
 
-                          if (((messageSnapshot.value as Map)[SENDER_UID] ==
-                                      userId ||
-                                  (messageSnapshot.value
-                                          as Map)[RECEIVER_UID] ==
-                                      userId) &&
-                              ((messageSnapshot.value as Map)[SENDER_UID] ==
-                                      widget.lastMessage.uid ||
-                                  (messageSnapshot.value
-                                          as Map)[RECEIVER_UID] ==
-                                      widget.lastMessage.uid)) {
-                            return new ChatMessageListItem(
-                              messageSnapshot: messageSnapshot,
-                              animation: animation,
-                            );
-                          } else {
-                            return Container();
+                        json.forEach((key, value) {
+                          if ((value[SENDER_UID] ==
+                                      Get.find<UserDataController>()
+                                          .userModel
+                                          .value
+                                          .id ||
+                                  value[RECEIVER_UID] ==
+                                      Get.find<UserDataController>()
+                                          .userModel
+                                          .value
+                                          .id) &&
+                              (value[SENDER_UID] == widget.partnerUid ||
+                                  value[RECEIVER_UID] == widget.partnerUid)) {
+                            messaages.add({'value': value, 'key': key});
                           }
-                        },
-                      ),
-                    ),
-                    new Divider(height: 1.0),
-                    new Container(
-                      decoration:
-                          new BoxDecoration(color: Theme.of(context).cardColor),
-                      child: _buildMessageComposer(context),
-                    ),
-                    new Builder(builder: (BuildContext context) {
-                      _scaffoldContext = context;
-                      return new Container(width: 0.0, height: 0.0);
-                    })
-                  ],
-                ),
-                widget.friendRequest
-                    ? Positioned(
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              Text(
-                                  widget.lastMessage.name +
-                                      " " +
-                                      'sent you friend request'.tr() +
-                                      "Do you want to agree".tr(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: purpleColor)),
-                              SizedBox(
-                                height: SizeConfig.heightMultiplier * 5,
+                        });
+                        messaages.sort((a, b) => b['value']['timeStamp']
+                            .compareTo(a['value']['timeStamp']));
+
+                        return Column(
+                          children: [
+                            if (messaages.length == 0)
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: _width * 0.045,
+                                ),
+                                child: encryptionMessage(),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                            Expanded(
+                              child: Stack(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      // friendRequest.friendRequestCtr
-                                      //     .remove(widget.index);
-                                      // friendRequest.otherUserDataCtr
-                                      //     .remove(widget.index);
-                                      FriendRequestService().acceptUser(
-                                          widget.lastMessage.uid,
-                                          widget.lastMessage.name,
-                                          widget.lastMessage.imageUrl);
-                                      Get.back();
-                                    },
-                                    child: Container(
-                                      height: SizeConfig.heightMultiplier * 5,
-                                      width: SizeConfig.widthMultiplier * 20,
-                                      child: Center(
-                                        child: Text('Agree'),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: purpleColor,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20),
-                                        ),
+                                  ListView.builder(
+                                      controller: _listController,
+                                      itemCount: messaages.length,
+                                      keyboardDismissBehavior:
+                                          ScrollViewKeyboardDismissBehavior
+                                              .onDrag,
+                                      reverse: true,
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.only(
+                                          top: 8,
+                                          left: Get.width * 0.045,
+                                          right: Get.width * 0.045,
+                                          bottom: 50),
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          children: [
+                                            if (index == messaages.length - 1)
+                                              encryptionMessage(),
+                                            ChatMessageListItem(
+                                              index: index,
+                                              messageSnapshot: messaages[index],
+                                              animation: animation,
+                                              senderNext: (index == 0)
+                                                  ? false
+                                                  : messaages[index - 1]
+                                                              ['value']
+                                                          [RECEIVER_UID] ==
+                                                      widget.selfUid,
+                                              senderPrevSelf:
+                                                  index == messaages.length - 1
+                                                      ? false
+                                                      : messaages[index + 1]
+                                                                  ['value']
+                                                              [RECEIVER_UID] ==
+                                                          widget.selfUid,
+                                              self: messaages[index]['value']
+                                                      [SENDER_UID] ==
+                                                  widget.selfUid,
+                                              prevIsSelf:
+                                                  index == messaages.length - 1
+                                                      ? false
+                                                      : messaages[index + 1]
+                                                                  ['value']
+                                                              [SENDER_UID] ==
+                                                          widget.selfUid,
+                                              nextIsSelf: (index == 0)
+                                                  ? false
+                                                  : messaages[index - 1]
+                                                              ['value']
+                                                          [SENDER_UID] ==
+                                                      widget.selfUid,
+                                              isLastMessage: index == 0,
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                  widget.friendRequest
+                                      ? Positioned(
+                                          child: Container(
+                                            padding: EdgeInsets.all(16),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                    widget.lastMessage.name +
+                                                        " " +
+                                                        'sent you friend request'
+                                                            .tr +
+                                                        "Do you want to agree"
+                                                            .tr,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: purpleColor)),
+                                                SizedBox(
+                                                  height: SizeConfig
+                                                          .heightMultiplier *
+                                                      5,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        // friendRequest.friendRequestCtr
+                                                        //     .remove(widget.index);
+                                                        // friendRequest.otherUserDataCtr
+                                                        //     .remove(widget.index);
+                                                        FriendRequestService()
+                                                            .acceptUser(
+                                                                widget
+                                                                    .lastMessage
+                                                                    .uid,
+                                                                widget
+                                                                    .lastMessage
+                                                                    .name,
+                                                                widget
+                                                                    .lastMessage
+                                                                    .imageUrl);
+                                                        Get.back();
+                                                      },
+                                                      child: Container(
+                                                        height: SizeConfig
+                                                                .heightMultiplier *
+                                                            5,
+                                                        width: SizeConfig
+                                                                .widthMultiplier *
+                                                            20,
+                                                        child: Center(
+                                                          child: Text('Agree'),
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: purpleColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        // print('tapped');
+                                                        // friendRequest.friendRequestModel
+                                                        //     .remove(widget.index);
+                                                        // friendRequest.otherUserData
+                                                        //     .remove(widget.index);
+                                                        FriendRequestService()
+                                                            .deleteFriendRequest(
+                                                                widget
+                                                                    .lastMessage
+                                                                    .uid);
+                                                      },
+                                                      child: Container(
+                                                        height: SizeConfig
+                                                                .heightMultiplier *
+                                                            5,
+                                                        width: SizeConfig
+                                                                .widthMultiplier *
+                                                            20,
+                                                        child: Center(
+                                                          child: Text(
+                                                            'Ignore',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    purpleColor),
+                                                          ),
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  purpleColor),
+                                                          color: greyColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height:
+                                                SizeConfig.heightMultiplier *
+                                                    20,
+                                          ),
+                                        )
+                                      : Container(),
+                                  if (_image != null)
+                                    Positioned(
+                                      left: 10,
+                                      bottom: 20,
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.file(
+                                                  File(_image.path),
+                                                  width: _width * 0.25,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 5,
+                                                right: 5,
+                                                child: CupertinoButton(
+                                                  padding: EdgeInsets.zero,
+                                                  minSize: 0,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: Colors.white70,
+                                                        width: 1.5,
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              1.0),
+                                                      child: Icon(
+                                                        Icons.close,
+                                                        color: Colors.white70,
+                                                        size: 14,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () => setState(() {
+                                                    _image = null;
+                                                  }),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          if (_uploading) ...[
+                                            SizedBox(height: 4),
+                                            Container(
+                                              width: _width * 0.25,
+                                              child: LinearProgressIndicator(
+                                                backgroundColor:
+                                                    greyColor.withOpacity(0.3),
+                                                valueColor:
+                                                    new AlwaysStoppedAnimation<
+                                                        Color>(greyColor),
+                                                minHeight: 3,
+                                              ),
+                                            ),
+                                          ],
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      // print('tapped');
-                                      // friendRequest.friendRequestModel
-                                      //     .remove(widget.index);
-                                      // friendRequest.otherUserData
-                                      //     .remove(widget.index);
-                                      FriendRequestService()
-                                          .deleteFriendRequest(
-                                              widget.lastMessage.uid);
-                                    },
-                                    child: Container(
-                                      height: SizeConfig.heightMultiplier * 5,
-                                      width: SizeConfig.widthMultiplier * 20,
-                                      child: Center(
-                                        child: Text(
-                                          'Ignore',
-                                          style: TextStyle(color: purpleColor),
-                                        ),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: purpleColor),
-                                        color: greyColor,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20),
-                                        ),
-                                      ),
+                                  Positioned(
+                                    bottom: 10,
+                                    left: 10,
+                                    child: StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('lastMessage')
+                                          .doc(widget.chatID)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<dynamic> snapshot) {
+                                        if (snapshot.hasData) {
+                                          for (int i = 0;
+                                              i <
+                                                  snapshot.data
+                                                      .data()["chatters"]
+                                                      .length;
+                                              i++) {
+                                            if (snapshot.data.data()["chatters"]
+                                                    [i]["uid"] !=
+                                                Get.find<UserDataController>()
+                                                    .userModel
+                                                    .value
+                                                    .id) {
+                                              if (snapshot.data
+                                                      .data()["chatters"][i]
+                                                  ['isTyping']) {
+                                                return SizedBox(
+                                                    height: 80,
+                                                    width: 120,
+                                                    child: TypingAnimation());
+                                              }
+                                            }
+                                          }
+
+                                          return SizedBox();
+                                        }
+                                        return SizedBox();
+                                      },
                                     ),
                                   ),
                                 ],
-                              )
-                            ],
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: SizeConfig.heightMultiplier * 20,
-                        ),
-                      )
-                    : Container(),
-              ],
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Center(
+                          child: SizedBox(),
+                        );
+                      }
+                    }),
+              ),
             ),
-            decoration: Theme.of(context).platform == TargetPlatform.iOS
-                ? new BoxDecoration(
-                    border: new Border(
-                      top: new BorderSide(
-                        color: Colors.grey[200],
-                      ),
-                    ),
-                  )
-                : null,
-          ),
+            Container(
+              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+              child: _buildMessageComposer(context),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  CupertinoButton getIOSSendButton() {
-    return new CupertinoButton(
-      child: new Text("Send"),
-      onPressed: _isComposingMessage
-          ? () => _textMessageSubmitted(_textEditingController.text)
-          : null,
-    );
-  }
-
-  IconButton getDefaultSendButton() {
-    return new IconButton(
-      icon: new Icon(
-        Icons.send,
-        color: purpleColor,
-      ),
-      onPressed: _isComposingMessage
-          ? () {
-              setState(() {
-                showEmoji = false;
-                focusNode.unfocus();
-                focusNode.canRequestFocus = false;
-              });
-              _textMessageSubmitted(_textEditingController.text);
-            }
-          : null,
-    );
-  }
+  Container encryptionMessage() => Container(
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        margin: EdgeInsets.only(top: 6, bottom: 8, left: 30, right: 30),
+        child: Text(
+          '🔒 All direct messages between users are 100% safe and secured.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
 
   _buildMessageComposer(context) {
     return AnimatedContainer(
@@ -309,7 +613,7 @@ class ChatScreenState extends State<ChatScreen> {
                           onSubmitted: _textMessageSubmitted,
                           decoration: new InputDecoration.collapsed(
                               hintStyle: TextStyle(color: Colors.grey),
-                              hintText: "Send a message".tr()),
+                              hintText: "Send a message".tr),
                         ),
                       ),
                     ),
@@ -356,7 +660,7 @@ class ChatScreenState extends State<ChatScreen> {
 
                       await snapshot.ref.getDownloadURL().then((value) {
                         _sendMessage(
-                            messageText: 'Image'.tr(),
+                            messageText: 'Image'.tr,
                             imageUrl: value.toString());
                       });
                     },
@@ -392,7 +696,7 @@ class ChatScreenState extends State<ChatScreen> {
                     } else {
                       Get.to(() => BuyCoins());
                       Get.snackbar(
-                          'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
+                          'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
                     }
                   },
                   child: Icon(
@@ -409,7 +713,7 @@ class ChatScreenState extends State<ChatScreen> {
                     } else {
                       Get.to(() => BuyCoins());
                       Get.snackbar(
-                          'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
+                          'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
                     }
                   },
                   child: Icon(
@@ -424,6 +728,57 @@ class ChatScreenState extends State<ChatScreen> {
             showEmojiPicker(),
           ],
         ));
+  }
+
+  Future<Null> _textMessageSubmitted(String text) async {
+    _textEditingController.clear();
+
+    setState(() {
+      _isComposingMessage = false;
+    });
+
+    // await _ensureLoggedIn();
+    _sendMessage(messageText: text, imageUrl: null);
+  }
+
+  CupertinoButton getIOSSendButton() {
+    return new CupertinoButton(
+      child: new Text("Send"),
+      onPressed: _isComposingMessage
+          ? () => _textMessageSubmitted(_textEditingController.text)
+          : null,
+    );
+  }
+
+  IconButton getDefaultSendButton() {
+    return new IconButton(
+      icon: new Icon(
+        Icons.send,
+        color: purpleColor,
+      ),
+      onPressed: _isComposingMessage
+          ? () {
+              setState(() {
+                showEmoji = false;
+                focusNode.unfocus();
+                focusNode.canRequestFocus = false;
+              });
+              _textMessageSubmitted(_textEditingController.text);
+            }
+          : null,
+    );
+  }
+
+  _call(bool videoCall) {
+    UserCallModel from = UserCallModel(
+        name: Get.find<UserDataController>().userModel.value.name,
+        imageUrl: Get.find<UserDataController>().userModel.value.imageUrl,
+        uid: Get.find<UserDataController>().userModel.value.id);
+    UserCallModel to = UserCallModel(
+        name: widget.lastMessage.name,
+        imageUrl: widget.lastMessage.imageUrl,
+        uid: widget.lastMessage.uid);
+    CallUtils.dial(from: from, to: to, context: context, videoCall: videoCall);
   }
 
   Widget showGiftPicker() {
@@ -456,11 +811,10 @@ class ChatScreenState extends State<ChatScreen> {
                         Get.find<UserDataController>().userModel.value.coins,
                         getGifts[index].coins);
                     _sendMessage(
-                        messageText: 'Gift'.tr(),
+                        messageText: 'Gift'.tr,
                         imageUrl: getGifts[index].imageUrl);
                   } else {
-                    Get.snackbar(
-                        'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
+                    Get.snackbar('NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
                   }
                 },
                 child: Column(
@@ -518,11 +872,10 @@ class ChatScreenState extends State<ChatScreen> {
                         Get.find<UserDataController>().userModel.value.coins,
                         getData[index].coins);
                     _sendMessage(
-                        messageText: 'Gift'.tr(),
+                        messageText: 'Gift'.tr,
                         imageUrl: getData[index].imageUrl);
                   } else {
-                    Get.snackbar(
-                        'NoEnoughCoin'.tr(), 'NoEnoughCoinSubTitle'.tr());
+                    Get.snackbar('NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
                   }
                 },
                 child: Column(
@@ -607,281 +960,132 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<Null> _textMessageSubmitted(String text) async {
-    _textEditingController.clear();
-
-    setState(() {
-      _isComposingMessage = false;
-    });
-
-    // await _ensureLoggedIn();
-    _sendMessage(messageText: text, imageUrl: null);
-  }
-
-  void _sendMessage({String messageText, String imageUrl}) {
-    reference.push().set({
-      MESSAGE_TEXT: messageText,
-      SENDER_UID: userId,
-      RECEIVER_UID: widget.lastMessage.uid,
-      MESSAGE_IMAGE_URL: imageUrl,
-      SENDER_NAME: Get.find<UserDataController>().userModel.value.name,
-      SENDER_IMAGE_URL: Get.find<UserDataController>().userModel.value.imageUrl,
-    }).catchError((e) {
-      print(e);
-    });
-
-    _sendLatestMessage(messageText);
-  }
-
-  void _sendLatestMessage(String latestMessage) {
-    print(USERS_COLLECTION + ' here  ' + LATEST_MESSAGES);
-    CollectionReference _receiverColl = FirebaseFirestore.instance
-        .collection(USERS_COLLECTION)
-        .doc(widget.lastMessage.uid)
-        .collection('last_message');
-    CollectionReference _userColl = FirebaseFirestore.instance
-        .collection(USERS_COLLECTION)
-        .doc(Get.find<UserDataController>().userModel.value.id)
-        .collection('last_message');
-    _userColl.doc(widget.lastMessage.uid).set({
-      LATEST_MESSAGE: latestMessage,
-      // LATEST_REFERENCE: _recRef,
-      MESSAGE_TIME: DateTime.now().toString(),
-      'Uid': widget.lastMessage.uid,
-      'ImageUrl': widget.lastMessage.imageUrl,
-      'Name': widget.lastMessage.name,
-    }).catchError((e) {
-      // print(e);
-    });
-    print('asdasd');
-    // print(_userRef);
-    _receiverColl.doc(Get.find<UserDataController>().userModel.value.id).set({
-      LATEST_MESSAGE: latestMessage,
-      'Uid': Get.find<UserDataController>().userModel.value.id,
-      'ImageUrl': Get.find<UserDataController>().userModel.value.imageUrl,
-      'Name': Get.find<UserDataController>().userModel.value.name,
-      // ignore: equal_keys_in_map
-      // LATEST_REFERENCE: _userRef,
-      // ignore: equal_keys_in_map
-      MESSAGE_TIME: DateTime.now().toString()
-    });
-  }
-
-  _buildBottomModel(context) async {
-    bool favFriend =
-        await LastMessageService().checkIfUserisFav(widget.lastMessage.uid);
-    return showMaterialModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (context) => SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: greyColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              height: SizeConfig.heightMultiplier * 55,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  Widget _appBar() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.only(),
+      color: Colors.white,
+      child: Row(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: CupertinoButton(
+              minSize: 0,
+              padding: EdgeInsets.only(left: 12),
+              child: Icon(Icons.arrow_back_ios_rounded, color: Colors.black),
+              onPressed: () {
+                // if (FocusNode().hasFocus)
+                //   FocusScope.of(context).requestFocus(FocusNode());
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Expanded(
+              child: Container(
+            child: CupertinoButton(
+              onPressed: () {
+                // showModalBottomSheet(
+                //   context: context,
+                //   backgroundColor: Colors.transparent,
+                //   isScrollControlled: true,
+                //   isDismissible: true,
+                //   builder: (context) => ProfileView(
+                //     uid: widget.partnerUid,
+                //     currentUser: widget.userData,
+                //   ),
+                // );
+              },
+              minSize: 0,
+              padding: EdgeInsets.zero,
+              child: Row(
                 children: [
-                  _customTile('Alias'.tr(), Icons.edit, () {
-                    Get.back();
-                    _buildBottomModelForName();
-                  }),
-                  _customTileWithTailing(
-                    'Add to Favourite'.tr(),
-                    Icons.star,
-                    favFriend == false
-                        ? GestureDetector(
-                            onTap: () {
-                              LastMessageService().addtoFavFriend(
-                                  widget.lastMessage.uid,
-                                  widget.lastMessage.name,
-                                  widget.lastMessage.imageUrl);
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.star_outline,
-                              color: Colors.white,
+                  SizedBox(width: 15),
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(999),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade400,
+                          blurRadius: 3,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: widget.dp == null || widget.dp == ''
+                          ? Container(
+                              color: Color(0xFFD8D8D8),
+                              child: Center(
+                                child: Text(
+                                  widget.userName[0].toUpperCase(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: widget.dp,
+                              fit: BoxFit.cover,
                             ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              LastMessageService().addtofriend(
-                                  widget.lastMessage.uid,
-                                  widget.lastMessage.name,
-                                  widget.lastMessage.imageUrl);
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                          ),
-                  ),
-                  _customTileWithTailing(
-                    'Online Reminder'.tr(),
-                    Icons.notifications,
-                    Switch(
-                      value: switchButton,
-                      onChanged: (bool newValue) {
-                        Navigator.pop(context);
-                        switchButton = newValue;
-                      },
-                      activeColor: greenColor,
-                      activeTrackColor: greenColor,
                     ),
                   ),
-                  _customTile('Block'.tr(), Icons.block, () {}),
-                  _customTile('Report'.tr(), Icons.report, () {}),
-                  _customTile('Deleted'.tr(), Icons.delete, () {
-                    LastMessageService().deleteUser(widget.lastMessage.uid);
-                    Get.back();
-                    Get.back();
-                    Get.snackbar('Deleted'.tr(), 'Chat Have been Deleted'.tr());
-                  }),
-                  _customTile('Cancel'.tr(), Icons.arrow_back, () {
-                    Get.back();
-                  }),
+                  SizedBox(width: 15),
+                  Text(
+                    '@${widget.userName}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey.shade800,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
-          ],
-        ),
+          )),
+          // Expanded(child: SizedBox()),
+        ],
       ),
     );
   }
 
-  _customTileWithTailing(title, icon, tailingWidget) {
-    return ListTile(
-      leading:
-          Icon(icon, color: icon == Icons.delete ? Colors.red : Colors.grey),
-      title: Text(
-        title,
-        style:
-            TextStyle(color: icon == Icons.delete ? Colors.red : Colors.white),
-      ),
-      trailing: tailingWidget,
-    );
-  }
-
-  _customTile(title, icon, Function ontap) {
-    return ListTile(
-      onTap: ontap,
-      leading:
-          Icon(icon, color: icon == Icons.delete ? Colors.red : Colors.grey),
-      title: Text(
-        title,
-        style:
-            TextStyle(color: icon == Icons.delete ? Colors.red : Colors.white),
-      ),
-    );
-  }
-
-  _call(bool videoCall) {
-    UserCallModel from = UserCallModel(
-        name: Get.find<UserDataController>().userModel.value.name,
-        imageUrl: Get.find<UserDataController>().userModel.value.imageUrl,
-        uid: Get.find<UserDataController>().userModel.value.id);
-    UserCallModel to = UserCallModel(
-        name: widget.lastMessage.name,
-        imageUrl: widget.lastMessage.imageUrl,
-        uid: widget.lastMessage.uid);
-    CallUtils.dial(from: from, to: to, context: context, videoCall: videoCall);
-  }
-
-  _buildBottomModelForName() {
-    return showMaterialModalBottomSheet(
-      backgroundColor: Colors.transparent,
+  void _pickMenu(BuildContext context, String option) {
+    showCupertinoModalPopup(
       context: context,
-      builder: (context) => SingleChildScrollView(
-        controller: ModalScrollController.of(context),
-        child: Container(
-          decoration: BoxDecoration(
-            color: greyColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+      builder: (context) {
+        return CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () {
+                option == 'gallery' ? _getGalleryImage() : _getCameraImage();
+                Navigator.pop(context);
+              },
+              child:
+                  Text(option == 'camera' ? 'Capture Image' : 'Choose Image'),
             ),
+            // CupertinoActionSheetAction(
+            //   onPressed: () {
+            //     option == 'gallery' ? getGalleryVideo() : getCameraVideo();
+            //     Navigator.pop(context);
+            //   },
+            //   child:
+            //       Text(option == 'camera' ? 'Capture Video' : 'Choose Video'),
+            // ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
           ),
-          child: Padding(
-            padding: EdgeInsets.only(
-                top: 40, bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Name',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: SizeConfig.textMultiplier * 2),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.heightMultiplier * 2,
-                      ),
-                      Container(
-                        color: Colors.grey[850],
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: TextFormField(
-                            textCapitalization: TextCapitalization.sentences,
-                            initialValue: widget.lastMessage.name,
-                            cursorColor: Colors.white,
-                            style: TextStyle(color: Colors.white),
-                            maxLength: 30,
-                            onChanged: (value) {
-                              name = value;
-                            },
-                            decoration: InputDecoration.collapsed(
-                              hintStyle: TextStyle(color: Colors.white),
-                              hintText: 'Name',
-                            ),
-                            autofocus: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      LastMessageService()
-                          .changeName(widget.lastMessage.uid, name);
-                      Get.back();
-                      Get.back();
-                      Get.snackbar('Name Changed', 'Name has been Changed');
-                    },
-                    child: Container(
-                      height: SizeConfig.heightMultiplier * 7,
-                      width: MediaQuery.of(context).size.width * 1,
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      color: purpleColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

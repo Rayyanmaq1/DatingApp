@@ -30,7 +30,8 @@ class LastMessageService {
         .map((QuerySnapshot query) {
       List<LastMessage> retVal = List();
       query.docs.forEach((element) {
-        retVal.add(LastMessage.fromDocumentSnapshot(element));
+        retVal
+            .add(LastMessage.fromDocumentSnapshot(element.data(), element.id));
       });
 
       return retVal;

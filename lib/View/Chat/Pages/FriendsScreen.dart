@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
@@ -197,7 +198,7 @@ class FriendsScreen extends StatelessWidget {
       onTap: () {
         LastMessage model = LastMessage.feomUserInfo(name, image, uid);
         Get.to(() => ChatScreen(
-              lastMessage: model,
+              // lastMessage: model,
               friendRequest: false,
             ));
       },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/SizedConfig.dart';
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:livu/theme.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -370,7 +371,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   LastMessage lastMessage =
                       LastMessage.fromHistoryModel(historyModel);
                   Get.to(() => ChatScreen(
-                        lastMessage: lastMessage,
+                        // lastMessage: lastMessage,
                         friendRequest: false,
                       ));
                 },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -185,7 +186,8 @@ class _ImissedState extends State<Imissed> {
                                     LastMessage.fromHistoryModel(controller
                                         .iMissedhistoryController[index]);
                                 Get.to(() => ChatScreen(
-                                    lastMessage: model, friendRequest: false));
+                                    // lastMessage: model,
+                                    friendRequest: false));
                               },
                               child: Container(
                                 width: SizeConfig.widthMultiplier * 9,

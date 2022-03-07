@@ -1,94 +1,154 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:get/get.dart' hide Trans;
-import 'package:livu/theme.dart';
-import '../../../Model/MessageModel.dart';
-import 'package:livu/SizedConfig.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
-import 'package:translator/translator.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:livu/Model/MessageModel.dart';
+import 'package:livu/theme.dart';
 
-var currentUserEmail;
-
-// ignore: must_be_immutable
 class ChatMessageListItem extends StatelessWidget {
-  final DataSnapshot messageSnapshot;
+  final Map<String, dynamic> messageSnapshot;
   final Animation animation;
+  final int index;
+  final bool self,
+      nextIsSelf,
+      prevIsSelf,
+      isLastMessage,
+      senderNext,
+      senderPrevSelf;
+
   // final userdataCtr = Get.put(UserDataController());
   // final CurrentUser currentUser;
   final receiverEmail;
   ChatMessageListItem(
-      {this.messageSnapshot, this.animation, this.receiverEmail});
-  GoogleTranslator translator = GoogleTranslator();
+      {this.messageSnapshot,
+      this.animation,
+      this.receiverEmail,
+      this.self,
+      this.nextIsSelf,
+      this.prevIsSelf,
+      this.isLastMessage,
+      this.index,
+      this.senderNext,
+      this.senderPrevSelf});
 
   @override
   Widget build(BuildContext context) {
-    return new SizeTransition(
-      sizeFactor:
-          new CurvedAnimation(parent: animation, curve: Curves.decelerate),
-      child: new Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        child: new Row(
+    return SizeTransition(
+      sizeFactor: CurvedAnimation(parent: animation, curve: Curves.decelerate),
+      child: Container(
+        margin: EdgeInsets.only(
+          top: self
+              ? prevIsSelf
+                  ? 2
+                  : 6
+              : !prevIsSelf
+                  ? 2
+                  : 6,
+          bottom: self
+              ? nextIsSelf
+                  ? 2
+                  : 6
+              : !nextIsSelf
+                  ? 2
+                  : 6,
+        ),
+        child: Row(
           children: Get.find<UserDataController>().userModel.value.id ==
-                  (messageSnapshot.value as Map)[SENDER_UID]
-              ? getSentMessageLayout()
-              : getReceivedMessageLayout(),
+                  messageSnapshot['value'][SENDER_UID]
+              ? getSentMessageLayout(context)
+              : getReceivedMessageLayout(context),
         ),
       ),
     );
   }
 
-  List<Widget> getSentMessageLayout() {
+  List<Widget> getSentMessageLayout(context) {
+    double _topPadding = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - _topPadding;
+    double _width = MediaQuery.of(context).size.width;
     return <Widget>[
-      new Expanded(
-        child: new Column(
+      Expanded(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            new Text((messageSnapshot.value as Map)[SENDER_NAME],
-                style: new TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey[300],
-                    fontWeight: FontWeight.bold)),
-            new Container(
-              margin: const EdgeInsets.only(top: 12.0),
-              child: (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL] != null
+            Container(
+              margin: const EdgeInsets.only(top: 0.0, right: 8),
+              child: messageSnapshot['value'][MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
-                        print(
-                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL]);
-
-                        Get.to(() => FullImageViewScreen(
-                            url: (messageSnapshot.value
-                                as Map)[MESSAGE_IMAGE_URL]));
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (context) => GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            onVerticalDragUpdate: (value) =>
+                                Navigator.pop(context),
+                            onDoubleTap: () => Navigator.pop(context),
+                            child: CupertinoPageScaffold(
+                              child: SafeArea(
+                                child: Container(
+                                  height: _height,
+                                  width: _width,
+                                  child: CachedNetworkImage(
+                                      imageUrl: messageSnapshot['value']
+                                          [MESSAGE_IMAGE_URL]),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                       },
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
-                        imageBuilder: (context, imageProvider) => Container(
-                          height: SizeConfig.heightMultiplier * 14,
-                          width: SizeConfig.widthMultiplier * 48,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.contain),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: CachedNetworkImage(
+                          imageUrl: messageSnapshot['value'][MESSAGE_IMAGE_URL],
+                          width: 160,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            14,
+                          ),
+                          topRight: Radius.circular(
+                            nextIsSelf && self && prevIsSelf
+                                ? nextIsSelf
+                                    ? 0
+                                    : 14
+                                : !nextIsSelf
+                                    ? prevIsSelf
+                                        ? 0
+                                        : 14
+                                    : 14,
+                          ),
+                          bottomLeft: Radius.circular(
+                            14,
+                          ),
+                          bottomRight: Radius.circular(
+                            nextIsSelf
+                                ? 0
+                                : prevIsSelf
+                                    ? 14
+                                    : 0,
                           ),
                         ),
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        color: greyColor,
                       ),
-                      //       new Image.network(
-                      //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
-                      //   width: 250.0,
-                      // ),
-                    )
-                  // new Image.network(
-                  //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
-                  //   width: 250.0,
-                  // )
-                  : new Text(
-                      (messageSnapshot.value as Map)[MESSAGE_TEXT],
-                      style: TextStyle(color: Colors.grey),
+                      child: Container(
+                        // alignment: Alignment.centerLeft,
+                        child: Text(
+                          messageSnapshot['value'][MESSAGE_TEXT],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                     ),
             ),
           ],
@@ -97,103 +157,194 @@ class ChatMessageListItem extends StatelessWidget {
       new Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          new Container(
-              margin: const EdgeInsets.only(left: 8.0),
-              child: new CircleAvatar(
-                backgroundImage: new NetworkImage(
-                    (messageSnapshot.value as Map)[SENDER_IMAGE_URL]),
-              )),
+          (!(self && nextIsSelf) || isLastMessage)
+              ? new Container(
+                  height: 29,
+                  width: 29,
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(999),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        blurRadius: 3,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: messageSnapshot['value'][SENDER_IMAGE_URL] == null ||
+                            messageSnapshot['value'][SENDER_IMAGE_URL] == ''
+                        ? Container(
+                            color: Color(0xFFD8D8D8),
+                            child: Center(
+                              child: Text(
+                                messageSnapshot['value'][SENDER_NAME][0]
+                                    .toUpperCase(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: messageSnapshot['value']
+                                [SENDER_IMAGE_URL],
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                )
+              : Container(
+                  height: 29, width: 29, margin: EdgeInsets.only(right: 10)),
         ],
       ),
     ];
   }
 
-  List<Widget> getReceivedMessageLayout() {
-    print("recieved layout called");
-
+  List<Widget> getReceivedMessageLayout(context) {
+    double _topPadding = MediaQuery.of(context).padding.top;
+    double _height = MediaQuery.of(context).size.height - _topPadding;
+    double _width = MediaQuery.of(context).size.width;
     return <Widget>[
       new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Container(
-              margin: const EdgeInsets.only(right: 8.0),
-              child: new CircleAvatar(
-                backgroundImage: new NetworkImage(
-                    (messageSnapshot.value as Map)[SENDER_IMAGE_URL]),
-              )),
+          ((self || nextIsSelf) || isLastMessage)
+              ? new Container(
+                  height: 29,
+                  width: 29,
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(999),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        blurRadius: 3,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: messageSnapshot['value'][SENDER_IMAGE_URL] == null ||
+                            messageSnapshot['value'][SENDER_IMAGE_URL] == ''
+                        ? Container(
+                            color: Color(0xFFD8D8D8),
+                            child: Center(
+                              child: Text(
+                                messageSnapshot['value'][SENDER_NAME][0]
+                                    .toUpperCase(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: messageSnapshot['value']
+                                [SENDER_IMAGE_URL],
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                )
+              : Container(
+                  height: 29, width: 29, margin: EdgeInsets.only(right: 10)),
         ],
       ),
-      new Expanded(
-        child: new Column(
+      Expanded(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text((messageSnapshot.value as Map)[SENDER_NAME],
-                style: new TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey[300],
-                    fontWeight: FontWeight.bold)),
-            new Container(
-              margin: const EdgeInsets.only(top: 5.0),
-              child: (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL] != null
+            Container(
+              child: messageSnapshot['value'][MESSAGE_IMAGE_URL] != null
                   ? GestureDetector(
                       onTap: () {
-                        Get.to(() => FullImageViewScreen(
-                            url: (messageSnapshot.value
-                                as Map)[MESSAGE_IMAGE_URL]));
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (context) => GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            onVerticalDragUpdate: (value) =>
+                                Navigator.pop(context),
+                            onDoubleTap: () => Navigator.pop(context),
+                            child: CupertinoPageScaffold(
+                              child: SafeArea(
+                                child: Container(
+                                  height: _height,
+                                  width: _width,
+                                  child: CachedNetworkImage(
+                                      imageUrl: messageSnapshot['value']
+                                          [MESSAGE_IMAGE_URL]),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                       },
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
-                        imageBuilder: (context, imageProvider) => Container(
-                          height: SizeConfig.heightMultiplier * 14,
-                          width: SizeConfig.widthMultiplier * 48,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.contain),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: CachedNetworkImage(
+                          imageUrl: messageSnapshot['value'][MESSAGE_IMAGE_URL],
+                          width: 160,
+                        ),
+                      ))
+                  : Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            senderPrevSelf ? 0 : 14,
+                          ),
+                          topRight: Radius.circular(
+                            !self
+                                ? 14
+                                : prevIsSelf
+                                    ? 0
+                                    : 14,
+                          ),
+                          bottomLeft: Radius.circular(
+                            senderPrevSelf && senderNext
+                                ? 0
+                                : senderPrevSelf
+                                    ? 14
+                                    : 0,
+                          ),
+                          bottomRight: Radius.circular(
+                            !self
+                                ? 14
+                                : !nextIsSelf && !prevIsSelf
+                                    ? 0
+                                    : nextIsSelf
+                                        ? 0
+                                        : 14,
                           ),
                         ),
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        color:
+                            // self
+                            //     ? Color(kSelfMessageColor)
+                            // :
+                            greyColor,
                       ),
-                      //       new Image.network(
-                      //   (messageSnapshot.value as Map)[MESSAGE_IMAGE_URL],
-                      //   width: 250.0,
-                      // ),
-                    )
-                  : 'app_name'.tr() == 'KIM LIVE'
-                      ? FutureBuilder(
-                          future: translator.translate(
-                              (messageSnapshot.value as Map)[MESSAGE_TEXT],
-                              from: 'ar',
-                              to: 'en'),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Container();
-                            }
-                            return Text(
-                              snapshot.data.toString(),
-                              style: TextStyle(color: Colors.grey),
-                            );
-                          },
-                        )
-                      : FutureBuilder(
-                          future: translator.translate(
-                              (messageSnapshot.value as Map)[MESSAGE_TEXT],
-                              from: 'en',
-                              to: 'ar'),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Container();
-                            }
-                            return Text(
-                              snapshot.data.toString(),
-                              style: TextStyle(color: Colors.grey),
-                            );
-                          },
+                      child: Container(
+                        // alignment: Alignment.centerLeft,
+                        child: Text(
+                          messageSnapshot['value'][MESSAGE_TEXT],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
+                      ),
+                    ),
             ),
           ],
         ),
@@ -211,7 +362,7 @@ class FullImageViewScreen extends StatelessWidget {
     return GestureDetector(
         onTap: () => Get.back(),
         child: Container(
-          color: greyColor,
+          color: Colors.white,
           child: Center(
               child: CachedNetworkImage(
             imageUrl: url,

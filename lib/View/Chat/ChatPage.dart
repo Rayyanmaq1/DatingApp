@@ -16,6 +16,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 
+import 'Widgets/CustomerServiceChatScreen.dart';
+
 class ChatPage extends StatefulWidget {
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -139,7 +141,7 @@ class _ChatPageState extends State<ChatPage> {
       onTap: () {
         appBar == true
             ? Get.to(() => ChatScreen(
-                  lastMessage: lastmessage,
+                  // lastMessage: lastmessage,
                   friendRequest: false,
                   // lastMessage: lastmessage,
                 ))

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:livu/Model/UserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +10,6 @@ import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/View/Chat/Message_Screen/ChatScreen.dart';
-import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/Dial.dart';
 import 'package:livu/Model/VideoCallModel.dart';
@@ -233,7 +234,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             ), () {
                           LastMessage model = LastMessage.userModel(userModel);
                           Get.to(() => ChatScreen(
-                                lastMessage: model,
+                                // lastMessage: model,
                                 friendRequest: false,
                               ));
                         }),

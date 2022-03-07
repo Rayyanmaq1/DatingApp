@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:livu/View/Chat/Widgets/CustomerServiceChatScreen.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -103,7 +104,7 @@ class _AddFriendState extends State<AddFriend> {
             LastMessage.fromFriendModel(dataController.friendRequestCtr[index]);
         Get.to(
           () => ChatScreen(
-            lastMessage: model,
+            // lastMessage: model,
             friendRequest: true,
           ),
         );
