@@ -7,7 +7,11 @@ class TypingAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Lottie.asset('assets/lotiesAnimation/typingAnimation.json'),
+      child: Lottie.asset(
+        'assets/lotiesAnimation/typingAnimation.json',
+        height: 30,
+        width: 80,
+      ),
     );
   }
 }
