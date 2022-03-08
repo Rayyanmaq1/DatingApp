@@ -68,6 +68,7 @@ dependencies:
   particles_flutter: ^0.1.4
   share: ^2.0.4
   lottie: ^1.2.2
+  timeago: ^3.2.2
 
 
 dev_dependencies:

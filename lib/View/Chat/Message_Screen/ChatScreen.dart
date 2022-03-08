@@ -102,7 +102,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
       TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
       MESSAGE_TEXT: messageText,
       SENDER_UID: userId,
-      RECEIVER_UID: widget.lastMessage.uid,
+      RECEIVER_UID: widget.partnerUid,
       MESSAGE_IMAGE_URL: imageUrl,
       SENDER_NAME: Get.find<UserDataController>().userModel.value.name,
       SENDER_IMAGE_URL: Get.find<UserDataController>().userModel.value.imageUrl,
@@ -245,7 +245,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
                             messaages.add({'value': value, 'key': key});
                           }
                         });
-                        messaages.sort((a, b) => b['key'].compareTo(a['key']));
+                        messaages.sort((a, b) => b['value']['timeStamp']
+                            .compareTo(a['value']['timeStamp']));
 
                         return Column(
                           children: [

@@ -16,6 +16,7 @@ import 'package:livu/Controller/FriendRequestController.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'Widgets/CustomerServiceChatScreen.dart';
 
@@ -130,6 +131,14 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   chatContainer(LastMessage lastmessage) {
+    final now = new DateTime.now();
+    final difference = now.difference(DateTime.parse(lastmessage.time));
+    ChattingUserData chattinguser;
+    lastmessage.chatters.forEach((element) {
+      if (element.uid != Get.find<UserDataController>().userModel.value.id) {
+        chattinguser = element;
+      }
+    });
     return ListTile(
       onLongPress: () {
         setState(() {
@@ -174,12 +183,12 @@ class _ChatPageState extends State<ChatPage> {
         radius: 30,
       ),
       title: Text(
-        lastmessage.name,
+        chattinguser.userName ?? 'UNKNOWN',
         style: TextStyle(
             color: Colors.grey[300], fontSize: SizeConfig.textMultiplier * 2),
       ),
       subtitle: Text(
-        lastmessage.lastMessage,
+        chattinguser.isTyping ? 'Typing...' : lastmessage.lastMessage,
         style: TextStyle(
             color: Colors.grey, fontSize: SizeConfig.textMultiplier * 1.5),
       ),
@@ -187,8 +196,8 @@ class _ChatPageState extends State<ChatPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            lastmessage.time.substring(0, 10),
-            style: TextStyle(color: Colors.grey),
+            timeago.format(now.subtract(difference), locale: 'en'),
+            style: TextStyle(color: Colors.grey, fontSize: 13),
           ),
         ],
       ),

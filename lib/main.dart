@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
+  timeago.setLocaleMessages('en', timeago.EnMessages());
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
