@@ -136,7 +136,22 @@ class ChatMessageListItem extends StatelessWidget {
                                     : 0,
                           ),
                         ),
-                        color: greyColor,
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xffC04848),
+                            Color(0xff480048),
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 5,
+                            spreadRadius: 3,
+                            offset: Offset(2, 3),
+                          ),
+                        ],
                       ),
                       child: Container(
                         // alignment: Alignment.centerLeft,
@@ -327,11 +342,22 @@ class ChatMessageListItem extends StatelessWidget {
                                         : 14,
                           ),
                         ),
-                        color:
-                            // self
-                            //     ? Color(kSelfMessageColor)
-                            // :
-                            greyColor,
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xffC04848),
+                            Color(0xff480048),
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 5,
+                            spreadRadius: 3,
+                            offset: Offset(2, 3),
+                          ),
+                        ],
                       ),
                       child: Container(
                         // alignment: Alignment.centerLeft,

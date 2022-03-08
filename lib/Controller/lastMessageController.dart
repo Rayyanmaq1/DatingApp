@@ -10,6 +10,7 @@ import 'CurrentUserData.dart';
 class LastMessageController extends GetxController {
   // ignore: deprecated_member_use
   RxList<LastMessage> lastMessage = List<LastMessage>().obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onInit() {
