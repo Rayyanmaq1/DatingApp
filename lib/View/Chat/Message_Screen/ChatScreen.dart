@@ -99,6 +99,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   void _sendMessage({String messageText, String imageUrl}) {
     reference.push().set({
+      TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
       MESSAGE_TEXT: messageText,
       SENDER_UID: userId,
       RECEIVER_UID: widget.lastMessage.uid,
@@ -500,8 +501,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                       ),
                                     ),
                                   Positioned(
-                                    bottom: 10,
-                                    left: 10,
+                                    bottom: 2,
+                                    left: 2,
                                     child: StreamBuilder(
                                       stream: FirebaseFirestore.instance
                                           .collection('lastMessage')

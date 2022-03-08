@@ -96,6 +96,7 @@ class PrivateCallService {
     final reference = FirebaseDatabase.instance.reference().child('messages');
 
     reference.push().set({
+      TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
       MESSAGE_TEXT: messageText,
       SENDER_UID: currentUserData.id,
       RECEIVER_UID: tosendUid,

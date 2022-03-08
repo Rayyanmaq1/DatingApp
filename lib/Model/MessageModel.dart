@@ -23,5 +23,7 @@ const String MESSAGE_TIME = 'messageTime';
 // ignore: non_constant_identifier_names
 const String Message_Read = 'messageSeen';
 
+const String TIMESTAMP = 'timeStamp';
+
 // ignore: non_constant_identifier_names
 const String ADMINUID = '1Jwuocmyf8cG5V3Hq5qCZwrMDO33';
