@@ -36,6 +36,7 @@ class ChattingScreen extends StatefulWidget {
   final String dp, userName, chatID, selfUid, partnerUid;
   final dynamic userData;
   final LastMessage lastMessage;
+
   bool friendRequest;
 
   ChattingScreen(
@@ -61,112 +62,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
   TextEditingController _editingController;
   ScrollController _listController;
   final _imagePicker = ImagePicker();
-
-  Future _getCameraImage() async {
-    _imagePicker
-        // ignore: deprecated_member_use
-        .getImage(
-          source: ImageSource.camera,
-          imageQuality: 80,
-          maxHeight: 1620,
-          maxWidth: 1080,
-        )
-        .then(
-          (value) => setState(() {
-            if (value != null) {
-              _image = XFile(value.path);
-              _selectedImageName = 'captured-image.jpg';
-            } else
-              _selectedImageName = '';
-          }),
-        );
-  }
-
-  Future _getGalleryImage() async {
-    _imagePicker
-        // ignore: deprecated_member_use
-        .getImage(
-          source: ImageSource.gallery,
-          imageQuality: 80,
-          maxHeight: 1620,
-          maxWidth: 1080,
-        )
-        .then((value) => setState(() {
-              if (value != null) {
-                _image = XFile(value.path);
-                _selectedImageName = path.basename(_image.path);
-              } else
-                _selectedImageName = '';
-            }));
-  }
-
-  void _sendMessage({String messageText, String imageUrl}) {
-    reference.push().set({
-      TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
-      MESSAGE_TEXT: messageText,
-      SENDER_UID: userId,
-      RECEIVER_UID: widget.partnerUid,
-      MESSAGE_IMAGE_URL: imageUrl,
-      SENDER_NAME: Get.find<UserDataController>().userModel.value.name,
-      SENDER_IMAGE_URL: Get.find<UserDataController>().userModel.value.imageUrl,
-    }).catchError((e) {
-      print(e);
-    });
-
-    _sendLatestMessage(messageText);
-  }
-
-  void _sendLatestMessage(String latestMessage) {
-    CollectionReference docRef =
-        FirebaseFirestore.instance.collection('lastMessage');
-
-    docRef.doc(widget.chatID).update({
-      LATEST_MESSAGE: latestMessage,
-      // LATEST_REFERENCE: _recRef,
-      'chatters': [
-        {
-          'uid': Get.find<UserDataController>().userModel.value.id,
-          'dp': Get.find<UserDataController>().userModel.value.imageUrl,
-          'name': Get.find<UserDataController>().userModel.value.name,
-          'isTyping': false
-        },
-        {
-          'uid': widget.partnerUid,
-          'dp': widget.dp,
-          'name': widget.userName,
-          'isTyping': false
-        }
-      ],
-      'chattersUid': [
-        Get.find<UserDataController>().userModel.value.id,
-        widget.partnerUid
-      ],
-      MESSAGE_TIME: DateTime.now().toString(),
-      'uid': widget.partnerUid,
-      'dp': widget.dp,
-    }).catchError((e) {
-      // print(e);
-    });
-    print('asdasd');
-  }
-
-  // void _markSeen(List messages) {
-  //   bool changed = false;
-  //   for (int i = 0; i < messages.length; i++) {
-  //     if (messages[i]['sender'] != widget.selfUid) {
-  //       if (!messages[i]['seen']) {
-  //         changed = true;
-  //         messages[i]['seen'] = true;
-  //       }
-  //     }
-  //   }
-  //   if (changed) {
-  //     FirebaseFirestore.instance.collection('chats').doc(widget.chatID).update({
-  //       'messages': messages,
-  //     });
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -284,7 +179,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                               top: 8,
                                               left: Get.width * 0.045,
                                               right: Get.width * 0.045,
-                                              bottom: 50),
+                                              bottom: 80),
                                           itemBuilder: (context, index) {
                                             return Column(
                                               children: [
@@ -839,7 +734,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
     UserCallModel to = UserCallModel(
         name: widget.lastMessage.name,
         imageUrl: widget.lastMessage.imageUrl,
-        uid: widget.lastMessage.uid);
+        uid: widget.partnerUid);
     CallUtils.dial(from: from, to: to, context: context, videoCall: videoCall);
   }
 
@@ -1036,8 +931,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
               padding: EdgeInsets.only(left: 12),
               child: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
               onPressed: () {
-                // if (FocusNode().hasFocus)
-                //   FocusScope.of(context).requestFocus(FocusNode());
+                if (FocusNode().hasFocus)
+                  FocusScope.of(context).requestFocus(FocusNode());
                 Navigator.pop(context);
               },
             ),
@@ -1045,18 +940,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           Expanded(
               child: Container(
             child: CupertinoButton(
-              onPressed: () {
-                // showModalBottomSheet(
-                //   context: context,
-                //   backgroundColor: Colors.transparent,
-                //   isScrollControlled: true,
-                //   isDismissible: true,
-                //   builder: (context) => ProfileView(
-                //     uid: widget.partnerUid,
-                //     currentUser: widget.userData,
-                //   ),
-                // );
-              },
+              onPressed: () {},
               minSize: 0,
               padding: EdgeInsets.zero,
               child: Row(
@@ -1129,8 +1013,6 @@ class _ChattingScreenState extends State<ChattingScreen> {
                 ),
               ],
             ),
-            width: 20,
-            height: 40,
           )),
         ],
       ),
@@ -1373,5 +1255,93 @@ class _ChattingScreenState extends State<ChattingScreen> {
         );
       },
     );
+  }
+
+  Future _getCameraImage() async {
+    _imagePicker
+        // ignore: deprecated_member_use
+        .getImage(
+          source: ImageSource.camera,
+          imageQuality: 80,
+          maxHeight: 1620,
+          maxWidth: 1080,
+        )
+        .then(
+          (value) => setState(() {
+            if (value != null) {
+              _image = XFile(value.path);
+              _selectedImageName = 'captured-image.jpg';
+            } else
+              _selectedImageName = '';
+          }),
+        );
+  }
+
+  Future _getGalleryImage() async {
+    _imagePicker
+        // ignore: deprecated_member_use
+        .getImage(
+          source: ImageSource.gallery,
+          imageQuality: 80,
+          maxHeight: 1620,
+          maxWidth: 1080,
+        )
+        .then((value) => setState(() {
+              if (value != null) {
+                _image = XFile(value.path);
+                _selectedImageName = path.basename(_image.path);
+              } else
+                _selectedImageName = '';
+            }));
+  }
+
+  void _sendMessage({String messageText, String imageUrl}) {
+    reference.push().set({
+      TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
+      MESSAGE_TEXT: messageText,
+      SENDER_UID: userId,
+      RECEIVER_UID: widget.partnerUid,
+      MESSAGE_IMAGE_URL: imageUrl,
+      SENDER_NAME: Get.find<UserDataController>().userModel.value.name,
+      SENDER_IMAGE_URL: Get.find<UserDataController>().userModel.value.imageUrl,
+    }).catchError((e) {
+      print(e);
+    });
+
+    _sendLatestMessage(messageText);
+  }
+
+  void _sendLatestMessage(String latestMessage) {
+    CollectionReference docRef =
+        FirebaseFirestore.instance.collection('lastMessage');
+
+    docRef.doc(widget.chatID).update({
+      LATEST_MESSAGE: latestMessage,
+      // LATEST_REFERENCE: _recRef,
+      'chatters': [
+        {
+          'uid': Get.find<UserDataController>().userModel.value.id,
+          'dp': Get.find<UserDataController>().userModel.value.imageUrl,
+          'name': Get.find<UserDataController>().userModel.value.name,
+          'isTyping': false
+        },
+        {
+          'uid': widget.partnerUid,
+          'dp': widget.dp,
+          'name': widget.userName,
+          'isTyping': false
+        }
+      ],
+      'chattersUid': [
+        Get.find<UserDataController>().userModel.value.id,
+        widget.partnerUid
+      ],
+      MESSAGE_TIME: DateTime.now().toString(),
+      'uid': widget.partnerUid,
+      'dp': widget.dp,
+    }).catchError((e) {
+      // print(e);
+    });
+    print('asdasd');
   }
 }

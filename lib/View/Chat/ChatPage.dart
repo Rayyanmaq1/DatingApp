@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:livu/Controller/CurrentUserData.dart';
 import 'package:livu/theme.dart';
@@ -47,50 +48,55 @@ class _ChatPageState extends State<ChatPage> {
                   Divider(
                     color: Colors.grey[850],
                   ),
-                  CustomerService(),
+                  Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: CustomerService()),
                   Divider(
                     color: Colors.grey[850],
                   ),
-                  ListTile(
-                    onTap: () => Get.to(() => AddFriend()),
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: orangeColor,
-                      backgroundImage: AssetImage('assets/userAvatar.png'),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: ListTile(
+                      onTap: () => Get.to(() => AddFriend()),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: orangeColor,
+                        backgroundImage: AssetImage('assets/userAvatar.png'),
+                      ),
+                      title: Text(
+                        'Add Friend',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: SizeConfig.textMultiplier * 2),
+                      ).tr(),
+                      trailing:
+                          GetX<FriendRequestController>(builder: (controller) {
+                        // controller.refresh();
+                        return controller.friendRequestCtr.length != 0
+                            ? Container(
+                                width: 20,
+                                height: 20,
+                                child: Center(
+                                    child: Text(
+                                  controller.friendRequestCtr.length.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                )),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        redColor,
+                                        pinkColor,
+                                      ],
+                                    ),
+                                    shape: BoxShape.circle),
+                              )
+                            : Container(
+                                width: 30,
+                                height: 30,
+                              );
+                      }),
                     ),
-                    title: Text(
-                      'Add Friend',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: SizeConfig.textMultiplier * 2),
-                    ).tr(),
-                    trailing:
-                        GetX<FriendRequestController>(builder: (controller) {
-                      // controller.refresh();
-                      return controller.friendRequestCtr.length != 0
-                          ? Container(
-                              width: 20,
-                              height: 20,
-                              child: Center(
-                                  child: Text(
-                                controller.friendRequestCtr.length.toString(),
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              )),
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      redColor,
-                                      pinkColor,
-                                    ],
-                                  ),
-                                  shape: BoxShape.circle),
-                            )
-                          : Container(
-                              width: 30,
-                              height: 30,
-                            );
-                    }),
                   ),
                   Divider(
                     color: Colors.grey[850],
@@ -101,6 +107,7 @@ class _ChatPageState extends State<ChatPage> {
                           ? Container(
                               child: ListView.separated(
                                 shrinkWrap: true,
+                                padding: EdgeInsets.zero,
                                 physics: BouncingScrollPhysics(),
                                 separatorBuilder: (context, index) {
                                   return Divider(

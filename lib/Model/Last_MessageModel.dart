@@ -85,14 +85,14 @@ class ChattingUserData {
     return ChattingUserData(
       dp: data['dp'],
       uid: data['uid'],
-      userName: data['userName'],
+      userName: data['name'],
       isTyping: data['isTyping'],
     );
   }
   Map<String, dynamic> toMap() => {
         'dp': this.dp,
         'uid': this.uid,
-        'userName': this.userName,
+        'name': this.userName,
         'isTyping': this.isTyping,
       };
 }
