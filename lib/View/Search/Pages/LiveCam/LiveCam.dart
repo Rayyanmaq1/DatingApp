@@ -138,6 +138,7 @@ class _LiveCamState extends State<LiveCam> {
     if (_role == ClientRole.Broadcaster) {
       list.add(RtcLocalView.SurfaceView());
     }
+    // ignore: missing_required_param
     _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(uid: uid)));
     return list;
   }
