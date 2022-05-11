@@ -220,8 +220,11 @@ class TheyMissed extends StatelessWidget {
                   children: [
                     Lottie.asset('assets/lotiesAnimation/missed.json'),
                     Text(
-                      'No Match history yet, out there and connect',
-                      style: TextStyle(color: Colors.white),
+                      'No Match history yet, out \nthere and connect',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: purpleColor,
+                          fontSize: SizeConfig.textMultiplier * 2.2),
                     ),
                     SizedBox(
                       height: SizeConfig.heightMultiplier * 10,
