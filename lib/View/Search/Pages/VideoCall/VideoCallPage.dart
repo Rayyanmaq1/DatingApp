@@ -9,6 +9,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/Services/VideoCallSearching.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+// ignore: must_be_immutable
 class VideocallPage extends StatelessWidget {
   int seleted;
   CameraController cameraController;

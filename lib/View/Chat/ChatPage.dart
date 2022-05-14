@@ -150,11 +150,12 @@ class _ChatPageState extends State<ChatPage> {
       onLongPress: () {
         setState(() {
           appBar = false;
-          seletedUser.add(lastmessage.uid);
+          seletedUser.add(lastmessage.docId);
         });
       },
-      tileColor:
-          seletedUser.contains(lastmessage.uid) ? Colors.grey[800] : greyColor,
+      tileColor: seletedUser.contains(lastmessage.docId)
+          ? Colors.grey[800]
+          : greyColor,
       onTap: () {
         ChattingUserData chattinguser;
         lastmessage.chatters.forEach((element) {
@@ -176,9 +177,9 @@ class _ChatPageState extends State<ChatPage> {
                 ))
             : setState(
                 () {
-                  seletedUser.contains(lastmessage.uid)
-                      ? seletedUser.remove(lastmessage.uid)
-                      : seletedUser.add(lastmessage.uid);
+                  seletedUser.contains(lastmessage.docId)
+                      ? seletedUser.remove(lastmessage.docId)
+                      : seletedUser.add(lastmessage.docId);
                   seletedUser.length >= 1 ? appBar = false : appBar = true;
                 },
               );
@@ -260,14 +261,10 @@ class _ChatPageState extends State<ChatPage> {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                     onTap: () {
-                      print(seletedUser);
-                      LastMessageService()
-                          .deleteChat(seletedUser)
-                          .then((value) {
-                        setState(() {
-                          seletedUser = [];
-                          appBar = true;
-                        });
+                      LastMessageService().deleteChat(seletedUser);
+                      setState(() {
+                        seletedUser = [];
+                        appBar = true;
                       });
                     },
                     child: Icon(

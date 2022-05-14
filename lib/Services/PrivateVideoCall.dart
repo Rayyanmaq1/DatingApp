@@ -76,10 +76,7 @@ class PrivateCallService {
   }
 
   giveLike(toSenduid, int likes) {
-    print('SenderUid: ' + toSenduid.toString());
-    print('Likes : ' + likes.toString());
     Map<String, dynamic> giveLike = {'Likes': likes + 1};
-    print('giveLike : ' + giveLike.toString());
 
     FirebaseFirestore.instance
         .collection('UserData')

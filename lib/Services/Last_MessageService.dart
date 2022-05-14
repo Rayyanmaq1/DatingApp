@@ -11,11 +11,8 @@ class LastMessageService {
 
   deleteChat(List<String> seletedUser) {
     for (int i = 0; i < seletedUser.length; i++) {
-      print(seletedUser[i]);
       FirebaseFirestore.instance
-          .collection('UserData')
-          .doc(currentUid())
-          .collection('last_message')
+          .collection('lastMessage')
           .doc(seletedUser[i])
           .delete();
     }

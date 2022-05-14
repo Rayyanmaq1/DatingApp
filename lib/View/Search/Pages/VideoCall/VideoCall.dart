@@ -64,16 +64,10 @@ class _VideoCallState extends State<VideoCall> {
             : Seleted_Genter_value == 2
                 ? 9
                 : 12);
-    // print(userModel.coins.toString() + " Coins");
     LiveCamService().history('VideoCallHistory', widget.matchedInfo);
-    // _getData();
-    // print('here');
   }
 
   Widget build(BuildContext context) {
-    // print('Document Id' + widget.id);
-    // _getData();
-    // print(matchedInfo.docs.first.id);
     return Scaffold(
         backgroundColor: greyColor,
         body: GestureDetector(
@@ -85,7 +79,7 @@ class _VideoCallState extends State<VideoCall> {
           child: Stack(
             children: [
               CallPage(
-                channelName: widget.matchedInfo['ChannelId'],
+                channelName: widget.matchedInfo['ChannelID'],
                 documentId: widget.id,
                 // documentId: widget.matchedInfo.,
               ),
@@ -112,8 +106,9 @@ class _VideoCallState extends State<VideoCall> {
     return Positioned(
       bottom: 0,
       child: AnimatedContainer(
+        // color: Colors.black,
         duration: Duration(milliseconds: 500),
-        height: showGifts ? SizeConfig.heightMultiplier * 39 : 0,
+        height: showGifts ? SizeConfig.heightMultiplier * 42 : 0,
         width: MediaQuery.of(context).size.width,
         child: PageView(
           // controller: pageController,
@@ -278,7 +273,7 @@ class _VideoCallState extends State<VideoCall> {
 
   _buildGiftContainer(context) {
     return Positioned(
-      bottom: 80,
+      bottom: 20,
       right: 5,
       child: GestureDetector(
         onTap: () {
@@ -357,7 +352,7 @@ class _VideoCallState extends State<VideoCall> {
   _buildLikeContainer(context) {
     return Positioned(
       top: 250,
-      right: 5,
+      right: 10,
       child: GestureDetector(
         onTap: likeOnce
             ? () {}
@@ -394,7 +389,7 @@ class _VideoCallState extends State<VideoCall> {
   _buildaddFriendContainer(context) {
     return Positioned(
       top: 200,
-      left: 5,
+      left: 10,
       child: GestureDetector(
         onTap: () {
           Get.snackbar('Send'.tr(), 'FriendRequestSend'.tr(),
@@ -411,10 +406,10 @@ class _VideoCallState extends State<VideoCall> {
             color: Colors.white,
             size: SizeConfig.heightMultiplier * 4,
           ),
-          width: SizeConfig.heightMultiplier * 6,
-          height: SizeConfig.heightMultiplier * 6,
+          width: SizeConfig.heightMultiplier * 7,
+          height: SizeConfig.heightMultiplier * 7,
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: purpleColor,
             shape: BoxShape.circle,
           ),
         ),
@@ -425,7 +420,7 @@ class _VideoCallState extends State<VideoCall> {
   _buildReportContainer(context) {
     return Positioned(
       top: 120,
-      left: 5,
+      left: 10,
       child: GestureDetector(
         onTap: () {
           _buildSecurityDialog(context);
@@ -458,7 +453,7 @@ class _VideoCallState extends State<VideoCall> {
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
           ).tr(),
           content: Container(
-            height: MediaQuery.of(context).size.height * 0.42,
+            height: MediaQuery.of(context).size.height * 0.46,
             child: Column(
               children: [
                 _buildCustomTile('Sexual_Context'.tr()),
@@ -541,6 +536,9 @@ class _VideoCallState extends State<VideoCall> {
                         Icons.thumb_up,
                         size: SizeConfig.imageSizeMultiplier * 4,
                         color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.widthMultiplier * 1,
                       ),
                       Container(
                         width: SizeConfig.widthMultiplier * 4,

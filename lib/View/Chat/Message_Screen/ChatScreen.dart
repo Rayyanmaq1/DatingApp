@@ -723,19 +723,19 @@ class _ChattingScreenState extends State<ChattingScreen> {
                             ),
                           ),
                   ),
-                  _customTileWithTailing(
-                    'Online reminder',
-                    Icons.notifications,
-                    Switch(
-                      value: switchButton,
-                      onChanged: (bool newValue) {
-                        Navigator.pop(context);
-                        switchButton = newValue;
-                      },
-                      activeColor: greenColor,
-                      activeTrackColor: greenColor,
-                    ),
-                  ),
+                  // _customTileWithTailing(
+                  //   'Online reminder',
+                  //   Icons.notifications,
+                  //   Switch(
+                  //     value: switchButton,
+                  //     onChanged: (bool newValue) {
+                  //       Navigator.pop(context);
+                  //       switchButton = newValue;
+                  //     },
+                  //     activeColor: greenColor,
+                  //     activeTrackColor: greenColor,
+                  //   ),
+                  // ),
                   _customTile('Block', Icons.block, () {}),
                   _customTile('Report', Icons.report, () {}),
                   _customTile('Delete', Icons.delete, () {
@@ -947,16 +947,23 @@ class _MessageContainerState extends State<MessageContainer> {
 
   @override
   Widget build(BuildContext context) {
+    if (focusNode.hasFocus) {
+      setState(() {
+        showEmoji = false;
+        showGifts = false;
+      });
+    }
+
     return AnimatedContainer(
         duration: Duration(milliseconds: 500),
         color: greyColor,
-        height: showEmoji || showGifts
-            ? SizeConfig.heightMultiplier * 45
+        height: (showEmoji || showGifts)
+            ? SizeConfig.heightMultiplier * 50
             : SizeConfig.heightMultiplier * 15,
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: Platform.isIOS ? 20.0 : 0.0),
+              padding: EdgeInsets.only(bottom: 4.0),
               child: new Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: new Row(
@@ -1000,102 +1007,111 @@ class _MessageContainerState extends State<MessageContainer> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // setState(() {
-                    //   if (showEmoji == true) {
-                    //     showEmoji = false;
-                    //   }
-                    //   showGifts = !showGifts;
-                    // });
-                  },
-                  child: FaIcon(
-                    FontAwesomeIcons.gift,
-                    color: purpleColor,
-                    size: 26,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (showEmoji == true) {
+                          showEmoji = false;
+                        }
+                        showGifts = !showGifts;
+                      });
+                    },
+                    child: FaIcon(
+                      FontAwesomeIcons.gift,
+                      color: purpleColor,
+                      size: 26,
+                    ),
                   ),
-                ),
-                GestureDetector(
-                    onTap: () async {
-                      var gallery = await ImagePicker().pickImage(
-                          source: ImageSource.gallery,
-                          maxWidth: 200,
-                          maxHeight: 300);
-                      print(gallery.path);
-                      var snapshot = await FirebaseStorage.instance
-                          .ref()
-                          .child(
-                              'chat_images/${DateTime.now().toString()}myimage.jpg')
-                          .putFile(File(gallery.path));
+                  GestureDetector(
+                      onTap: () async {
+                        var gallery = await ImagePicker().pickImage(
+                            source: ImageSource.gallery,
+                            maxWidth: 200,
+                            maxHeight: 300);
+                        print(gallery.path);
+                        var snapshot = await FirebaseStorage.instance
+                            .ref()
+                            .child(
+                                'chat_images/${DateTime.now().toString()}myimage.jpg')
+                            .putFile(File(gallery.path));
 
-                      await snapshot.ref.getDownloadURL().then((value) {
-                        _sendMessage(
-                            messageText: 'Image'.tr,
-                            imageUrl: value.toString());
+                        await snapshot.ref.getDownloadURL().then((value) {
+                          _sendMessage(
+                              messageText: 'Image'.tr,
+                              imageUrl: value.toString());
+                        });
+                      },
+                      child: Icon(
+                        Icons.photo_camera,
+                        color: purpleColor,
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      if (showGifts == true) {
+                        setState(() {
+                          showGifts = false;
+                        });
+                      }
+                      focusNode.unfocus();
+                      focusNode.canRequestFocus = false;
+                      setState(() {
+                        showEmoji = !showEmoji;
+                        _emojiIcon = Icon(FontAwesomeIcons.keyboard);
                       });
                     },
                     child: Icon(
-                      Icons.photo_camera,
+                      Icons.emoji_emotions,
+                      color: Colors.grey[600],
+                      size: 26,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (Get.find<UserDataController>()
+                              .userModel
+                              .value
+                              .coins >=
+                          40) {
+                        _call(false);
+                      } else {
+                        Get.to(() => BuyCoins());
+                        Get.snackbar(
+                            'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
+                      }
+                    },
+                    child: Icon(
+                      Icons.call,
+                      color: orangeColor,
+                      size: 26,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (Get.find<UserDataController>()
+                              .userModel
+                              .value
+                              .coins >=
+                          80) {
+                        _call(true);
+                      } else {
+                        Get.to(() => BuyCoins());
+                        Get.snackbar(
+                            'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
+                      }
+                    },
+                    child: Icon(
+                      Icons.videocam,
                       color: purpleColor,
-                    )),
-                GestureDetector(
-                  // onTap: () {
-                  //   if (showGifts == true) {
-                  //     setState(() {
-                  //       showGifts = false;
-                  //     });
-                  //   }
-                  //   focusNode.unfocus();
-                  //   focusNode.canRequestFocus = false;
-                  //   setState(() {
-                  //     showEmoji = !showEmoji;
-                  //     _emojiIcon = Icon(FontAwesomeIcons.keyboard);
-                  // });
-                  // },
-                  child: Icon(
-                    Icons.emoji_emotions,
-                    color: Colors.grey[600],
-                    size: 26,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (Get.find<UserDataController>().userModel.value.coins >=
-                        40) {
-                      _call(false);
-                    } else {
-                      Get.to(() => BuyCoins());
-                      Get.snackbar(
-                          'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
-                    }
-                  },
-                  child: Icon(
-                    Icons.call,
-                    color: orangeColor,
-                    size: 26,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (Get.find<UserDataController>().userModel.value.coins >=
-                        80) {
-                      _call(true);
-                    } else {
-                      Get.to(() => BuyCoins());
-                      Get.snackbar(
-                          'NoEnoughCoin'.tr, 'NoEnoughCoinSubTitle'.tr);
-                    }
-                  },
-                  child: Icon(
-                    Icons.videocam,
-                    color: purpleColor,
-                    size: 26,
-                  ),
-                )
-              ],
+                      size: 26,
+                    ),
+                  )
+                ],
+              ),
             ),
             showGiftPicker(),
             showEmojiPicker(),
@@ -1368,16 +1384,20 @@ class _MessageContainerState extends State<MessageContainer> {
   }
 
   Widget showEmojiPicker() {
-    return Container(
+    return AnimatedContainer(
       height: showEmoji ? SizeConfig.heightMultiplier * 35 : 0,
-      // duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 500),
       child: EmojiPicker(
-        onEmojiSelected: (category, emoji) {
+        onEmojiSelected: (category, Emoji emoji) {
+          _textEditingController.text =
+              _textEditingController.text + emoji.emoji;
+          setState(() {
+            _isComposingMessage = true;
+          });
           // Do something when emoji is tapped
         },
         onBackspacePressed: () {
-          // Backspace-Button tapped logic
-          // Remove this line to also remove the button in the UI
+          _backspace();
         },
         config: Config(
             columns: 7,
@@ -1407,6 +1427,52 @@ class _MessageContainerState extends State<MessageContainer> {
             buttonMode: ButtonMode.MATERIAL),
       ),
     );
+  }
+
+  void _backspace() {
+    final text = _textEditingController.text;
+    final textSelection = _textEditingController.selection;
+    final selectionLength = textSelection.end - textSelection.start;
+
+    // There is a selection.
+    if (selectionLength > 0) {
+      final newText = text.replaceRange(
+        textSelection.start,
+        textSelection.end,
+        '',
+      );
+      _textEditingController.text = newText;
+      _textEditingController.selection = textSelection.copyWith(
+        baseOffset: textSelection.start,
+        extentOffset: textSelection.start,
+      );
+      return;
+    }
+
+    // The cursor is at the beginning.
+    if (textSelection.start == 0) {
+      return;
+    }
+
+    // Delete the previous character
+    final previousCodeUnit = text.codeUnitAt(textSelection.start - 1);
+    final offset = _isUtf16Surrogate(previousCodeUnit) ? 2 : 1;
+    final newStart = textSelection.start - offset;
+    final newEnd = textSelection.start;
+    final newText = text.replaceRange(
+      newStart,
+      newEnd,
+      '',
+    );
+    _textEditingController.text = newText;
+    _textEditingController.selection = textSelection.copyWith(
+      baseOffset: newStart,
+      extentOffset: newStart,
+    );
+  }
+
+  bool _isUtf16Surrogate(int value) {
+    return value & 0xF800 == 0xD800;
   }
 
   Future<Null> _textMessageSubmitted(String text) async {

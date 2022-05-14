@@ -58,6 +58,7 @@ class _CallPageState extends State<CallPage> {
   }
 
   Future<void> initialize() async {
+    print("channel id: ${widget.channelName}");
     if (APP_ID.isEmpty) {
       setState(() {
         _infoStrings.add(
