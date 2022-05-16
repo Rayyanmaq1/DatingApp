@@ -89,10 +89,13 @@ class PrivateCallService {
       String imageUrl,
       tosendUid,
       tosendImage,
-      tosendName}) {
-    final reference = FirebaseDatabase.instance.reference().child('messages');
+      tosendName}) async {
+    final reference = FirebaseDatabase.instance.ref().child('messages');
+    String docID = await _sendLatestMessage(
+        messageText, tosendUid, tosendImage, tosendName);
 
     reference.push().set({
+      CHATDOCID: docID,
       TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
       MESSAGE_TEXT: messageText,
       SENDER_UID: currentUserData.id,
@@ -103,18 +106,12 @@ class PrivateCallService {
     }).catchError((e) {
       print(e);
     });
-
-    _sendLatestMessage(messageText, tosendUid, tosendImage, tosendName);
   }
 
-  void _sendLatestMessage(
+  Future<String> _sendLatestMessage(
       String latestMessage, String tosendUid, tosendImage, tosendName) {
-    CollectionReference docRef =
-        FirebaseFirestore.instance.collection('lastMessage');
-
-    docRef.doc().set({
+    Map<String, dynamic> msg = {
       LATEST_MESSAGE: latestMessage,
-      // LATEST_REFERENCE: _recRef,
       'chatters': [
         {
           'uid': currentUserData.id,
@@ -134,9 +131,32 @@ class PrivateCallService {
       'Uid': tosendUid,
       'ImageUrl': tosendImage,
       'Name': tosendName,
-    }).catchError((e) {
-      // print(e);
+    };
+    bool msgFound = false;
+    return FirebaseFirestore.instance
+        .collection('lastMessage')
+        .where('chattersUid', arrayContains: currentUserData.id)
+        .get()
+        // ignore: missing_return
+        .then((value) {
+      for (int i = 0; i < value.docs.length; i++) {
+        if (value.docs[i].data()['chattersUid'].contains(tosendUid)) {
+          FirebaseFirestore.instance
+              .collection('lastMessage')
+              .doc(value.docs[i].id)
+              .update(msg);
+          msgFound = true;
+          return value.docs[i].id;
+        }
+      }
+      if (!msgFound) {
+        return FirebaseFirestore.instance
+            .collection('lastMessage')
+            .add(msg)
+            .then((value) {
+          return value.id;
+        });
+      }
     });
-    print('asdasd');
   }
 }

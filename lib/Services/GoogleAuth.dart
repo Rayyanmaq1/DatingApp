@@ -30,7 +30,7 @@ class GmailAuthentication {
         .then((value) {
       if (value.exists) {
         Get.offAll(() => CustomNavigation(
-              showPopUps: false,
+              showPopUps: true,
             ));
       } else {
         Get.offAll(() => UserData());

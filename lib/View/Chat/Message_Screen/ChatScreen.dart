@@ -77,31 +77,31 @@ class _ChattingScreenState extends State<ChattingScreen> {
     super.dispose();
   }
 
-  int length = 0;
-  final TextEditingController _textEditingController =
-      new TextEditingController();
-  bool _isComposingMessage = false;
-  bool switchButton = false;
-  bool favourite;
-  final TextEditingController controller = TextEditingController();
-  XFile image;
+  // int length = 0;
+  // final TextEditingController _textEditingController =
+  //     new TextEditingController();
+  // bool _isComposingMessage = false;
+  // bool switchButton = false;
+  // bool favourite;
+  // final TextEditingController controller = TextEditingController();
+  // XFile image;
   final reference = FirebaseDatabase.instance.ref().child('messages');
-  String userId = Get.find<UserDataController>().userModel.value.id;
-  final friendRequest = Get.put(FriendRequestController());
+  // String userId = Get.find<UserDataController>().userModel.value.id;
+  // final friendRequest = Get.put(FriendRequestController());
   String name;
-  FocusNode focusNode = FocusNode();
-  bool showGifts = false;
-  AnimationController _controller;
-  Animation _animation;
-  bool showEmoji = false;
-  final pageController = PageController(viewportFraction: 0.8);
-  List<Gifts> getGifts = getGiftsList();
-  List<Gifts> getData = getlist();
-  Icon _emojiIcon = Icon(
-    FontAwesomeIcons.smileWink,
-    color: Colors.grey,
-    size: 20,
-  );
+  // FocusNode focusNode = FocusNode();
+  // bool showGifts = false;
+  // AnimationController _controller;
+  // Animation _animation;
+  // bool showEmoji = false;
+  // final pageController = PageController(viewportFraction: 0.8);
+  // List<Gifts> getGifts = getGiftsList();
+  // List<Gifts> getData = getlist();
+  // Icon _emojiIcon = Icon(
+  //   FontAwesomeIcons.smileWink,
+  //   color: Colors.grey,
+  //   size: 20,
+  // );
   @override
   Widget build(BuildContext context) {
     Animation<double> animation = kAlwaysCompleteAnimation;
@@ -1159,6 +1159,7 @@ class _MessageContainerState extends State<MessageContainer> {
 
   void _sendMessage({String messageText, String imageUrl}) {
     reference.push().set({
+      CHATDOCID: widget.chatID,
       TIMESTAMP: DateTime.now().millisecondsSinceEpoch,
       MESSAGE_TEXT: messageText,
       SENDER_UID: userId,

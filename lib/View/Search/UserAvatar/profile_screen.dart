@@ -16,7 +16,7 @@ import 'package:livu/SizedConfig.dart';
 import 'package:livu/View/Chat/Message_Screen/VideoCall/PickupLayout.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final userdataCtr = Get.put(UserDataController());
+  final userdataCtrl = Get.find<UserDataController>();
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
@@ -136,23 +136,15 @@ class ProfileScreen extends StatelessWidget {
                           builder: (controller) {
                             return Text(
                               controller.userModel.value.name != null
-                                  ? '${controller.userModel.value.id}'
+                                  ? '${controller.userData.bio}'
                                   : '',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: SizeConfig.textMultiplier * 1.3),
+                                  fontSize: SizeConfig.textMultiplier * 1.5),
                             );
                           },
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 8, left: 10),
-                      //   child: Icon(
-                      //     FontAwesomeIcons.solidCopy,
-                      //     size: 16,
-                      //     color: Colors.grey[300],
-                      //   ),
-                      // )
                     ],
                   ),
                   Padding(
