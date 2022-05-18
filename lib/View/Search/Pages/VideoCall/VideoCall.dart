@@ -1,5 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:livu/Controller/lastMessageController.dart';
+import 'package:livu/Model/MessageModel.dart';
 import 'package:livu/SizedConfig.dart';
 import 'package:get/route_manager.dart';
 import 'package:livu/theme.dart';
@@ -82,6 +85,9 @@ class _VideoCallState extends State<VideoCall> {
                 channelName: widget.matchedInfo['ChannelID'],
                 documentId: widget.id,
                 // documentId: widget.matchedInfo.,
+              ),
+              StreamChat(
+                matchedInfo: widget.matchedInfo,
               ),
               _buildUserInfoContainer(context),
               _buildReportContainer(context),
@@ -361,10 +367,10 @@ class _VideoCallState extends State<VideoCall> {
                   likeOnce = true;
                 });
                 PrivateCallService().giveLike(
-                  widget.matchedInfo['SenderUid'] == userModel.id
+                  toSenduid: widget.matchedInfo['SenderUid'] == userModel.id
                       ? widget.matchedInfo['ReciverUid']
                       : widget.matchedInfo['SenderUid'],
-                  widget.matchedInfo['SenderUid'] == userModel.id
+                  likes: widget.matchedInfo['SenderUid'] == userModel.id
                       ? widget.matchedInfo['ReciverLikes']
                       : widget.matchedInfo['SenderLikes'],
                 );
@@ -691,6 +697,212 @@ class _VideoCallState extends State<VideoCall> {
           ),
         ),
       ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class StreamChat extends StatelessWidget {
+  StreamChat({
+    Key key,
+    this.matchedInfo,
+  }) : super(key: key);
+  Map<String, dynamic> matchedInfo;
+  final reference = FirebaseDatabase.instance.ref().child('messages');
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 140,
+      child: Container(
+        width: Get.width,
+        height: Get.height * 0.3,
+        child: StreamBuilder(
+          stream: reference.onValue,
+          builder: (context, snapshot) {
+            List<Map<String, dynamic>> msgList = [];
+
+            if (snapshot.hasData) {
+              final json = snapshot.data.snapshot.value;
+              if (json == null) {
+                return SizedBox();
+              }
+              String patnersUid = matchedInfo['SenderUid'] !=
+                      Get.find<UserDataController>().userData.id
+                  ? matchedInfo['ReciverUid']
+                  : matchedInfo['SenderUid'];
+              String patnerName = matchedInfo['SenderUid'] !=
+                      Get.find<UserDataController>().userData.id
+                  ? matchedInfo['ReciverName']
+                  : matchedInfo['SenderName'];
+
+              json.forEach((key, value) {
+                if ((value[SENDER_UID] ==
+                            Get.find<UserDataController>().userModel.value.id ||
+                        value[RECEIVER_UID] ==
+                            Get.find<UserDataController>()
+                                .userModel
+                                .value
+                                .id) &&
+                    (value[SENDER_UID] == patnersUid ||
+                        value[RECEIVER_UID] == patnersUid)) {
+                  msgList.add({'value': value, 'key': key});
+                }
+              });
+              msgList.sort((a, b) =>
+                  b['value']['timeStamp'].compareTo(a['value']['timeStamp']));
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Get.find<LastMessageController>().isLoading.value = false;
+              });
+            }
+            return Container(
+              height: Get.height * 0.3,
+              child: ListView.builder(
+                  reverse: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: msgList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return getReceivedMessageLayout(
+                      context: context,
+                      messageSnapshot: msgList[index],
+                    );
+                  }),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getReceivedMessageLayout({context, messageSnapshot}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        new Container(
+          height: 29,
+          width: 29,
+          margin: EdgeInsets.only(left: 16, top: 16, bottom: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(999),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade400,
+                blurRadius: 3,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: messageSnapshot['value'][SENDER_IMAGE_URL] == null ||
+                    messageSnapshot['value'][SENDER_IMAGE_URL] == ''
+                ? Container(
+                    color: Color(0xFFD8D8D8),
+                    child: Center(
+                      child: Text(
+                        messageSnapshot['value'][SENDER_NAME][0].toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  )
+                : CachedNetworkImage(
+                    imageUrl: messageSnapshot['value'][SENDER_IMAGE_URL],
+                    fit: BoxFit.cover,
+                  ),
+          ),
+        ),
+        SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: messageSnapshot['value'][MESSAGE_IMAGE_URL] != null
+                  ? GestureDetector(
+                      onTap: () {
+                        // showCupertinoDialog(
+                        //   context: context,
+                        //   builder: (context) => GestureDetector(
+                        //     onTap: () => Navigator.pop(context),
+                        //     onVerticalDragUpdate: (value) =>
+                        //         Navigator.pop(context),
+                        //     onDoubleTap: () => Navigator.pop(context),
+                        //     child: CupertinoPageScaffold(
+                        //       child: SafeArea(
+                        //         child: Container(
+                        //           height: _height,
+                        //           width: _width,
+                        //           child: CachedNetworkImage(
+                        //               imageUrl: messageSnapshot['value']
+                        //                   [MESSAGE_IMAGE_URL]),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // );
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: CachedNetworkImage(
+                          imageUrl: messageSnapshot['value'][MESSAGE_IMAGE_URL],
+                          width: 40,
+                        ),
+                      ))
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          messageSnapshot['value'][SENDER_NAME],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 6),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                Color(0xffC04848),
+                                Color(0xff480048),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 2,
+                                spreadRadius: 1,
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            messageSnapshot['value'][MESSAGE_TEXT],
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:livu/Model/Last_MessageModel.dart';
+import 'package:livu/Model/MessageModel.dart';
 import 'package:livu/Model/UserModel.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +12,17 @@ class LastMessageService {
   }
 
   deleteChat(List<String> seletedUser) {
+    final reference = FirebaseDatabase.instance.ref().child('messages');
     for (int i = 0; i < seletedUser.length; i++) {
+      reference.once().then((DatabaseEvent snapshot) {
+        final json = snapshot.snapshot.value as Map<dynamic, dynamic>;
+        json.forEach((key, value) {
+          if ((value[CHATDOCID] == seletedUser[i])) {
+            FirebaseDatabase.instance.ref().child('messages/' + key).remove();
+          }
+        });
+      });
+
       FirebaseFirestore.instance
           .collection('lastMessage')
           .doc(seletedUser[i])

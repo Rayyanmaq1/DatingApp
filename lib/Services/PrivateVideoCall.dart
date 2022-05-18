@@ -67,6 +67,12 @@ class PrivateCallService {
       'Name': currentUserData.name,
       'time': DateTime.now().toString().substring(0, 10),
     };
+    sendMessage(
+        messageText: '${currentUserData.name} added you as a friend',
+        imageUrl: null,
+        tosendUid: toSenduid,
+        tosendImage: currentUserData.imageUrl,
+        tosendName: currentUserData.name);
     FirebaseFirestore.instance
         .collection('UserData')
         .doc(toSenduid)
@@ -75,9 +81,15 @@ class PrivateCallService {
         .set(sendRequestData);
   }
 
-  giveLike(toSenduid, int likes) {
+  giveLike({toSenduid, int likes}) {
     Map<String, dynamic> giveLike = {'Likes': likes + 1};
-
+    sendMessage(
+      messageText: '${currentUserData.name} gave to a like',
+      imageUrl: null,
+      tosendUid: toSenduid,
+      tosendImage: currentUserData.imageUrl,
+      tosendName: currentUserData.name,
+    );
     FirebaseFirestore.instance
         .collection('UserData')
         .doc(toSenduid)

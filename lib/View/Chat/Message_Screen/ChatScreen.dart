@@ -125,7 +125,9 @@ class _ChattingScreenState extends State<ChattingScreen> {
                     child: Container(
                       color: greyColor,
                       child: StreamBuilder(
-                          stream: reference.onValue,
+                          stream: reference
+                            
+                          .onValue,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               List<Map<String, dynamic>> messaages = [];
