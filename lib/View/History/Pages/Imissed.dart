@@ -193,7 +193,8 @@ class _ImissedState extends State<Imissed> {
                                 width: SizeConfig.widthMultiplier * 9,
                                 height: SizeConfig.widthMultiplier * 9,
                                 decoration: BoxDecoration(
-                                    shape: BoxShape.circle, color: purpleColor),
+                                    shape: BoxShape.circle,
+                                    color: AppColors.purpleColor),
                                 child: Center(
                                   child: FaIcon(
                                     FontAwesomeIcons.solidCommentDots,
@@ -218,7 +219,7 @@ class _ImissedState extends State<Imissed> {
                         'No Match history yet, out \nthere and connect',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: purpleColor,
+                            color: AppColors.purpleColor,
                             fontSize: SizeConfig.textMultiplier * 2.2),
                       ),
                       SizedBox(
@@ -240,7 +241,7 @@ class _ImissedState extends State<Imissed> {
                             ),
                           ),
                           decoration: BoxDecoration(
-                              color: purpleColor,
+                              color: AppColors.purpleColor,
                               borderRadius: BorderRadius.circular(24)),
                         ),
                       )
@@ -257,7 +258,7 @@ class _ImissedState extends State<Imissed> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           title: Text(
             'Report_User',
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
@@ -299,7 +300,7 @@ class _ImissedState extends State<Imissed> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           content: Container(
             height: MediaQuery.of(context).size.height * 0.05,
             child: Column(
@@ -319,7 +320,7 @@ class _ImissedState extends State<Imissed> {
               },
               child: Text(
                 'Delete_Action_Button',
-                style: TextStyle(color: greenColor),
+                style: TextStyle(color: AppColors.greenColor),
               ).tr(),
             )
           ],

@@ -20,7 +20,7 @@ class BlockedUser {
             context: (context),
             builder: (context) {
               return AlertDialog(
-                backgroundColor: greyColor,
+                backgroundColor: AppColors.greyColor,
                 title: Text(
                   'You Have Been Blocked by Admin',
                   style: TextStyle(color: Colors.grey[300]),

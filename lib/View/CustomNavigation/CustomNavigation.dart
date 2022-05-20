@@ -98,7 +98,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
             ? Colors.amber
             : _selectedPage == 1
                 ? Colors.white
-                : purpleColor,
+                : AppColors.purpleColor,
         // onTap: _onItemTapped,
       ),
     );

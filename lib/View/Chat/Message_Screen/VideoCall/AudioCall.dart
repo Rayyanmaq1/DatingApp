@@ -118,13 +118,13 @@ class _AudioCallPageState extends State<AudioCallPage> {
   Widget build(BuildContext context) {
     _getData();
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       appBar: AppBar(
         title: Text(
           'Voice Call'.tr(),
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
       ),
       body: Stack(
         children: [

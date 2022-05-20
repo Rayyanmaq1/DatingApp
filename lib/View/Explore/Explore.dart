@@ -32,7 +32,7 @@ class _ExploreState extends State<Explore> {
     //print(getData.length);
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         body: videoList.length != 0
             ? PageView.builder(
                 scrollDirection: Axis.vertical,
@@ -59,7 +59,8 @@ class _ExploreState extends State<Explore> {
                   ),
                   Text(
                     'No Video to show',
-                    style: TextStyle(color: purpleColor, fontSize: 18),
+                    style:
+                        TextStyle(color: AppColors.purpleColor, fontSize: 18),
                   )
                 ],
               ),
@@ -202,7 +203,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                   bottom: 80,
                   left: 20,
                   child: PhysicalModel(
-                    color: purpleColor,
+                    color: AppColors.purpleColor,
                     borderRadius: BorderRadius.circular(24),
                     elevation: 5,
                     child: RawMaterialButton(

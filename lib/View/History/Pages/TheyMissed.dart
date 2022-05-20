@@ -198,7 +198,8 @@ class TheyMissed extends StatelessWidget {
                                 width: SizeConfig.widthMultiplier * 9,
                                 height: SizeConfig.widthMultiplier * 9,
                                 decoration: BoxDecoration(
-                                    shape: BoxShape.circle, color: orangeColor),
+                                    shape: BoxShape.circle,
+                                    color: AppColors.orangeColor),
                                 child: Center(
                                   child: FaIcon(
                                     FontAwesomeIcons.phone,
@@ -223,7 +224,7 @@ class TheyMissed extends StatelessWidget {
                       'No Match history yet, out \nthere and connect',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: purpleColor,
+                          color: AppColors.purpleColor,
                           fontSize: SizeConfig.textMultiplier * 2.2),
                     ),
                     SizedBox(
@@ -245,7 +246,7 @@ class TheyMissed extends StatelessWidget {
                           ),
                         ),
                         decoration: BoxDecoration(
-                            color: purpleColor,
+                            color: AppColors.purpleColor,
                             borderRadius: BorderRadius.circular(24)),
                       ),
                     )
@@ -261,7 +262,7 @@ class TheyMissed extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           title: Text(
             'Report_User',
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
@@ -313,7 +314,7 @@ class TheyMissed extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           content: Container(
             height: MediaQuery.of(context).size.height * 0.05,
             child: Column(
@@ -333,7 +334,7 @@ class TheyMissed extends StatelessWidget {
               },
               child: Text(
                 'Delete_Action_Button',
-                style: TextStyle(color: greenColor),
+                style: TextStyle(color: AppColors.greenColor),
               ).tr(),
             )
           ],

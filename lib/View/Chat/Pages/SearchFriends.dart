@@ -26,10 +26,10 @@ class _SearchFriendsState extends State<SearchFriends> {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
-            backgroundColor: greyColor,
+            backgroundColor: AppColors.greyColor,
             elevation: 0,
             title: TextField(
               controller: _controller,
@@ -52,7 +52,7 @@ class _SearchFriendsState extends State<SearchFriends> {
                 child: Container(
                   child: Center(child: Text('Search').tr()),
                   decoration: BoxDecoration(
-                    color: purpleColor,
+                    color: AppColors.purpleColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(4),
                     ),
@@ -157,7 +157,7 @@ class _SearchFriendsState extends State<SearchFriends> {
                                 'No_Friend',
                                 style: TextStyle(
                                   fontSize: SizeConfig.heightMultiplier * 2.5,
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                 ),
                               ).tr(),
                             ],

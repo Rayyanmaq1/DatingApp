@@ -48,7 +48,7 @@ class _FilterWidgetState extends State<FilterWidget> {
               children: [
                 Icon(
                   Icons.filter_alt,
-                  color: purpleColor,
+                  color: AppColors.purpleColor,
                 ),
                 SizedBox(
                   width: SizeConfig.widthMultiplier * 1,
@@ -76,7 +76,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             clipper: MovieTicketClipper(),
             child: Container(
               height: SizeConfig.heightMultiplier * 8,
-              color: purpleColor,
+              color: AppColors.purpleColor,
             ),
           ),
           Padding(
@@ -344,7 +344,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             Get.to(() => BuyCoins());
                           },
                           child: PhysicalModel(
-                            color: purpleColor,
+                            color: AppColors.purpleColor,
                             borderRadius: BorderRadius.circular(4),
                             elevation: 3,
                             child: Container(
@@ -371,7 +371,7 @@ class _FilterWidgetState extends State<FilterWidget> {
           ),
         );
       }),
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
     );
   }
 }

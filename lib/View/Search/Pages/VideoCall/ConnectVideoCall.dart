@@ -104,7 +104,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 child: Container(
                     height: Get.height,
                     width: Get.width,
-                    color: greyColor,
+                    color: AppColors.greyColor,
                     child: Lottie.asset('assets/lotiesAnimation/Loading.json')),
               );
             }
@@ -121,7 +121,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       return Container(
                         height: Get.height,
                         width: Get.width,
-                        color: greyColor,
+                        color: AppColors.greyColor,
                         child: Center(
                           child: Lottie.asset(
                               'assets/lotiesAnimation/Loading.json'),
@@ -212,7 +212,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                                     child: Container(
                                       padding: EdgeInsets.all(8),
                                       decoration: BoxDecoration(
-                                        color: purpleColor.withOpacity(0.7),
+                                        color: AppColors.purpleColor
+                                            .withOpacity(0.7),
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(12),
                                         ),
@@ -316,7 +317,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             }
             return Center(
               child: Container(
-                color: greyColor,
+                color: AppColors.greyColor,
                 height: Get.height,
                 width: Get.width,
                 child: Column(
@@ -329,7 +330,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     Text(
                       'No one Avaiable yet',
                       style: TextStyle(
-                          color: purpleColor,
+                          color: AppColors.purpleColor,
                           fontSize: SizeConfig.textMultiplier * 3),
                     ),
                   ],

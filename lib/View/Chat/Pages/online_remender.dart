@@ -16,7 +16,7 @@ class _OnlineRemenderState extends State<OnlineRemender> {
       backgroundColor: Color(0xff191919),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         title: Text(
           "Online Remender",
           style: TextStyle(

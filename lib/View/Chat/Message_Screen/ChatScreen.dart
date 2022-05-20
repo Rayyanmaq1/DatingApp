@@ -123,11 +123,9 @@ class _ChattingScreenState extends State<ChattingScreen> {
                   _appBar(),
                   Expanded(
                     child: Container(
-                      color: greyColor,
+                      color: AppColors.greyColor,
                       child: StreamBuilder(
-                          stream: reference
-                            
-                          .onValue,
+                          stream: reference.onValue,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               List<Map<String, dynamic>> messaages = [];
@@ -249,8 +247,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: TextStyle(
-                                                              color:
-                                                                  purpleColor)),
+                                                              color: AppColors
+                                                                  .purpleColor)),
                                                       SizedBox(
                                                         height: SizeConfig
                                                                 .heightMultiplier *
@@ -292,8 +290,8 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                                               ),
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color:
-                                                                    purpleColor,
+                                                                color: AppColors
+                                                                    .purpleColor,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .all(
@@ -328,17 +326,17 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                                                 child: Text(
                                                                   'Ignore',
                                                                   style: TextStyle(
-                                                                      color:
-                                                                          purpleColor),
+                                                                      color: AppColors
+                                                                          .purpleColor),
                                                                 ),
                                                               ),
                                                               decoration:
                                                                   BoxDecoration(
                                                                 border: Border.all(
-                                                                    color:
-                                                                        purpleColor),
-                                                                color:
-                                                                    greyColor,
+                                                                    color: AppColors
+                                                                        .purpleColor),
+                                                                color: AppColors
+                                                                    .greyColor,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .all(
@@ -423,11 +421,14 @@ class _ChattingScreenState extends State<ChattingScreen> {
                                                     width: _width * 0.25,
                                                     child:
                                                         LinearProgressIndicator(
-                                                      backgroundColor: greyColor
+                                                      backgroundColor: AppColors
+                                                          .greyColor
                                                           .withOpacity(0.3),
                                                       valueColor:
                                                           new AlwaysStoppedAnimation<
-                                                              Color>(greyColor),
+                                                                  Color>(
+                                                              AppColors
+                                                                  .greyColor),
                                                       minHeight: 3,
                                                     ),
                                                   ),
@@ -535,7 +536,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
 
   Container encryptionMessage() => Container(
         decoration: BoxDecoration(
-          color: greyColor,
+          color: AppColors.greyColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -571,7 +572,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.only(),
-      color: greyColor,
+      color: AppColors.greyColor,
       child: Row(
         children: [
           Container(
@@ -680,7 +681,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: greyColor,
+                color: AppColors.greyColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
@@ -792,7 +793,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -863,7 +864,7 @@ class _ChattingScreenState extends State<ChattingScreen> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),
@@ -958,7 +959,7 @@ class _MessageContainerState extends State<MessageContainer> {
 
     return AnimatedContainer(
         duration: Duration(milliseconds: 500),
-        color: greyColor,
+        color: AppColors.greyColor,
         height: (showEmoji || showGifts)
             ? SizeConfig.heightMultiplier * 50
             : SizeConfig.heightMultiplier * 15,
@@ -1025,7 +1026,7 @@ class _MessageContainerState extends State<MessageContainer> {
                     },
                     child: FaIcon(
                       FontAwesomeIcons.gift,
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                       size: 26,
                     ),
                   ),
@@ -1050,7 +1051,7 @@ class _MessageContainerState extends State<MessageContainer> {
                       },
                       child: Icon(
                         Icons.photo_camera,
-                        color: purpleColor,
+                        color: AppColors.purpleColor,
                       )),
                   GestureDetector(
                     onTap: () {
@@ -1088,7 +1089,7 @@ class _MessageContainerState extends State<MessageContainer> {
                     },
                     child: Icon(
                       Icons.call,
-                      color: orangeColor,
+                      color: AppColors.orangeColor,
                       size: 26,
                     ),
                   ),
@@ -1108,7 +1109,7 @@ class _MessageContainerState extends State<MessageContainer> {
                     },
                     child: Icon(
                       Icons.videocam,
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                       size: 26,
                     ),
                   )
@@ -1222,7 +1223,7 @@ class _MessageContainerState extends State<MessageContainer> {
     return new IconButton(
       icon: new Icon(
         Icons.send,
-        color: purpleColor,
+        color: AppColors.purpleColor,
       ),
       onPressed: _isComposingMessage
           ? () {

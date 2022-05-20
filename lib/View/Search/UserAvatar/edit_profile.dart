@@ -292,7 +292,7 @@ class _EditProfileState extends State<EditProfile> {
                     setState(() {});
                   },
                   child: Container(
-                    color: greyColor,
+                    color: AppColors.greyColor,
                     height: MediaQuery.of(context).size.height * 0.25,
                     width: MediaQuery.of(context).size.width * 1,
                     child: uploadedVideoLink == ''
@@ -437,7 +437,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget appBar() {
     return AppBar(
       elevation: 4,
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       title: Text(
         "Edit_profile",
         style: TextStyle(color: Colors.white),
@@ -530,7 +530,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Container(
               width: SizeConfig.widthMultiplier * 5,
               height: SizeConfig.widthMultiplier * 5,
-              color: greyColor,
+              color: AppColors.greyColor,
               child: selectedImage == null
                   ? SizedBox()
                   : Stack(
@@ -558,7 +558,7 @@ class _EditProfileState extends State<EditProfile> {
                           right: 8,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: greyColor.withOpacity(0.5),
+                              color: AppColors.greyColor.withOpacity(0.5),
                               shape: BoxShape.circle,
                             ),
                             child: GestureDetector(
@@ -571,7 +571,7 @@ class _EditProfileState extends State<EditProfile> {
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.15,
-                                        color: greyColor,
+                                        color: AppColors.greyColor,
                                         child: Column(
                                           children: [
                                             ListTile(
@@ -599,7 +599,7 @@ class _EditProfileState extends State<EditProfile> {
                               },
                               child: Icon(
                                 Icons.cancel,
-                                color: greyColor,
+                                color: AppColors.greyColor,
                               ),
                             ),
                           ),
@@ -635,7 +635,7 @@ class _EditProfileState extends State<EditProfile> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -706,7 +706,7 @@ class _EditProfileState extends State<EditProfile> {
                           style: TextStyle(color: Colors.white),
                         ).tr(),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),
@@ -726,7 +726,7 @@ class _EditProfileState extends State<EditProfile> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -796,7 +796,7 @@ class _EditProfileState extends State<EditProfile> {
                           style: TextStyle(color: Colors.white),
                         ).tr(),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),
@@ -836,7 +836,7 @@ class _EditProfileState extends State<EditProfile> {
                               height: SizeConfig.heightMultiplier * 2,
                               width: SizeConfig.widthMultiplier * 22,
                               decoration: BoxDecoration(
-                                color: purpleColor.withOpacity(0.6),
+                                color: AppColors.purpleColor.withOpacity(0.6),
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(12),
                                 ),
@@ -897,7 +897,7 @@ class _EditProfileState extends State<EditProfile> {
                                 height: SizeConfig.heightMultiplier * 2,
                                 width: SizeConfig.widthMultiplier * 22,
                                 decoration: BoxDecoration(
-                                  color: purpleColor.withOpacity(0.6),
+                                  color: AppColors.purpleColor.withOpacity(0.6),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(12),
                                   ),
@@ -937,7 +937,7 @@ class _EditProfileState extends State<EditProfile> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -1008,7 +1008,7 @@ class _EditProfileState extends State<EditProfile> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),
@@ -1028,7 +1028,7 @@ class _EditProfileState extends State<EditProfile> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -1099,7 +1099,7 @@ class _EditProfileState extends State<EditProfile> {
                           style: TextStyle(color: Colors.white),
                         ).tr(),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),

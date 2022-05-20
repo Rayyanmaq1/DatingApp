@@ -22,7 +22,7 @@ class _InterestState extends State<Interest> {
     //  selectedValue = userdataCtr.userModel.value.interest;
     print(userdataCtr.userModel.value.interest);
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       body: Column(
         children: [
           SizedBox(

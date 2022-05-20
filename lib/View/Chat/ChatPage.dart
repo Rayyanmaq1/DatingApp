@@ -37,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
     // friendRequest.onInit();
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         body: CustomScrollView(
           slivers: [
             _buildAppBar(),
@@ -60,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
                       onTap: () => Get.to(() => AddFriend()),
                       leading: CircleAvatar(
                         radius: 30,
-                        backgroundColor: orangeColor,
+                        backgroundColor: AppColors.orangeColor,
                         backgroundImage: AssetImage('assets/userAvatar.png'),
                       ),
                       title: Text(
@@ -85,8 +85,8 @@ class _ChatPageState extends State<ChatPage> {
                                 decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        redColor,
-                                        pinkColor,
+                                        AppColors.redColor,
+                                        AppColors.pinkColor,
                                       ],
                                     ),
                                     shape: BoxShape.circle),
@@ -155,7 +155,7 @@ class _ChatPageState extends State<ChatPage> {
       },
       tileColor: seletedUser.contains(lastmessage.docId)
           ? Colors.grey[800]
-          : greyColor,
+          : AppColors.greyColor,
       onTap: () {
         ChattingUserData chattinguser;
         lastmessage.chatters.forEach((element) {
@@ -222,7 +222,7 @@ class _ChatPageState extends State<ChatPage> {
               'Message',
               style: TextStyle(color: Colors.white),
             ).tr(),
-            backgroundColor: greyColor,
+            backgroundColor: AppColors.greyColor,
             actions: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -241,7 +241,7 @@ class _ChatPageState extends State<ChatPage> {
             floating: true,
             elevation: 0,
             title: Text(seletedUser.length.toString() + ' Message'),
-            backgroundColor: greyColor,
+            backgroundColor: AppColors.greyColor,
             actions: [
               Padding(
                 padding: const EdgeInsets.all(12.0),

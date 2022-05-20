@@ -237,7 +237,7 @@ class _LiveCamState extends State<LiveCam> {
           })
         : null;
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -412,7 +412,8 @@ class _LiveCamState extends State<LiveCam> {
                                   height: SizeConfig.heightMultiplier * 2,
                                   width: SizeConfig.widthMultiplier * 22,
                                   decoration: BoxDecoration(
-                                    color: purpleColor.withOpacity(0.6),
+                                    color:
+                                        AppColors.purpleColor.withOpacity(0.6),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(12),
                                     ),
@@ -460,7 +461,7 @@ class _LiveCamState extends State<LiveCam> {
                     animationDuration: 20000,
                     percent: 1,
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: purpleColor,
+                    progressColor: AppColors.purpleColor,
                   ),
                 ),
                 Positioned(

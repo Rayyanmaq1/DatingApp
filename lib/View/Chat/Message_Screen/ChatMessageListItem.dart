@@ -156,7 +156,9 @@ class ChatMessageListItem extends StatelessWidget {
                       child: Container(
                         // alignment: Alignment.centerLeft,
                         child: Text(
-                          messageSnapshot['value'][MESSAGE_TEXT],
+                          messageSnapshot['value'][MESSAGE_TEXT] != null
+                              ? messageSnapshot['value'][MESSAGE_TEXT]
+                              : '',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -362,7 +364,9 @@ class ChatMessageListItem extends StatelessWidget {
                       child: Container(
                         // alignment: Alignment.centerLeft,
                         child: Text(
-                          messageSnapshot['value'][MESSAGE_TEXT],
+                          messageSnapshot['value'][MESSAGE_TEXT] != null
+                              ? messageSnapshot['value'][MESSAGE_TEXT]
+                              : '',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,

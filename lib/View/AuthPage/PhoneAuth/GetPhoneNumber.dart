@@ -70,7 +70,7 @@ class GetPhoneNumber extends StatelessWidget {
             ),
             PhysicalModel(
               elevation: 4,
-              color: purpleColor,
+              color: AppColors.purpleColor,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               child: RawMaterialButton(
                 onPressed: () {

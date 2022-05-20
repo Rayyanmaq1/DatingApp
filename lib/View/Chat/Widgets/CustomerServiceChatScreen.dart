@@ -60,9 +60,9 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       appBar: new AppBar(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'Customer Service',
@@ -122,7 +122,7 @@ class ChatScreenState extends State<ChatScreen> {
     return new IconButton(
       icon: new Icon(
         Icons.send,
-        color: purpleColor,
+        color: AppColors.purpleColor,
       ),
       onPressed: () {
         setState(() {
@@ -136,7 +136,7 @@ class ChatScreenState extends State<ChatScreen> {
 
   _buildMessageComposer(context) {
     return Container(
-      color: greyColor,
+      color: AppColors.greyColor,
       child: Column(
         children: [
           Padding(

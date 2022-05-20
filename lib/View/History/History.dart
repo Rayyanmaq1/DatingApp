@@ -28,7 +28,7 @@ class _HistoryState extends State<History> {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         appBar: AppBar(
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.white),
@@ -36,7 +36,7 @@ class _HistoryState extends State<History> {
             'History',
             style: TextStyle(color: Colors.white),
           ).tr(),
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
         ),
         body: Column(
           children: [
@@ -59,7 +59,9 @@ class _HistoryState extends State<History> {
                       ).tr(),
                     ),
                     decoration: BoxDecoration(
-                        color: seleted == 0 ? purpleColor : Colors.grey[850],
+                        color: seleted == 0
+                            ? AppColors.purpleColor
+                            : Colors.grey[850],
                         borderRadius: BorderRadius.circular(4)),
                   ),
                 ),
@@ -79,7 +81,9 @@ class _HistoryState extends State<History> {
                       ).tr(),
                     ),
                     decoration: BoxDecoration(
-                        color: seleted == 1 ? purpleColor : Colors.grey[850],
+                        color: seleted == 1
+                            ? AppColors.purpleColor
+                            : Colors.grey[850],
                         borderRadius: BorderRadius.circular(4)),
                   ),
                 ),

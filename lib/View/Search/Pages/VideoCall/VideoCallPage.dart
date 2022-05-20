@@ -54,7 +54,7 @@ class VideocallPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
           child: Stack(
@@ -87,11 +87,11 @@ class VideocallPage extends StatelessWidget {
                                 VideoCallService().deleteUserFromSearch();
                               });
                             },
-                            color: greyColor,
+                            color: AppColors.greyColor,
                             child: Text(
                               'Cancel',
                               style: TextStyle(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   fontSize: SizeConfig.textMultiplier * 2),
                             ),
                           ),
@@ -101,11 +101,11 @@ class VideocallPage extends StatelessWidget {
                               VideoCallService().deleteUserFromSearch();
                               Get.back();
                             },
-                            color: greyColor,
+                            color: AppColors.greyColor,
                             child: Text(
                               'Accept',
                               style: TextStyle(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   fontSize: SizeConfig.textMultiplier * 2),
                             ),
                           ),

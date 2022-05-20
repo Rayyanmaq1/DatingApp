@@ -212,7 +212,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             Icon(
                               Icons.call,
                               size: SizeConfig.imageSizeMultiplier * 10,
-                              color: orangeColor,
+                              color: AppColors.orangeColor,
                             ), () {
                           if (Get.find<UserDataController>()
                                   .userModel
@@ -230,7 +230,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             FaIcon(
                               FontAwesomeIcons.solidCommentDots,
                               size: SizeConfig.imageSizeMultiplier * 10,
-                              color: purpleColor,
+                              color: AppColors.purpleColor,
                             ), () {
                           LastMessage model = LastMessage.userModel(userModel);
                           Get.to(() => ChatScreen(
@@ -242,7 +242,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             Icon(
                               Icons.videocam,
                               size: SizeConfig.imageSizeMultiplier * 10,
-                              color: redColor,
+                              color: AppColors.redColor,
                             ), () {
                           if (Get.find<UserDataController>()
                                   .userModel

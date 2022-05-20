@@ -113,7 +113,7 @@ class FullImageViewScreen extends StatelessWidget {
     return GestureDetector(
         onTap: () => Get.back(),
         child: Container(
-          color: greyColor,
+          color: AppColors.greyColor,
           child: Center(
               child: CachedNetworkImage(
             imageUrl: url,

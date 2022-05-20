@@ -26,7 +26,7 @@ class _UserDataState extends State<UserData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: purpleColor,
+        backgroundColor: AppColors.purpleColor,
         elevation: 0,
         title: Text('sign_up_title').tr(),
       ),
@@ -171,7 +171,7 @@ class _UserDataState extends State<UserData> {
                 child: GestureDetector(
                   onTap: () {},
                   child: PhysicalModel(
-                    color: purpleColor,
+                    color: AppColors.purpleColor,
                     elevation: 4,
                     borderRadius: BorderRadius.circular(6),
                     child: RawMaterialButton(

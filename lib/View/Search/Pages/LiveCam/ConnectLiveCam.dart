@@ -173,7 +173,7 @@ class _ConnectLiveCamState extends State<ConnectLiveCam> {
                       child: Container(
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: purpleColor.withOpacity(0.7),
+                          color: AppColors.purpleColor.withOpacity(0.7),
                           borderRadius: BorderRadius.all(
                             Radius.circular(12),
                           ),

@@ -17,7 +17,7 @@ class PickupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -28,7 +28,7 @@ class PickupScreen extends StatelessWidget {
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(vertical: 100),
         child: Container(
-          color: greyColor.withOpacity(0.6),
+          color: AppColors.greyColor.withOpacity(0.6),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

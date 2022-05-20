@@ -17,17 +17,13 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   PageController pageController = PageController();
-  Color litegreycolor = Color(0xff5a5d65);
-  Color greycolor = Color(0xffb8bbc1);
-  Color whitecolor = Colors.white;
-  Color liteblackcolor = Color(0xff1a1a1a);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
       ),
       backgroundColor: Color(0xff191919),
       body: Column(
@@ -92,7 +88,8 @@ class _UserProfileState extends State<UserProfile> {
                     children: [
                       Text(
                         widget.userData.name,
-                        style: TextStyle(color: greycolor, fontSize: 18),
+                        style:
+                            TextStyle(color: AppColors.greyColor, fontSize: 18),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0, bottom: 5),
@@ -107,8 +104,8 @@ class _UserProfileState extends State<UserProfile> {
                                 padding: const EdgeInsets.only(left: 4.0),
                                 child: Text(
                                   widget.userData.age,
-                                  style:
-                                      TextStyle(color: greycolor, fontSize: 18),
+                                  style: TextStyle(
+                                      color: AppColors.greyColor, fontSize: 18),
                                 ),
                               ),
                             ]),
@@ -122,11 +119,12 @@ class _UserProfileState extends State<UserProfile> {
                         children: [
                           Icon(
                             Icons.location_on,
-                            color: greycolor,
+                            color: AppColors.greyColor,
                           ),
                           Text(
                             widget.userData.location,
-                            style: TextStyle(color: greycolor, fontSize: 18),
+                            style: TextStyle(
+                                color: AppColors.greyColor, fontSize: 18),
                           ),
                         ],
                       ),
@@ -141,7 +139,7 @@ class _UserProfileState extends State<UserProfile> {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundColor: whitecolor,
+                        backgroundColor: Colors.white,
                         child: Icon(
                           Icons.favorite,
                           color: Colors.red,

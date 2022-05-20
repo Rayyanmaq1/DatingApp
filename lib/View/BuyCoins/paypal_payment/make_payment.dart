@@ -30,7 +30,7 @@ class _MakePaymentState extends State<MakePayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(45.0),

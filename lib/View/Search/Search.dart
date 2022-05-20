@@ -163,7 +163,7 @@ class _SearchState extends State<Search> {
                         child: AnimatedContainer(
                           duration: Duration(milliseconds: 400),
                           decoration: BoxDecoration(
-                              color: purpleColor,
+                              color: AppColors.purpleColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
                           width: 100,
@@ -186,7 +186,7 @@ class _SearchState extends State<Search> {
                               child: Container(
                                 child: Icon(
                                   Icons.videocam,
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                 ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
@@ -250,7 +250,7 @@ class _SearchState extends State<Search> {
                         child: AnimatedContainer(
                           duration: Duration(milliseconds: 400),
                           decoration: BoxDecoration(
-                              color: redColor,
+                              color: AppColors.redColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
                           width: 100,
@@ -273,7 +273,7 @@ class _SearchState extends State<Search> {
                               child: Container(
                                 child: Icon(
                                   Icons.favorite,
-                                  color: redColor,
+                                  color: AppColors.redColor,
                                 ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,

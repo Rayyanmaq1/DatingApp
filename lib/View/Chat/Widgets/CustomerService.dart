@@ -17,7 +17,7 @@ class CustomerService extends StatelessWidget {
         height: 65,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [redColor, orangeColor],
+              colors: [AppColors.redColor, AppColors.orangeColor],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight),
           shape: BoxShape.circle,
@@ -29,7 +29,8 @@ class CustomerService extends StatelessWidget {
       title: Text(
         'Customer Service',
         style: TextStyle(
-            color: redColor, fontSize: SizeConfig.textMultiplier * 2.3),
+            color: AppColors.redColor,
+            fontSize: SizeConfig.textMultiplier * 2.3),
       ),
     );
   }

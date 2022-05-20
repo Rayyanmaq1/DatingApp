@@ -4,6 +4,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:livu/theme.dart';
 import 'package:livu/Services/CoinsDeduction.dart';
 import 'package:get/get.dart';
+
 class Payment extends StatefulWidget {
   int coins;
   int finalAmount;
@@ -38,9 +39,9 @@ class PaymentState extends State<Payment> {
       duration:
           new Duration(milliseconds: response.success == true ? 1200 : 3000),
     ));
-    if(response.success){
+    if (response.success) {
       CoinsDeduction().addCoins(widget.coins);
-      Future.delayed(Duration(seconds: 2),(){
+      Future.delayed(Duration(seconds: 2), () {
         Get.back();
       });
     }
@@ -56,10 +57,10 @@ class PaymentState extends State<Payment> {
   Widget build(BuildContext context) {
     print(widget.finalAmount);
     return Scaffold(
-      backgroundColor: greyColor,
+      backgroundColor: AppColors.greyColor,
       appBar: AppBar(
         title: Text('Payment'),
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
       ),
       body: Container(
         padding: EdgeInsets.all(20),

@@ -72,7 +72,7 @@ class _VideoCallState extends State<VideoCall> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         body: GestureDetector(
           onTap: () {
             setState(() {
@@ -415,7 +415,7 @@ class _VideoCallState extends State<VideoCall> {
           width: SizeConfig.heightMultiplier * 7,
           height: SizeConfig.heightMultiplier * 7,
           decoration: BoxDecoration(
-            color: purpleColor,
+            color: AppColors.purpleColor,
             shape: BoxShape.circle,
           ),
         ),
@@ -453,7 +453,7 @@ class _VideoCallState extends State<VideoCall> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           title: Text(
             'Report_User',
             style: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
@@ -605,7 +605,7 @@ class _VideoCallState extends State<VideoCall> {
         controller: ModalScrollController.of(context),
         child: Container(
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -688,7 +688,7 @@ class _VideoCallState extends State<VideoCall> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      color: purpleColor,
+                      color: AppColors.purpleColor,
                     ),
                   ),
                 ),
@@ -889,7 +889,9 @@ class StreamChat extends StatelessWidget {
                             ],
                           ),
                           child: Text(
-                            messageSnapshot['value'][MESSAGE_TEXT],
+                            messageSnapshot['value'][MESSAGE_TEXT] != null
+                                ? messageSnapshot['value'][MESSAGE_TEXT]
+                                : '',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

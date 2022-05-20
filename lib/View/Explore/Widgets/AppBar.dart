@@ -42,7 +42,7 @@ class CustomAppBar extends StatelessWidget {
           ),
         ],
       ),
-      color: greyColor,
+      color: AppColors.greyColor,
     );
   }
 }

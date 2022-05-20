@@ -33,8 +33,8 @@ class LiveCamPage extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                redColor,
-                pinkColor,
+                AppColors.redColor,
+                AppColors.pinkColor,
               ])),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +91,7 @@ class LiveCamPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          backgroundColor: greyColor,
+          backgroundColor: AppColors.greyColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
           child: Stack(
@@ -124,11 +124,11 @@ class LiveCamPage extends StatelessWidget {
                                 LiveCamService().deleteUserFromSearch();
                               });
                             },
-                            color: greyColor,
+                            color: AppColors.greyColor,
                             child: Text(
                               'Cancel',
                               style: TextStyle(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   fontSize: SizeConfig.textMultiplier * 2),
                             ),
                           ),
@@ -138,11 +138,11 @@ class LiveCamPage extends StatelessWidget {
                               LiveCamService().deleteUserFromSearch();
                               Get.back();
                             },
-                            color: greyColor,
+                            color: AppColors.greyColor,
                             child: Text(
                               'Accept',
                               style: TextStyle(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   fontSize: SizeConfig.textMultiplier * 2),
                             ),
                           ),

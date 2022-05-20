@@ -44,14 +44,14 @@ class _BuyCoinsState extends State<BuyCoins> {
             ],
           ),
         ),
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
               title:
                   Text('buy_coins', style: TextStyle(color: Colors.white)).tr(),
-              backgroundColor: greyColor,
+              backgroundColor: AppColors.greyColor,
               iconTheme: IconThemeData(color: Colors.white),
             ),
             SliverToBoxAdapter(
@@ -63,7 +63,7 @@ class _BuyCoinsState extends State<BuyCoins> {
                         text: 'Your Have'.tr(),
                         style: TextStyle(
                             fontSize: SizeConfig.textMultiplier * 2,
-                            color: orangeColor),
+                            color: AppColors.orangeColor),
                         children: [
                           TextSpan(
                               text: userData.coins.toString(),
@@ -116,7 +116,7 @@ class _BuyCoinsState extends State<BuyCoins> {
         Container(
           width: SizeConfig.widthMultiplier * 50,
           decoration: BoxDecoration(
-            color: greyColor,
+            color: AppColors.greyColor,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.grey[700], width: 1),
           ),
@@ -169,7 +169,7 @@ class _BuyCoinsState extends State<BuyCoins> {
                         fontSize: SizeConfig.textMultiplier * 2),
                   )),
                   decoration: BoxDecoration(
-                    color: purpleColor,
+                    color: AppColors.purpleColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(8),
                     ),
@@ -189,7 +189,7 @@ class _BuyCoinsState extends State<BuyCoins> {
                     child: Container(
                       height: SizeConfig.heightMultiplier * 7,
                       width: SizeConfig.heightMultiplier * 7,
-                      color: redColor,
+                      color: AppColors.redColor,
                       child: Center(
                           child: Text(
                         data[index].offer.toString().substring(6),
@@ -274,7 +274,7 @@ class _BuyCoinsState extends State<BuyCoins> {
                       fontSize: SizeConfig.textMultiplier * 2),
                 )),
                 decoration: BoxDecoration(
-                  color: purpleColor,
+                  color: AppColors.purpleColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),

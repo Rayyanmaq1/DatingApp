@@ -22,7 +22,7 @@ showSecondOverlay(context) {
                   top: MediaQuery.of(context).size.height * 0.23,
                   left: MediaQuery.of(context).size.width * 0.07,
                   child: Material(
-                    color: greyColor,
+                    color: AppColors.greyColor,
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
                       child: Padding(
@@ -38,7 +38,7 @@ showSecondOverlay(context) {
                                   child: Image.asset('assets/PopUp1.jpg'),
                                 )),
                                 decoration: BoxDecoration(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
@@ -46,7 +46,7 @@ showSecondOverlay(context) {
                             Expanded(
                               flex: 1,
                               child: Container(
-                                color: greyColor,
+                                color: AppColors.greyColor,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -85,7 +85,7 @@ showSecondOverlay(context) {
                   left: MediaQuery.of(context).size.width * 0.09,
                   child: CustomPaint(
                     painter: TrianglePainter(
-                      strokeColor: greyColor,
+                      strokeColor: AppColors.greyColor,
                       strokeWidth: 10,
                       paintingStyle: PaintingStyle.fill,
                     ),
@@ -118,7 +118,7 @@ showOverlay(BuildContext context) async {
                   top: MediaQuery.of(context).size.height * 0.145,
                   left: MediaQuery.of(context).size.width * 0.08,
                   child: Material(
-                    color: greyColor,
+                    color: AppColors.greyColor,
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
                       child: Padding(
@@ -134,7 +134,7 @@ showOverlay(BuildContext context) async {
                                   child: Image.asset('assets/PopUp2.jpg'),
                                 )),
                                 decoration: BoxDecoration(
-                                  color: purpleColor,
+                                  color: AppColors.purpleColor,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
@@ -142,7 +142,7 @@ showOverlay(BuildContext context) async {
                             Expanded(
                               flex: 1,
                               child: Container(
-                                color: greyColor,
+                                color: AppColors.greyColor,
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -181,7 +181,7 @@ showOverlay(BuildContext context) async {
                   left: MediaQuery.of(context).size.width * 0.1,
                   child: CustomPaint(
                     painter: TrianglePainter(
-                      strokeColor: greyColor,
+                      strokeColor: AppColors.greyColor,
                       strokeWidth: 10,
                       paintingStyle: PaintingStyle.fill,
                     ),

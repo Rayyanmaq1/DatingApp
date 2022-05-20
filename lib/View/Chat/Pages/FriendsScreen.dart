@@ -18,7 +18,7 @@ class FriendsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: greyColor,
+        backgroundColor: AppColors.greyColor,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -32,7 +32,7 @@ class FriendsScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ).tr(),
-              backgroundColor: greyColor,
+              backgroundColor: AppColors.greyColor,
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -103,7 +103,7 @@ class FriendsScreen extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize:
                                               SizeConfig.heightMultiplier * 2.5,
-                                          color: purpleColor,
+                                          color: AppColors.purpleColor,
                                         ),
                                       ).tr(),
                                     ],
@@ -173,7 +173,7 @@ class FriendsScreen extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize:
                                               SizeConfig.heightMultiplier * 2.5,
-                                          color: purpleColor,
+                                          color: AppColors.purpleColor,
                                         ),
                                       ).tr(),
                                     ],
